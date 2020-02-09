@@ -1,4 +1,5 @@
-Information about the application stored in the info.txt file can be shown here.
-Describe the purpose of this application.
+Battleship is a two-player game where both players fight to reign over the universe.
+Each player has its own fleet of spaceships which they can strategically place in between the stars in space.
+Taking turns, they are able to aim and fire lasercanons to destroy the enemy ships.
 
-//TODO
+Will you rule the universe? Play and find out!

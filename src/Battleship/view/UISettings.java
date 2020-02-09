@@ -19,11 +19,11 @@ public class UISettings {
     public static final char FILE_SEPARATOR = System.getProperties().getProperty("file.separator").charAt(0);
     private String ApplicationName;
     private String homeDir;
-    private String defaultCss = "themes02.css";
+    private String defaultCss = "themes02.css"; //TODO add own CSS file here
     private Path styleSheetPath = Paths.get("resources"+FILE_SEPARATOR+"stylesheets"+FILE_SEPARATOR+defaultCss);
-    private Path AboutImagePath = Paths.get("resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"AboutImage.png");
-    private Path applicationIconPath = Paths.get("resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"ApplicationIcon.png");
-    private Path startScreenImagePath = Paths.get("resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"StartScreenImage.png");
+    private Path AboutImagePath = Paths.get("resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"ship_red_2.png"); //TODO create and put AboutIcon here
+    private Path applicationIconPath = Paths.get("resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"ship_red_2.png"); //TODO create and put ApplicationIcon here
+    private Path startScreenImagePath = Paths.get("resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"ship_red_2.png"); //TODO create and put StartScreenImage here
     private Path infoTextPath = Paths.get("resources"+FILE_SEPARATOR+"other"+FILE_SEPARATOR+"info.txt");
 
     public UISettings() {
@@ -31,7 +31,7 @@ public class UISettings {
         this.resY = (int) Screen.getPrimary().getVisualBounds().getHeight();
         this.insetsMargin = this.getLowestRes()/100;
         this.homeDir = System.getProperties().getProperty("user.dir");
-        this.ApplicationName = "MVP";
+        this.ApplicationName = "Battleship";
     };
 
     public int getResX () {return this.resX;}
@@ -40,7 +40,7 @@ public class UISettings {
 
     public int getInsetsMargin () {return this.insetsMargin;}
 
-    public int getLowestRes () {return (resX>resY?resX:resY);}
+    public int getLowestRes () {return (Math.min(resX, resY));}
 
     public boolean styleSheetAvailable (){return Files.exists(styleSheetPath);}
 
