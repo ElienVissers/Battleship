@@ -57,7 +57,7 @@
 {
     -fx-border-color: white, white;
     -fx-border-width: 1, 1;
-    -fx-border-style: solid, segments(1, 1);
+    /*-fx-border-style: solid, segments(1, 1);*/
     -fx-border-radius: 0, 0;
     -fx-border-insets: 1 1 1 1, 0;
 }
@@ -103,7 +103,7 @@
     -fx-border-color: white, white;
 
     -fx-border-width: 1, 1;
-    -fx-border-style: solid, segments(1, 1);
+    /*-fx-border-style: solid, segments(1, 1);*/
     -fx-border-radius: 0, 0;
     -fx-border-insets: 1 1 1 1, 0;
 }
@@ -162,7 +162,7 @@
     -fx-background-radius: 0;
     -fx-border-color: white, #d1d1d1;
     -fx-border-width: 1, 2;
-    -fx-border-style: segments(1, 1), solid;
+    /*-fx-border-style: segments(1, 1), solid;*/
     -fx-border-insets: -3, 0;
 }
 
@@ -250,7 +250,7 @@
    -fx-background-radius: 1.0em; /* large value to make sure this remains circular */
    -fx-background-insets: 0;
    
-   -fx-border-style: solid, segments(1, 1);
+   /*-fx-border-style: solid, segments(1, 1);*/
    -fx-border-radius: 1.0em, 0;
    -fx-border-color: #cfcfcf, white;
    -fx-border-insets: 0px, -2px;
@@ -286,13 +286,13 @@
    -fx-background-radius: 1.0em; /* large value to make sure this remains circular */
    -fx-background-insets: 0;
    
-   -fx-border-style: solid, segments(1, 1);
+   /*-fx-border-style: solid, segments(1, 1);*/
    -fx-border-radius: 1.0em, 0;
    -fx-border-color: white, white;
    -fx-border-insets: 0px, -2px;
    -fx-border-width: 1px, 1px;
-    
-   -fx-padding: 4px; /* 4 -- padding from outside edge to the inner black dot */   
+
+   -fx-padding: 4px; /* 4 -- padding from outside edge to the inner black dot */
 }
 
 /*******************************************************************************

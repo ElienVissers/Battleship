@@ -56,7 +56,7 @@
 {
     -fx-border-color: black;
     -fx-border-width: 1;
-    -fx-border-style: segments(1, 1);
+    /*-fx-border-style: segments(1, 1);*/
     -fx-background-insets: 0 0 0 0, 0, 1, 2;   
 }
 
@@ -99,7 +99,7 @@
 .toggle-button:focused {
     -fx-border-color: black;
     -fx-border-width: 1;
-    -fx-border-style: segments(1, 1);
+    /*-fx-border-style: segments(1, 1);*/
     -fx-background-insets: 0 0 0 0, 0, 1, 2;   
 }
 
@@ -157,7 +157,7 @@
     -fx-background-radius: 0;
     -fx-border-color: black, #bababa;
     -fx-border-width: 1, 2;
-    -fx-border-style: segments(1, 1), solid;
+    /*-fx-border-style: segments(1, 1), solid;*/
     -fx-border-insets: -3, 0;
 }
 
@@ -250,7 +250,7 @@
    -fx-background-radius: 1.0em; /* large value to make sure this remains circular */
    -fx-background-insets: 0;
    
-   -fx-border-style: solid, segments(1, 1);
+   /*-fx-border-style: solid, segments(1, 1);*/
    -fx-border-radius: 1.0em, 0;
    -fx-border-color: #bababa, black;
    -fx-border-insets: 0px, -2px;
@@ -286,7 +286,7 @@
    -fx-background-radius: 1.0em; /* large value to make sure this remains circular */
    -fx-background-insets: 0;
    
-   -fx-border-style: solid, segments(1, 1);
+   /*-fx-border-style: solid, segments(1, 1);*/
    -fx-border-radius: 1.0em, 0;
    -fx-border-color: #212121, #212121;
    -fx-border-insets: 0px, -2px;
