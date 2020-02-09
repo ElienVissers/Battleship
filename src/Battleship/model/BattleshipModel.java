@@ -15,7 +15,7 @@ public class BattleshipModel {
 
     public static void main(String[] args) {
         System.out.println("Run Zeeslag App.");
-        //TODO Add a function to get player names and check if computer needs to play 
+        //TODO Add a function to get player names and check if computer needs to play
         Game currentGame = new Game(false, args); //possible game extension: play against a computer player
 
         currentGame.prepareGrids();
