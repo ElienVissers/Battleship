@@ -61,6 +61,10 @@ public class HumanPlayer extends Player {
         */
 
         //FIXME replace testCell with the new targetCell!
+        /* TODO
+            implement to uppercase for char
+            Check that number or char isn't above max or min
+         */
         Scanner keyboard = new Scanner(System.in);
         System.out.println("Which cell do you want to target?");
         String test = keyboard.next();
