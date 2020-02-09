@@ -13,6 +13,7 @@ import java.nio.file.Files;
 /**
  * @author Elien Vissers-Similon
  * @version 1.0 09.02.2020 14:00
+ * RUN/DEBUG configuration - vm options: --module-path "C:\Program Files\Java\javafx-sdk-11.0.2\lib" --add-modules javafx.controls,javafx.fxml,javafx.graphics,javafx.media
  */
 public class Main extends Application {
 
