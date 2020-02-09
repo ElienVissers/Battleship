@@ -1,7 +1,9 @@
 package Battleship.view.startscreen;
 
 import Battleship.view.UISettings;
+import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -15,11 +17,12 @@ import java.nio.file.Files;
  * @version 1.0 09.02.2020 14:13
  */
 
-public class StartScreenView extends BorderPane {
+public class StartScreenView extends VBox {
 
     private UISettings uiSettings;
     private Label timeDisplay;
     private ProgressBar timeProgress;
+    private ImageView centralImage;
     private StartScreenTransition trans;
 
     public StartScreenView(UISettings uiSettings) {
@@ -35,13 +38,9 @@ public class StartScreenView extends BorderPane {
     }
 
     private void layoutNodes() {
-        int ImageSize = uiSettings.getLowestRes()/5;
-        BorderPane progressPane = new BorderPane();
-        progressPane.setRight(this.timeProgress);
-        progressPane.setLeft(this.timeDisplay);
-        BorderPane.setMargin(this.timeDisplay, new Insets(uiSettings.getInsetsMargin()));
-        BorderPane.setMargin(this.timeProgress, new Insets(uiSettings.getInsetsMargin()));
-        ImageView centralImage;
+        //TODO layout properly (functionality OK)
+        int ImageSize = uiSettings.getLowestRes()/8;
+        timeProgress.setStyle("-fx-accent: red");
         if (Files.exists(uiSettings.getStartScreenImagePath())) {
             try {
                 centralImage = new ImageView(new Image(uiSettings.getStartScreenImagePath().toUri().toURL().toString()));
@@ -49,24 +48,26 @@ public class StartScreenView extends BorderPane {
                 centralImage.setFitHeight(ImageSize);
                 centralImage.setFitWidth(ImageSize);
                 centralImage.setSmooth(true);
-                this.setCenter(centralImage);
             }
             catch (MalformedURLException ex) {
                 // do nothing, if toURL-conversion fails, program can continue
             }
-        } else { // do nothing, if StartScreenImage is not available, program can continue
         }
-        this.setBottom(progressPane);
+        this.setPadding(new Insets(uiSettings.getInsetsMargin()));
+        this.getChildren().addAll(centralImage, timeDisplay, timeProgress);
+        this.setAlignment(Pos.CENTER);
     }
 
     Label getTimeDisplay () {return (timeDisplay);}
 
     ProgressBar getTimeProgress () {return (timeProgress);}
 
+    ImageView getCentralImage() {return (centralImage);}
+
     StartScreenTransition getTransition() {return trans;}
 
     private void animate() {
-        trans = new StartScreenTransition(this,3);
+        trans = new StartScreenTransition(this,4);
         trans.play();
     }
 

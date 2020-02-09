@@ -31,6 +31,7 @@ public class StartScreenPresenter {
     }
 
     private void EventHandlers() {
+        /** create and switch to MainScreen: from StartScreen to MainScreen in existing Stage */
         view.getTransition().setOnFinished(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -40,13 +41,14 @@ public class StartScreenPresenter {
                 try {
                     msView.getScene().getStylesheets().add(uiSettings.getStyleSheetPath().toUri().toURL().toString());
                 } catch (MalformedURLException ex) {
-                    // // do nothing, if toURL-conversion fails, program can continue
+                    // do nothing, if toURL-conversion fails, program can continue
                 }
                 msView.getScene().getWindow().sizeToScene();
-                msView.getScene().getWindow().setX(uiSettings.getResX()/20);
-                msView.getScene().getWindow().setY(uiSettings.getResY()/20);
-                msView.getScene().getWindow().setHeight(9 * uiSettings.getResY()/10);
-                msView.getScene().getWindow().setWidth(9 * uiSettings.getResX()/10);
+                //open new window fullscreen
+                msView.getScene().getWindow().setX(0);
+                msView.getScene().getWindow().setY(0);
+                msView.getScene().getWindow().setHeight(uiSettings.getResY());
+                msView.getScene().getWindow().setWidth(uiSettings.getResX());
                 msPresenter.windowsHandler();
             }
         });

@@ -23,7 +23,7 @@ public class UISettings {
     private Path styleSheetPath = Paths.get("resources"+FILE_SEPARATOR+"stylesheets"+FILE_SEPARATOR+defaultCss);
     private Path AboutImagePath = Paths.get("resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"ship_red_2.png"); //TODO create and put AboutIcon here
     private Path applicationIconPath = Paths.get("resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"ship_red_2.png"); //TODO create and put ApplicationIcon here
-    private Path startScreenImagePath = Paths.get("resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"ship_red_2.png"); //TODO create and put StartScreenImage here
+    private Path startScreenImagePath = Paths.get("resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"ship_red_2.png"); //TODO create and put StartScreenImage here (same as AboutIcon?)
     private Path infoTextPath = Paths.get("resources"+FILE_SEPARATOR+"other"+FILE_SEPARATOR+"info.txt");
 
     public UISettings() {
