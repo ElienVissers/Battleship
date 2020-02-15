@@ -6,7 +6,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 
-public class MainOptionsView extends BorderPane  {
+public class MainOptionsScreenView extends BorderPane  {
 
     private UISettings uiSettings;
     private MenuItem exitMI;
@@ -14,7 +14,7 @@ public class MainOptionsView extends BorderPane  {
     private Button cssButton;
     private Button okButton;
 
-    public MainOptionsView(UISettings uiSettings) {
+    public MainOptionsScreenView(UISettings uiSettings) {
         this.uiSettings = uiSettings;
         initialiseNodes();
         layoutNodes();
@@ -24,7 +24,7 @@ public class MainOptionsView extends BorderPane  {
         this.exitMI = new MenuItem("Exit");
         this.cssButton = new Button("Select File");
         this.cssName = new TextField();
-        this.cssName.setPrefWidth(uiSettings.getLowestRes() / 3);
+        this.cssName.setPrefWidth(uiSettings.getLowestRes() / 3.0);
         this.cssName.setText(uiSettings.getStyleSheetPath().toString());
         this.okButton = new Button("OK");
     }
@@ -35,7 +35,7 @@ public class MainOptionsView extends BorderPane  {
         MenuBar menuBar = new MenuBar(menuFile);
         setTop(menuBar);
         HBox cssSettings = new HBox();
-        cssSettings.setSpacing(uiSettings.getLowestRes() / 100);
+        cssSettings.setSpacing(uiSettings.getLowestRes() / 100.0);
         cssSettings.setPadding(new Insets(20));
         Label cssLabel = new Label("Style Sheet File Name:");
         cssSettings.getChildren().addAll(cssLabel, cssName, cssButton);

@@ -65,7 +65,7 @@ public class StartScreenView extends VBox {
     StartScreenTransition getTransition() {return trans;}
 
     private void animate() {
-        trans = new StartScreenTransition(this,4);
+        trans = new StartScreenTransition(this,3);
         trans.play();
     }
 

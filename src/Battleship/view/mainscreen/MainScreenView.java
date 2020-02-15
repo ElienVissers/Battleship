@@ -11,12 +11,12 @@ import javafx.scene.control.*;
 
 public class MainScreenView extends BorderPane  {
 
-    private MenuItem exitMI;
-    private MenuItem saveMI;
-    private MenuItem loadMI;
-    private MenuItem settingsMI;
     private MenuItem aboutMI;
     private MenuItem infoMI;
+    private MenuItem exitMI;
+    private MenuItem optionsMI;
+    private MenuItem highscoresMI;
+    private CheckMenuItem computerPlayerCheck;
     private UISettings uiSettings;
 
     public MainScreenView(UISettings uiSettings) {
@@ -26,31 +26,31 @@ public class MainScreenView extends BorderPane  {
     }
 
     private void initialiseNodes() {
-        this.exitMI = new MenuItem("Exit");
-        this.saveMI = new MenuItem("Save");
-        this.loadMI = new MenuItem("Load");
-        this.settingsMI = new MenuItem("Settings");
         this.aboutMI = new MenuItem("About");
         this.infoMI = new MenuItem("Info");
+        this.exitMI = new MenuItem("Exit");
+        this.computerPlayerCheck = new CheckMenuItem("Virtual opponent");
+        this.optionsMI = new MenuItem("Options");
+        this.highscoresMI = new MenuItem("Highscores");
     }
 
     private void layoutNodes() {
-        Menu menuFile = new Menu("File",null,loadMI, saveMI, new SeparatorMenuItem(), settingsMI, new SeparatorMenuItem(),exitMI);
-        Menu menuHelp = new Menu("Help",null, aboutMI, infoMI);
-        MenuBar menuBar = new MenuBar(menuFile,menuHelp);
+        Menu helpM = new Menu("Help",null, aboutMI, infoMI, new SeparatorMenuItem(), exitMI);
+        Menu optionsM = new Menu("Options",null, computerPlayerCheck, optionsMI, new SeparatorMenuItem(), highscoresMI);
+        MenuBar menuBar = new MenuBar(optionsM, helpM);
         setTop(menuBar);
     }
 
     MenuItem getExitItem() {return exitMI;}
 
-    MenuItem getSaveItem() {return saveMI;}
-
-    MenuItem getLoadItem() {return loadMI;}
-
-    MenuItem getSettingsItem() {return settingsMI;}
-
     MenuItem getAboutItem() {return aboutMI;}
 
     MenuItem getInfoItem() {return infoMI;}
+
+    MenuItem getOptionsItem() {return optionsMI;}
+
+    MenuItem getHighscoresItem() {return highscoresMI;}
+
+    MenuItem getComputerPlayerCheck() {return computerPlayerCheck;}
 
 }

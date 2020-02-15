@@ -12,13 +12,13 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.nio.file.Paths;
 
-public class MainOptionsPresenter {
+public class MainOptionsScreenPresenter {
 
     private BattleshipModel model;
-    private MainOptionsView view;
+    private MainOptionsScreenView view;
     private UISettings uiSettings;
 
-    public MainOptionsPresenter(BattleshipModel model, MainOptionsView view, UISettings uiSettings) {
+    public MainOptionsScreenPresenter(BattleshipModel model, MainOptionsScreenView view, UISettings uiSettings) {
         this.model = model;
         this.view = view;
         this.uiSettings = uiSettings;
