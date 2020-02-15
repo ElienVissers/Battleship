@@ -28,7 +28,6 @@ public class MainScreenView extends BorderPane  {
     private Button startButton;
     private UISettings uiSettings;
 
-    private boolean computerPlayer = false;
     private String[] enemies = {"Yoda", "Anakin Skywalker", "Darth Vader", "Obi-Wan Kenobi", "Luke Skywalker", "Han Solo", "R2-D2", "C-3PO"};
 
     public MainScreenView(UISettings uiSettings) {
@@ -53,9 +52,6 @@ public class MainScreenView extends BorderPane  {
         this.player1Text.setPrefWidth(150);
         this.player2Text.setPrefWidth(150);
         this.startButton = new Button("START");
-        if (computerPlayerCheck.isSelected()) {
-            computerPlayer = true;
-        }
     }
 
     private void layoutNodes() {
@@ -117,7 +113,7 @@ public class MainScreenView extends BorderPane  {
     void setPlayerMode() {
         if(player2Text.isEditable()) {
             Random rand = new Random();
-            int index = rand.nextInt(enemies.length - 1);
+            int index = rand.nextInt(enemies.length);
             player2Text.setText(enemies[index]);
             player2Text.setEditable(false);
         } else {
