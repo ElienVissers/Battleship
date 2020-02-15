@@ -3,6 +3,7 @@ package Battleship.view.mainscreen;
 import Battleship.view.UISettings;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
 
@@ -23,6 +24,7 @@ public class MainScreenView extends BorderPane  {
     private Label player2Label;
     private TextField player1Text;
     private TextField player2Text;
+    private Button startButton;
     private UISettings uiSettings;
 
     public MainScreenView(UISettings uiSettings) {
@@ -44,6 +46,7 @@ public class MainScreenView extends BorderPane  {
         this.player2Label = new Label("Player 2");
         this.player1Text = new TextField();
         this.player2Text = new TextField();
+        this.startButton = new Button("START");
 
     }
 
@@ -54,25 +57,35 @@ public class MainScreenView extends BorderPane  {
         MenuBar menuBar = new MenuBar(optionsM, helpM);
         setTop(menuBar);
         //CONTENT
+        //--playerbox
         VBox player1 = new VBox();
         VBox player2 = new VBox();
-        layoutVBox(player1, player1Label, player1Text);
-        layoutVBox(player2, player2Label, player2Text);
+        layoutVBox(player1, player1Label, player1Text, 20);
+        layoutVBox(player2, player2Label, player2Text, 20);
         HBox playerBox = new HBox();
         layoutHBox(playerBox, player1, player2);
-        this.setCenter(playerBox);
+        //--button
+        layoutButton(startButton);
+        //--content
+        VBox content = new VBox();
+        layoutVBox(content, playerBox, startButton, 100);
+        this.setCenter(content);
     }
 
-    private void layoutVBox(VBox box, Label label, TextField text) {
+    private void layoutVBox(VBox box, Node upper, Node lower, int spacing) {
         box.setAlignment(Pos.CENTER);
-        box.setSpacing(20);
-        box.getChildren().addAll(label, text);
+        box.setSpacing(spacing);
+        box.getChildren().addAll(upper, lower);
     }
 
     private void layoutHBox(HBox box, VBox childBox1, VBox childBox2) {
         box.getChildren().addAll(childBox1, childBox2);
         box.setAlignment(Pos.CENTER);
         box.setSpacing(200);
+    }
+
+    private void layoutButton(Button button) {
+        button.setAlignment(Pos.CENTER);
     }
 
     MenuItem getExitItem() {return exitMI;}
