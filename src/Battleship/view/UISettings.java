@@ -21,9 +21,9 @@ public class UISettings {
     private String homeDir;
     private String defaultCss = "themes02.css"; //TODO add own CSS file here
     private Path styleSheetPath = Paths.get("resources"+FILE_SEPARATOR+"stylesheets"+FILE_SEPARATOR+defaultCss);
-    private Path AboutImagePath = Paths.get("resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"ship_red_2.png"); //TODO create and put AboutIcon here
-    private Path applicationIconPath = Paths.get("resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"ship_red_2.png"); //TODO create and put ApplicationIcon here
-    private Path startScreenImagePath = Paths.get("resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"ship_red_2.png"); //TODO create and put StartScreenImage here (same as AboutIcon?)
+    private Path AboutImagePath = Paths.get("resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"ship_red_2.png"); //TODO create and put image.png here
+    private Path applicationIconPath = Paths.get("resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"ship_red_2.png"); //TODO create and put logo.png here
+    private Path startScreenImagePath = Paths.get("resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"ship_red_2.png"); //TODO create and put image.png here
     private Path infoTextPath = Paths.get("resources"+FILE_SEPARATOR+"other"+FILE_SEPARATOR+"info.txt");
 
     public UISettings() {

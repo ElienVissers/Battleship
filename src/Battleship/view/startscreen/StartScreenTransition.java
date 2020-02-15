@@ -21,6 +21,6 @@ public class StartScreenTransition extends Transition {
     protected void interpolate(double frac) {
         this.view.getTimeDisplay().setText(String.format("Loading: %.1f", frac * 100));
         this.view.getTimeProgress().setProgress(frac);
-        //TODO create animation for centralImage (from right to left on over the window
+        //TODO create animation for centralImage (from right to left on over the window)
     }
 }
