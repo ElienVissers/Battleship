@@ -42,6 +42,8 @@ public class MainScreenPresenter {
     }
 
     private void EventHandlers() {
+
+        //MENU
         view.getOptionsItem().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -83,6 +85,14 @@ public class MainScreenPresenter {
                 Stage infoScreenStage = new Stage();
                 openMenuWindow(infoScreenStage, infoScreenView, "Info"); //open INFO MENU window
             }});
+        view.getComputerPlayerCheck().setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                view.setPlayerMode();
+            }
+        });
+
+        //CONTENT
     }
 
     public void windowsHandler() {

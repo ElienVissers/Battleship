@@ -1,11 +1,12 @@
 package Battleship.view.mainscreen;
 
 import Battleship.view.UISettings;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
+
+import java.util.Random;
 
 /**
  * @author Elien Vissers-Similon
@@ -27,6 +28,9 @@ public class MainScreenView extends BorderPane  {
     private Button startButton;
     private UISettings uiSettings;
 
+    private boolean computerPlayer = false;
+    private String[] enemies = {"Yoda", "Anakin Skywalker", "Darth Vader", "Obi-Wan Kenobi", "Luke Skywalker", "Han Solo", "R2-D2", "C-3PO"};
+
     public MainScreenView(UISettings uiSettings) {
         this.uiSettings = uiSettings;
         initialiseNodes();
@@ -46,17 +50,27 @@ public class MainScreenView extends BorderPane  {
         this.player2Label = new Label("Player 2");
         this.player1Text = new TextField();
         this.player2Text = new TextField();
+        this.player1Text.setPrefWidth(150);
+        this.player2Text.setPrefWidth(150);
         this.startButton = new Button("START");
-
+        if (computerPlayerCheck.isSelected()) {
+            computerPlayer = true;
+        }
     }
 
     private void layoutNodes() {
-        //MENU
+        addMenu();
+        addContent();
+    }
+
+    private void addMenu() {
         Menu helpM = new Menu("Help",null, aboutMI, infoMI, new SeparatorMenuItem(), exitMI);
         Menu optionsM = new Menu("Options",null, computerPlayerCheck, optionsMI, new SeparatorMenuItem(), highscoresMI);
         MenuBar menuBar = new MenuBar(optionsM, helpM);
         setTop(menuBar);
-        //CONTENT
+    }
+
+    private void addContent() {
         //--playerbox
         VBox player1 = new VBox();
         VBox player2 = new VBox();
@@ -99,5 +113,18 @@ public class MainScreenView extends BorderPane  {
     MenuItem getHighscoresItem() {return highscoresMI;}
 
     MenuItem getComputerPlayerCheck() {return computerPlayerCheck;}
+
+    void setPlayerMode() {
+        if(player2Text.isEditable()) {
+            Random rand = new Random();
+            int index = rand.nextInt(enemies.length - 1);
+            player2Text.setText(enemies[index]);
+            player2Text.setEditable(false);
+        } else {
+            player2Text.setEditable(true);
+            player2Text.setText("");
+        }
+        addContent();
+    }
 
 }
