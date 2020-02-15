@@ -7,11 +7,9 @@ import javafx.util.Duration;
 public class StartScreenTransition extends Transition {
 
     private final StartScreenView view;
-    private int maxDuration;
 
-    public StartScreenTransition(StartScreenView view, int maxDuration) {
+    StartScreenTransition(StartScreenView view, int maxDuration) {
         this.view = view;
-        this.maxDuration = maxDuration;
         this.setCycleDuration(Duration.seconds(maxDuration));
         this.setCycleCount(1);
         this.setInterpolator(Interpolator.LINEAR);

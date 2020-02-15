@@ -3,7 +3,7 @@ package Battleship.view.mainscreen;
 import Battleship.model.*;
 import Battleship.view.aboutscreen.*;
 import Battleship.view.infoscreen.*;
-import Battleship.view.settingsscreen.*;
+import Battleship.view.mainoptionsscreen.*;
 import Battleship.view.UISettings;
 import javafx.event.*;
 import javafx.scene.*;
@@ -48,17 +48,17 @@ public class MainScreenPresenter {
         view.getSettingsItem().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                SettingsView settingsView = new SettingsView(uiSettings);
-                SettingsPresenter presenter = new SettingsPresenter(model, settingsView, uiSettings);
+                MainOptionsView mainOptionsView = new MainOptionsView(uiSettings);
+                MainOptionsPresenter presenter = new MainOptionsPresenter(model, mainOptionsView, uiSettings);
                 Stage settingsStage = new Stage();
                 settingsStage.setTitle("Settings");
                 settingsStage.initOwner(view.getScene().getWindow());
                 settingsStage.initModality(Modality.APPLICATION_MODAL);
-                Scene scene = new Scene(settingsView);
+                Scene scene = new Scene(mainOptionsView);
                 settingsStage.setScene(scene);
                 settingsStage.setTitle(uiSettings.getApplicationName() + " - Settings");
-                settingsStage.setX(view.getScene().getWindow().getX() + uiSettings.getResX() / 10);
-                settingsStage.setY(view.getScene().getWindow().getY() + uiSettings.getResY() / 10);
+                settingsStage.setX(view.getScene().getWindow().getX() + uiSettings.getResX() / 10.0);
+                settingsStage.setY(view.getScene().getWindow().getY() + uiSettings.getResY() / 10.0);
                 if (Files.exists(uiSettings.getApplicationIconPath())) {
                     try {
                         settingsStage.getIcons().add(new Image(uiSettings.getApplicationIconPath().toUri().toURL().toString()));
@@ -67,8 +67,8 @@ public class MainScreenPresenter {
                     }
                 } else { // do nothing, if ApplicationIconImage is not available, program can continue
                 }
-                settingsView.getScene().getWindow().setHeight(7 * uiSettings.getResY() / 10);
-                settingsView.getScene().getWindow().setWidth(7 * uiSettings.getResX() / 10);
+                mainOptionsView.getScene().getWindow().setHeight(7 * uiSettings.getResY() / 10.0);
+                mainOptionsView.getScene().getWindow().setWidth(7 * uiSettings.getResX() / 10.0);
                 if (uiSettings.styleSheetAvailable()) {
                     settingsStage.getScene().getStylesheets().removeAll();
                     try {
@@ -167,8 +167,8 @@ public class MainScreenPresenter {
                 Scene scene = new Scene(aboutScreenView);
                 aboutScreenStage.setScene(scene);
                 aboutScreenStage.setTitle(uiSettings.getApplicationName() + " - About");
-                aboutScreenStage.setX(view.getScene().getWindow().getX() + uiSettings.getResX() / 10);
-                aboutScreenStage.setY(view.getScene().getWindow().getY() + uiSettings.getResY() / 10);
+                aboutScreenStage.setX(view.getScene().getWindow().getX() + uiSettings.getResX() / 10.0);
+                aboutScreenStage.setY(view.getScene().getWindow().getY() + uiSettings.getResY() / 10.0);
                 if (Files.exists(uiSettings.getApplicationIconPath())) {
                     try {
                         aboutScreenStage.getIcons().add(new Image(uiSettings.getApplicationIconPath().toUri().toURL().toString()));
@@ -177,8 +177,8 @@ public class MainScreenPresenter {
                     }
                 } else { // do nothing, if ApplicationIconImage is not available, program can continue
                 }
-                aboutScreenView.getScene().getWindow().setHeight(uiSettings.getResY() / 2);
-                aboutScreenView.getScene().getWindow().setWidth(uiSettings.getResX() / 2);
+                aboutScreenView.getScene().getWindow().setHeight(uiSettings.getResY() / 2.0);
+                aboutScreenView.getScene().getWindow().setWidth(uiSettings.getResX() / 2.0);
                 if (uiSettings.styleSheetAvailable()) {
                     aboutScreenView.getScene().getStylesheets().removeAll();
                     try {
@@ -200,8 +200,8 @@ public class MainScreenPresenter {
                 Scene scene = new Scene(infoScreenView);
                 infoScreenStage.setScene(scene);
                 infoScreenStage.setTitle(uiSettings.getApplicationName()+ " - Info");
-                infoScreenStage.setX(view.getScene().getWindow().getX() + uiSettings.getResX() / 10);
-                infoScreenStage.setY(view.getScene().getWindow().getY() + uiSettings.getResY() / 10);
+                infoScreenStage.setX(view.getScene().getWindow().getX() + uiSettings.getResX() / 10.0);
+                infoScreenStage.setY(view.getScene().getWindow().getY() + uiSettings.getResY() / 10.0);
                 if (Files.exists(uiSettings.getApplicationIconPath())) {
                     try {
                         infoScreenStage.getIcons().add(new Image(uiSettings.getApplicationIconPath().toUri().toURL().toString()));
@@ -211,8 +211,8 @@ public class MainScreenPresenter {
                     }
                 } else { // do nothing, if ApplicationIconImage is not available, program can continue
                 }
-                infoScreenView.getScene().getWindow().setHeight(uiSettings.getResY()/2);
-                infoScreenView.getScene().getWindow().setWidth(uiSettings.getResX()/2);
+                infoScreenView.getScene().getWindow().setHeight(uiSettings.getResY()/2.0);
+                infoScreenView.getScene().getWindow().setWidth(uiSettings.getResX()/2.0);
                 if (uiSettings.styleSheetAvailable()){
                     infoScreenView.getScene().getStylesheets().removeAll();
                     try {

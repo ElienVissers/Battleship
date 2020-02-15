@@ -1,7 +1,6 @@
 package Battleship.view.startscreen;
 
 import Battleship.view.UISettings;
-import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.layout.*;
