@@ -38,7 +38,6 @@ public class StartScreenView extends VBox {
     }
 
     private void layoutNodes() {
-        //TODO layout properly (functionality OK)
         int ImageSize = uiSettings.getLowestRes()/8;
         timeProgress.setStyle("-fx-accent: red");
         if (Files.exists(uiSettings.getStartScreenImagePath())) {
