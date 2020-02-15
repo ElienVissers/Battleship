@@ -27,9 +27,9 @@ public class Game {
 
     private int turnCounter;
 
-    public Game(boolean isComputer, String ...s) {
+    public Game(boolean isComputer, String name1, String name2) {
         createGameShips();
-        createGamePlayers(isComputer, s);
+        createGamePlayers(isComputer, name1, name2);
         createGameGrids();
         date = LocalDate.now();
         turnCounter = 0;
@@ -56,16 +56,17 @@ public class Game {
     }
 
     /*create players*/
-    public void createGamePlayers(boolean isComputer, String[] s) {
+    public void createGamePlayers(boolean isComputer, String name1, String name2) {
         players = new ArrayList<>();
-        for (String name:s) {
-            Player player = new HumanPlayer(name, ships);
-            players.add(player);
-        }
+        Player player1 = new HumanPlayer(name1, ships);
+        Player player2;
         if (isComputer) {
-            Player player = new ComputerPlayer(ships);
-            players.add(player);
+            player2 = new ComputerPlayer(name2, ships);
+        } else {
+            player2 = new HumanPlayer(name2, ships);
         }
+        players.add(player1);
+        players.add(player2);
         activePlayer = players.get(0);
         passivePlayer = players.get(1);
     }

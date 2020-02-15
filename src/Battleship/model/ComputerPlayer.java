@@ -17,8 +17,8 @@ public class ComputerPlayer extends Player {
     private String name;
     private List<Ship> ships;
 
-    public ComputerPlayer(List<Ship> ships) {
-        this.name = "computer";
+    public ComputerPlayer(String name, List<Ship> ships) {
+        this.name = name;
         this.ships = ships;
     }
 

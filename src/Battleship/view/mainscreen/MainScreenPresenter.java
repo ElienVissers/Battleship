@@ -56,7 +56,7 @@ public class MainScreenPresenter {
         view.getHighscoresItem().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                //TODO load highscores from file
+                //TODO load highscores from file (LATER, geen prioriteit)
                 HighscoresScreenView highscoresScreenView = new HighscoresScreenView(uiSettings);
                 HighscoresScreenPresenter highscoresScreenPresenter = new HighscoresScreenPresenter(model, highscoresScreenView, uiSettings);
                 Stage highscoresStage = new Stage();
@@ -93,6 +93,21 @@ public class MainScreenPresenter {
         });
 
         //CONTENT
+        view.getStartButton().setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                model.start(view.isComputer(), view.getPlayer1Text().getText(), view.getPlayer2Text().getText());
+                /*
+                    TODO
+                     1. "van scherm A naar scherm B in bestaande Stage", zie ppt.
+                     2. wegwerken van de "infinite wait"-situatie die er nu is...
+                            = waarschijnlijk aanpassing maken in de BattleshipModel-klasse;
+                            dit is nu geen "main-methode" meer, krijgt geen input meer van command line,
+                            maar hij wacht nog steeds op input ("which cell do you want to target?"),
+                            zonder dat er nu input gegeven kan worden...
+                            DUS: BattleshipModel herschrijven? Kijken naar de voorbeeldprojecten? Hoe is het "model" daar opgebouwd?
+                 */
+            }});
     }
 
     public void windowsHandler() {

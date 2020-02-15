@@ -13,10 +13,9 @@ public class BattleshipModel {
 
     private static boolean gameRuns = true;
 
-    public static void main(String[] args) {
+    public static void start(Boolean playerMode, String name1, String name2) {
         System.out.println("Run Zeeslag App.");
-        //TODO Add a function to get player names and check if computer needs to play
-        Game currentGame = new Game(false, args); //possible game extension: play against a computer player
+        Game currentGame = new Game(playerMode, name1, name2);
 
         currentGame.prepareGrids();
         while (gameRuns) {
