@@ -6,7 +6,7 @@
 * {
     -fx-font-family: 'Chaparral Pro';
     -fx-text-fill: ivory;
-    -fx-my-menu-color: darkgrey;                /* variable */
+    -fx-my-menu-color: grey;                /* variable */
     -fx-my-menu-color-highlighted: lightgrey;   /* variable */
     -fx-my-menu-font-color: black;              /* variable */
     -fx-my-menu-font-color-highlighted: black;  /* variable */
@@ -99,14 +99,14 @@
     -fx-background-radius: 0;
     -fx-background-color: transparent;
     -fx-font-size: 15;
-    -fx-border-color: darkgrey;
+    -fx-border-color: ivory;
+    -fx-text-fill: ivory;
     -fx-border-width: 1;
     -fx-border-radius: 0;
 }
 
 .button:hover {
-    -fx-background-color: darkgrey;
-    -fx-text-fill: ivory;
+    -fx-background-color: grey;
     -fx-cursor: hand;
 }
 

@@ -40,6 +40,10 @@ public class StartScreenView extends VBox {
         int ImageSize = uiSettings.getLowestRes()/2;
         timeProgress.setStyle("-fx-accent: #2D2D2D");
         timeDisplay.setStyle("-fx-text-fill: ivory;");
+        VBox time = new VBox();
+        time.getChildren().addAll(timeDisplay, timeProgress);
+        time.setAlignment(Pos.CENTER);
+        time.setSpacing(10);
         if (Files.exists(uiSettings.getStartScreenImagePath())) {
             try {
                 centralImage = new ImageView(new Image(uiSettings.getStartScreenImagePath().toUri().toURL().toString()));
@@ -52,8 +56,8 @@ public class StartScreenView extends VBox {
                 // do nothing, if toURL-conversion fails, program can continue
             }
         }
-        this.getChildren().addAll(centralImage, timeDisplay, timeProgress);
-        this.setSpacing(10);
+        this.getChildren().addAll(centralImage, time);
+        this.setSpacing(60);
         this.setAlignment(Pos.CENTER);
     }
 

@@ -32,7 +32,7 @@ public class Main extends Application {
             }
         }
         primaryStage.setScene(scene);
-        primaryStage.setHeight(uiSettings.getLowestRes() /2.5);
+        primaryStage.setHeight(uiSettings.getLowestRes() /2.0);
         primaryStage.setWidth(uiSettings.getLowestRes() /1.5);
         primaryStage.setTitle(uiSettings.getApplicationName());
         if (Files.exists(uiSettings.getApplicationIconPath())) {

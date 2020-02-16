@@ -107,7 +107,7 @@ public class PrepareGameScreenPresenter {
                 if (label.equals(selectedLabel)) {
                     t.consume();
                 } else {
-                    label.setStyle("-fx-background-color:darkgrey;");
+                    label.setStyle("-fx-background-color:grey;");
                 }
             }
         });
@@ -132,7 +132,7 @@ public class PrepareGameScreenPresenter {
                 view.getShipLabel3().setStyle("-fx-background-color:#2D2D2D;");
                 view.getShipLabel4().setStyle("-fx-background-color:#2D2D2D;");
                 view.getShipLabel5().setStyle("-fx-background-color:#2D2D2D;");
-                label.setStyle("-fx-background-color:darkgrey;");
+                label.setStyle("-fx-background-color:grey;");
             }
         });
     }
