@@ -3,10 +3,7 @@ package Battleship.view.preparegamescreen;
 import Battleship.view.UISettings;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 
 /**
  * @author Elien Vissers-Similon
@@ -48,7 +45,7 @@ public class PrepareGameScreenView extends BorderPane {
 
     private void layoutCenter() {
         HBox content = new HBox();
-        content.getChildren().addAll(createShipBox());
+        content.getChildren().addAll(createShipBox(), createGridPane());
         this.setCenter(content);
     }
 
@@ -65,6 +62,21 @@ public class PrepareGameScreenView extends BorderPane {
 
     private void layoutShipLabel(Label label) {
         label.setContentDisplay(ContentDisplay.RIGHT);
+    }
+
+    private GridPane createGridPane() {
+        GridPane grid = new GridPane();
+        //TODO get gridsize from Presenter (< Model)...
+        for (int i = 0; i < 10; i++) {
+            ColumnConstraints column = new ColumnConstraints(50);
+            grid.getColumnConstraints().add(column);
+        }
+        for (int i = 0; i < 10; i++) {
+            RowConstraints row = new RowConstraints(50);
+            grid.getRowConstraints().add(row);
+        }
+        grid.setGridLinesVisible(true);
+        return grid;
     }
 
     Label getActivePlayerLabel() {
