@@ -56,6 +56,11 @@ public class PrepareGameScreenPresenter {
 
     private void setActivePlayerName() {
         view.getActivePlayerLabel().setText("Prepare you fleet for battle, " + model.getActivePlayerName());
+        if (model.getActivePlayerColor().equals("red")) {
+            view.getActivePlayerLabel().setStyle("-fx-text-fill: #983C32; -fx-font-size: 20;");
+        } else if (model.getActivePlayerColor().equals("blue")) {
+            view.getActivePlayerLabel().setStyle("-fx-text-fill: #36589B; -fx-font-size: 20;");
+        }
     }
 
     private int[] loadCounters() {
@@ -96,7 +101,6 @@ public class PrepareGameScreenPresenter {
     */
 
     private void addHoverHandlers(Label label) {
-        //TODO: link to CSS?
         label.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent t) {
@@ -113,23 +117,22 @@ public class PrepareGameScreenPresenter {
                 if (label.equals(selectedLabel)) {
                     t.consume();
                 } else {
-                    label.setStyle("-fx-background-color:lightgrey;");
+                    label.setStyle("-fx-background-color:#2D2D2D;");
                 }
             }
         });
     }
 
     private void addClickHandler(Label label) {
-        //TODO: link to CSS?
         label.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent t) {
                 selectedLabel = label;
-                view.getShipLabel2().setStyle("-fx-background-color:lightgrey;");
-                view.getShipLabel3().setStyle("-fx-background-color:lightgrey;");
-                view.getShipLabel4().setStyle("-fx-background-color:lightgrey;");
-                view.getShipLabel5().setStyle("-fx-background-color:lightgrey;");
-                label.setStyle("-fx-background-color:firebrick;");
+                view.getShipLabel2().setStyle("-fx-background-color:#2D2D2D;");
+                view.getShipLabel3().setStyle("-fx-background-color:#2D2D2D;");
+                view.getShipLabel4().setStyle("-fx-background-color:#2D2D2D;");
+                view.getShipLabel5().setStyle("-fx-background-color:#2D2D2D;");
+                label.setStyle("-fx-background-color:darkgrey;");
             }
         });
     }

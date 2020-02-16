@@ -23,11 +23,11 @@ public class UISettings {
     public static final char FILE_SEPARATOR = System.getProperties().getProperty("file.separator").charAt(0);
     private String ApplicationName;
     private String homeDir;
-    private String defaultCss = "themes02.css"; //TODO add own CSS file here
+    private String defaultCss = "battleship_standard.css";
     private Path styleSheetPath = Paths.get("resources"+FILE_SEPARATOR+"stylesheets"+FILE_SEPARATOR+defaultCss);
-    private Path AboutImagePath = Paths.get("resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"ship_red_2.png"); //TODO create and put image.png here
-    private Path applicationIconPath = Paths.get("resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"ship_red_2.png"); //TODO create and put logo.png here
-    private Path startScreenImagePath = Paths.get("resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"ship_red_2.png"); //TODO create and put image.png here
+    private Path AboutImagePath = Paths.get("resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"ApplicationImage.gif");
+    private Path applicationIconPath = Paths.get("resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"ApplicationLogo.png");
+    private Path startScreenImagePath = Paths.get("resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"ApplicationImage.gif");
     private Path infoTextPath = Paths.get("resources"+FILE_SEPARATOR+"other"+FILE_SEPARATOR+"info.txt");
 
     public UISettings() {
