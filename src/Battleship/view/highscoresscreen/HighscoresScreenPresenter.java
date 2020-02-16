@@ -2,18 +2,9 @@ package Battleship.view.highscoresscreen;
 
 import Battleship.model.BattleshipModel;
 import Battleship.view.UISettings;
-import Battleship.view.mainoptionsscreen.MainOptionsScreenView;
-import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.scene.input.MouseEvent;
-import javafx.stage.FileChooser;
 import javafx.stage.WindowEvent;
-
-import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.nio.file.Paths;
 
 /**
  * @author Elien Vissers-Similon

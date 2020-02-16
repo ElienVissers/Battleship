@@ -1,7 +1,6 @@
 package Battleship.view.aboutscreen;
 
 import Battleship.model.BattleshipModel;
-import Battleship.model.*;
 import Battleship.view.UISettings;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
