@@ -46,6 +46,7 @@ public class MainScreenPresenter {
         view.getStartButton().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                //TODO throw exception (or consume event, create Alert,...?) when one or two names are empty Strings!
                 model.startGame(view.isComputer(), view.getPlayer1Text().getText(), view.getPlayer2Text().getText());
                 PrepareGameScreenView prepareGameScreenView = new PrepareGameScreenView(uiSettings);
                 PrepareGameScreenPresenter prepareGameScreenpresenter = new PrepareGameScreenPresenter(model, prepareGameScreenView, uiSettings);

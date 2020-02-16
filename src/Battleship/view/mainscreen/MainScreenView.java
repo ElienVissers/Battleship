@@ -31,6 +31,9 @@ public class MainScreenView extends BorderPane  {
     private String[] enemies = {"Yoda", "Anakin Skywalker", "Darth Vader", "Obi-Wan Kenobi", "Luke Skywalker", "Han Solo", "R2-D2", "C-3PO"};
     private Boolean isComputer = false;
 
+    //TODO add animation: ships flying accros the screen?
+    //TODO add animation: transition to black screen after pressing startButton?
+
     public MainScreenView(UISettings uiSettings) {
         this.uiSettings = uiSettings;
         initialiseNodes();
