@@ -47,7 +47,7 @@ public class HumanPlayer extends Player {
         List<Square> list = new ArrayList<>();
         list.add(new Square("A3"));
         list.add(new Square("A4"));
-        testMap.put(Ship.ROWBOAT, list);
+        testMap.put(Ship.STARFIGHTER, list);
         return testMap;
     }
 

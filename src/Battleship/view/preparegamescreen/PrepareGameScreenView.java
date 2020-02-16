@@ -1,8 +1,12 @@
 package Battleship.view.preparegamescreen;
 
 import Battleship.view.UISettings;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 /**
  * @author Elien Vissers-Similon
@@ -10,6 +14,11 @@ import javafx.scene.layout.BorderPane;
  */
 public class PrepareGameScreenView extends BorderPane {
 
+    private Label activePlayerLabel;
+    private Label shipLabel2;
+    private Label shipLabel3;
+    private Label shipLabel4;
+    private Label shipLabel5;
     private UISettings uiSettings;
 
     public PrepareGameScreenView(UISettings uiSettings) {
@@ -19,9 +28,62 @@ public class PrepareGameScreenView extends BorderPane {
     }
 
     private void initialiseNodes() {
+        this.activePlayerLabel = new Label();
+        this.shipLabel2 = new Label();
+        this.shipLabel3 = new Label();
+        this.shipLabel4 = new Label();
+        this.shipLabel5 = new Label();
     }
 
     private void layoutNodes() {
+        layoutTop();
+        layoutCenter();
     }
 
+    private void layoutTop() {
+        activePlayerLabel.setPrefHeight(200);
+        this.setTop(activePlayerLabel);
+        this.setAlignment(activePlayerLabel, Pos.CENTER);
+    }
+
+    private void layoutCenter() {
+        HBox content = new HBox();
+        content.getChildren().addAll(createShipBox());
+        this.setCenter(content);
+    }
+
+    private VBox createShipBox() {
+        VBox shipBox = new VBox();
+        layoutShipLabel(shipLabel2);
+        layoutShipLabel(shipLabel3);
+        layoutShipLabel(shipLabel4);
+        layoutShipLabel(shipLabel5);
+        shipBox.getChildren().addAll(shipLabel2, shipLabel3, shipLabel4, shipLabel5);
+        shipBox.setSpacing(50);
+        return shipBox;
+    }
+
+    private void layoutShipLabel(Label label) {
+        label.setContentDisplay(ContentDisplay.RIGHT);
+    }
+
+    Label getActivePlayerLabel() {
+        return activePlayerLabel;
+    }
+
+    Label getShipLabel2() {
+        return shipLabel2;
+    }
+
+    Label getShipLabel3() {
+        return shipLabel3;
+    }
+
+    Label getShipLabel4() {
+        return shipLabel4;
+    }
+
+    Label getShipLabel5() {
+        return shipLabel5;
+    }
 }

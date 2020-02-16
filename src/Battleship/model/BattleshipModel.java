@@ -19,6 +19,8 @@ public class BattleshipModel {
     private List<Player> players;
     private Player activePlayer;
     private Player passivePlayer;
+    private int activeIndex;
+    int[] availableShips = new int[NUMBER_OF_SHIPS];
     private List<Ship> ships;
     private Map<Player, GameBoard> grids;
 
@@ -39,7 +41,6 @@ public class BattleshipModel {
 
     /*create ships*/
     public void createGameShips() {
-        int[] availableShips = new int[NUMBER_OF_SHIPS];
         for (int i = 0; i < NUMBER_OF_SHIPS; i++) {
             availableShips[i] = rand.nextInt(4) + 2;
         }
@@ -47,10 +48,10 @@ public class BattleshipModel {
         for (int size: availableShips) {
             Ship ship;
             switch (size) {
-                case 2: ship = Ship.ROWBOAT; break;
-                case 3: ship = Ship.MOTORBOAT; break;
-                case 4: ship = Ship.CATAMARAN; break;
-                case 5: ship = Ship.HOUSEBOAT; break;
+                case 2: ship = Ship.STARFIGHTER; break;
+                case 3: ship = Ship.STARDISCOVERER; break;
+                case 4: ship = Ship.STARDESTROYER; break;
+                case 5: ship = Ship.STARCRUISER; break;
                 default: ship = null;
             }
             ships.add(ship);
@@ -71,6 +72,7 @@ public class BattleshipModel {
         players.add(player2);
         activePlayer = players.get(0);
         passivePlayer = players.get(1);
+        activeIndex = 0;
     }
 
     /*create grids*/
@@ -127,9 +129,11 @@ public class BattleshipModel {
         if (activePlayer.equals(players.get(0))) {
             activePlayer = players.get(1);
             passivePlayer = players.get(0);
+            activeIndex = 1;
         } else if (activePlayer.equals(players.get(1))) {
             activePlayer = players.get(0);
             passivePlayer = players.get(1);
+            activeIndex = 0;
         }
         System.out.println("It's " + activePlayer.getName() + "'s turn now.");
     }
@@ -140,5 +144,23 @@ public class BattleshipModel {
         System.out.println("In-game message congratulates winning player " + activePlayer.getName());
         System.out.println("Write away name of the winning player, the date and the amount of turns");
         System.out.println("Close the game.");
+    }
+
+    public String getActivePlayerName() {
+        return activePlayer.getName();
+    }
+
+    public String getActivePlayerColor() {
+        String color = "";
+        if (activeIndex == 0) {
+            color = "red";
+        } else if (activeIndex ==1) {
+            color = "blue";
+        }
+        return color;
+    }
+
+    public int[] getAvailableShips() {
+        return availableShips;
     }
 }

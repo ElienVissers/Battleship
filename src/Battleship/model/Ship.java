@@ -8,7 +8,7 @@ package Battleship.model;
  */
 
 public enum Ship {
-    ROWBOAT(2), MOTORBOAT(3), CATAMARAN(4), HOUSEBOAT(5);
+    STARFIGHTER(2), STARDISCOVERER(3), STARDESTROYER(4), STARCRUISER(5);
 
     private int size;
 
