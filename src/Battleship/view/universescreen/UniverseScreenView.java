@@ -1,4 +1,4 @@
-package Battleship.view.mainoptionsscreen;
+package Battleship.view.universescreen;
 
 import Battleship.view.UISettings;
 import javafx.geometry.Insets;
@@ -6,7 +6,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 
-public class MainOptionsScreenView extends BorderPane  {
+public class UniverseScreenView extends BorderPane  {
 
     private UISettings uiSettings;
     private MenuItem exitMI;
@@ -14,7 +14,7 @@ public class MainOptionsScreenView extends BorderPane  {
     private Button cssButton;
     private Button okButton;
 
-    public MainOptionsScreenView(UISettings uiSettings) {
+    public UniverseScreenView(UISettings uiSettings) {
         this.uiSettings = uiSettings;
         initialiseNodes();
         layoutNodes();

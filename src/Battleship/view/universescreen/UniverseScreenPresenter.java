@@ -1,4 +1,4 @@
-package Battleship.view.mainoptionsscreen;
+package Battleship.view.universescreen;
 
 import Battleship.model.*;
 import Battleship.view.UISettings;
@@ -12,13 +12,13 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.nio.file.Paths;
 
-public class MainOptionsScreenPresenter {
+public class UniverseScreenPresenter {
 
     private BattleshipModel model;
-    private MainOptionsScreenView view;
+    private UniverseScreenView view;
     private UISettings uiSettings;
 
-    public MainOptionsScreenPresenter(BattleshipModel model, MainOptionsScreenView view, UISettings uiSettings) {
+    public UniverseScreenPresenter(BattleshipModel model, UniverseScreenView view, UISettings uiSettings) {
         this.model = model;
         this.view = view;
         this.uiSettings = uiSettings;

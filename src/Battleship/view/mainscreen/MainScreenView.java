@@ -46,7 +46,7 @@ public class MainScreenView extends BorderPane  {
         this.infoMI = new MenuItem("Info");
         this.exitMI = new MenuItem("Exit");
         this.computerPlayerCheck = new CheckMenuItem("Virtual opponent");
-        this.optionsMI = new MenuItem("Options");
+        this.optionsMI = new MenuItem("Universe settings");
         this.highscoresMI = new MenuItem("Highscores");
         //CONTENT
         this.player1Label = new Label("Player 1");

@@ -5,7 +5,7 @@ import Battleship.view.aboutscreen.*;
 import Battleship.view.highscoresscreen.HighscoresScreenView;
 import Battleship.view.highscoresscreen.HighscoresScreenPresenter;
 import Battleship.view.infoscreen.*;
-import Battleship.view.mainoptionsscreen.*;
+import Battleship.view.universescreen.*;
 import Battleship.view.UISettings;
 import Battleship.view.preparegamescreen.PrepareGameScreenPresenter;
 import Battleship.view.preparegamescreen.PrepareGameScreenView;
@@ -59,11 +59,11 @@ public class MainScreenPresenter {
         view.getOptionsItem().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                MainOptionsScreenView mainOptionsScreenView = new MainOptionsScreenView(uiSettings);
-                MainOptionsScreenPresenter mainOptionsScreenPresenter = new MainOptionsScreenPresenter(model, mainOptionsScreenView, uiSettings);
+                UniverseScreenView universeScreenView = new UniverseScreenView(uiSettings);
+                UniverseScreenPresenter universeScreenPresenter = new UniverseScreenPresenter(model, universeScreenView, uiSettings);
                 Stage mainOptionsStage = new Stage();
-                openMenuWindow(mainOptionsStage, mainOptionsScreenView, "Options"); //open OPTIONS MENU window
-                mainOptionsScreenPresenter.windowsHandler();
+                openMenuWindow(mainOptionsStage, universeScreenView, "Universe settings"); //open UNIVERSE SETTINGS MENU window
+                universeScreenPresenter.windowsHandler();
             }
         });
         view.getHighscoresItem().setOnAction(new EventHandler<ActionEvent>() {
