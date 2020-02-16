@@ -33,10 +33,7 @@ public class HighscoresScreenPresenter {
     public void windowsHandler() {
         view.getScene().getWindow().setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
-            public void handle(WindowEvent event) {handleCloseEvent(event);}});
+            public void handle(WindowEvent event) {view.getScene().getWindow().hide();}});
     }
 
-    private void handleCloseEvent(Event event){
-        view.getScene().getWindow().hide();
-    }
 }

@@ -1,5 +1,9 @@
 package Battleship.view;
 
+import javafx.event.Event;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.stage.Screen;
 
 import java.nio.file.Files;
@@ -59,4 +63,21 @@ public class UISettings {
     public Path getInfoTextPath () {return this.infoTextPath;}
 
     public String getApplicationName () {return this.ApplicationName;}
+
+    public static void getCloseAlert(Event event, Scene scene) {
+        final Alert stopWindow = new Alert(Alert.AlertType.CONFIRMATION);
+        stopWindow.setHeaderText("You're closing the application.");
+        stopWindow.setContentText("Are you sure? Unsaved data may be lost.");
+        stopWindow.setTitle("WARNING!");
+        stopWindow.getButtonTypes().clear();
+        ButtonType noButton = new ButtonType("No");
+        ButtonType yesButton = new ButtonType("Yes");
+        stopWindow.getButtonTypes().addAll(yesButton, noButton);
+        stopWindow.showAndWait();
+        if (stopWindow.getResult() == null || stopWindow.getResult().equals(noButton)) {
+            event.consume();
+        } else {
+            scene.getWindow().hide();
+        }
+    }
 }

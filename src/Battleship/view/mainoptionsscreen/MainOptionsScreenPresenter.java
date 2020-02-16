@@ -32,7 +32,7 @@ public class MainOptionsScreenPresenter {
     private void EventHandlers() {
         view.getExitItem().setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle(ActionEvent event) {handleCloseEvent(event);}});
+            public void handle(ActionEvent event) {UISettings.getCloseAlert(event, view.getScene()); }});
         view.getCssButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -59,7 +59,7 @@ public class MainOptionsScreenPresenter {
         });
         view.getOkButton().setOnMouseClicked(new EventHandler<MouseEvent>()  {
             @Override
-            public void handle(MouseEvent event) { handleCloseEvent(event);
+            public void handle(MouseEvent event) { UISettings.getCloseAlert(event, view.getScene());
             }
         });
     }
@@ -67,10 +67,7 @@ public class MainOptionsScreenPresenter {
     public void windowsHandler() {
         view.getScene().getWindow().setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
-            public void handle(WindowEvent event) {handleCloseEvent(event);}});
-    }
-
-    private void handleCloseEvent(Event event){
-        view.getScene().getWindow().hide();
+            public void handle(WindowEvent event) {
+                UISettings.getCloseAlert(event, view.getScene()); }});
     }
 }

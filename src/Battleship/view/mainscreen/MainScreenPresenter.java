@@ -11,8 +11,6 @@ import Battleship.view.preparegamescreen.PrepareGameScreenPresenter;
 import Battleship.view.preparegamescreen.PrepareGameScreenView;
 import javafx.event.*;
 import javafx.scene.*;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -64,6 +62,7 @@ public class MainScreenPresenter {
                 MainOptionsScreenPresenter mainOptionsScreenPresenter = new MainOptionsScreenPresenter(model, mainOptionsScreenView, uiSettings);
                 Stage mainOptionsStage = new Stage();
                 openMenuWindow(mainOptionsStage, mainOptionsScreenView, "Options"); //open OPTIONS MENU window
+                mainOptionsScreenPresenter.windowsHandler();
             }
         });
         view.getHighscoresItem().setOnAction(new EventHandler<ActionEvent>() {
@@ -74,12 +73,13 @@ public class MainScreenPresenter {
                 HighscoresScreenPresenter highscoresScreenPresenter = new HighscoresScreenPresenter(model, highscoresScreenView, uiSettings);
                 Stage highscoresStage = new Stage();
                 openMenuWindow(highscoresStage, highscoresScreenView, "Highscores"); //open HIGHSCORES MENU window
+                highscoresScreenPresenter.windowsHandler();
             }
         });
         view.getExitItem().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                handleCloseEvent(event);
+                UISettings.getCloseAlert(event, view.getScene());
             }
         });
         view.getAboutItem().setOnAction(new EventHandler<ActionEvent>() {
@@ -109,7 +109,7 @@ public class MainScreenPresenter {
     public void windowsHandler() {
         view.getScene().getWindow().setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
-            public void handle(WindowEvent event) { handleCloseEvent(event); }});
+            public void handle(WindowEvent event) { UISettings.getCloseAlert(event, view.getScene()); }});
     }
 
     private void openMenuWindow(Stage stage, Parent newView, String name) {
@@ -137,23 +137,6 @@ public class MainScreenPresenter {
             }
         }
         stage.showAndWait();
-    }
-
-    private void handleCloseEvent(Event event){
-        final Alert stopWindow = new Alert(Alert.AlertType.CONFIRMATION);
-        stopWindow.setHeaderText("You're closing the application.");
-        stopWindow.setContentText("Are you sure? Unsaved data may be lost.");
-        stopWindow.setTitle("WARNING!");
-        stopWindow.getButtonTypes().clear();
-        ButtonType noButton = new ButtonType("No");
-        ButtonType yesButton = new ButtonType("Yes");
-        stopWindow.getButtonTypes().addAll(yesButton, noButton);
-        stopWindow.showAndWait();
-        if (stopWindow.getResult() == null || stopWindow.getResult().equals(noButton)) {
-            event.consume();
-        } else {
-            view.getScene().getWindow().hide();
-        }
     }
 
 }
