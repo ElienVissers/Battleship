@@ -149,35 +149,30 @@ public class PrepareGameScreenPresenter {
 
     private void addCellHoverHandler() {
         for (Node targetNode : view.getGrid().getChildren()) {
-            //ATTENTION: the gridlines are also a child... this sets a null value at the Integer targetIndex
-            //SOLUTION: filter out the null values with additional if-clauses
             Integer targetColumnIndex = GridPane.getColumnIndex(targetNode);
             Integer targetRowIndex = GridPane.getRowIndex(targetNode);
-            if (targetColumnIndex != null && targetRowIndex != null) {
-                targetNode.setOnMouseEntered(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent t) {
-                        for (Node n : view.getGrid().getChildren()) {
-                            //TODO highlight based on shipsize
-                            Integer columnIndex = GridPane.getColumnIndex(n);
-                            Integer rowIndex = GridPane.getRowIndex(n);
-                            if (columnIndex != null && rowIndex != null) {
-                                if (columnIndex == targetColumnIndex && rowIndex == targetRowIndex) {
-                                    n.getStyleClass().add("grid-pane-selected");
-                                }
-                            }
+            targetNode.setOnMouseEntered(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent t) {
+                    for (Node n : view.getGrid().getChildren()) {
+                        //TODO highlight based on shipsize
+                        Integer columnIndex = GridPane.getColumnIndex(n);
+                        Integer rowIndex = GridPane.getRowIndex(n);
+                        if (columnIndex == targetColumnIndex && rowIndex == targetRowIndex) {
+                            n.getStyleClass().add("grid-pane-selected");
                         }
                     }
-                });
-                targetNode.setOnMouseExited(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent t) {
-                        for (Node n : view.getGrid().getChildren()) {
-                            n.getStyleClass().remove("grid-pane-selected");
-                        }
+                }
+            });
+            targetNode.setOnMouseExited(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent t) {
+                    for (Node n : view.getGrid().getChildren()) {
+                        n.getStyleClass().remove("grid-pane-selected");
                     }
-                });
-            }
+                }
+            });
+
         }
     }
 
