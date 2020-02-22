@@ -17,6 +17,7 @@ import javafx.stage.WindowEvent;
  * @author Elien Vissers-Similon
  * @version 1.0 15.02.2020 17:54
  */
+
 public class PrepareGameScreenPresenter {
 
     private BattleshipModel model;
@@ -24,11 +25,20 @@ public class PrepareGameScreenPresenter {
     private UISettings uiSettings;
 
     private Label selectedLabel;
+    private Label[] shipLabels;
 
     public PrepareGameScreenPresenter(BattleshipModel model, PrepareGameScreenView view, UISettings uiSettings) {
         this.model = model;
         this.view = view;
         this.uiSettings = uiSettings;
+
+        this.selectedLabel = new Label();
+        this.shipLabels = new Label[4];
+        this.shipLabels[0] = view.getShipLabel2();
+        this.shipLabels[1] = view.getShipLabel3();
+        this.shipLabels[2] = view.getShipLabel4();
+        this.shipLabels[3] = view.getShipLabel5();
+
         updateView();
         EventHandlers();
     }
@@ -55,10 +65,9 @@ public class PrepareGameScreenPresenter {
 
 
     private void EventHandlers() {
-        addClickHandler(view.getShipLabel2());
-        addClickHandler(view.getShipLabel3());
-        addClickHandler(view.getShipLabel4());
-        addClickHandler(view.getShipLabel5());
+        for (Label shipLabel : shipLabels) {
+            addSelectShipHandler(shipLabel);
+        }
         addCellHoverHandler();
     }
 
@@ -133,15 +142,14 @@ public class PrepareGameScreenPresenter {
     }
     */
 
-    private void addClickHandler(Label label) {
+    private void addSelectShipHandler(Label label) {
         label.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent t) {
                 selectedLabel = label;
-                view.getShipLabel2().getStyleClass().remove("ship-label-selected");
-                view.getShipLabel3().getStyleClass().remove("ship-label-selected");
-                view.getShipLabel4().getStyleClass().remove("ship-label-selected");
-                view.getShipLabel5().getStyleClass().remove("ship-label-selected");
+                for (Label shipLabel : shipLabels) {
+                    shipLabel.getStyleClass().remove("ship-label-selected");
+                }
                 label.getStyleClass().add("ship-label-selected");
             }
         });
@@ -175,5 +183,4 @@ public class PrepareGameScreenPresenter {
 
         }
     }
-
 }
