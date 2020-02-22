@@ -22,8 +22,8 @@ public class BattleshipModel {
     private int activeIndex;
     int[] availableShips = new int[NUMBER_OF_SHIPS];
     private List<Ship> ships;
-    private Map<Player, GameBoard> grids;
-
+    private Map<Player, GameBoard> gameboards;
+    
     private LocalDate date;
     private String winner;
 
@@ -37,10 +37,11 @@ public class BattleshipModel {
     public void startGame(Boolean isComputer, String name1, String name2) {
         createGameShips();
         createGamePlayers(isComputer, name1, name2);
+        createGameGrids();
     }
 
     /*create ships*/
-    public void createGameShips() {
+    private void createGameShips() {
         for (int i = 0; i < NUMBER_OF_SHIPS; i++) {
             availableShips[i] = rand.nextInt(4) + 2;
         }
@@ -59,14 +60,14 @@ public class BattleshipModel {
     }
 
     /*create players*/
-    public void createGamePlayers(boolean isComputer, String name1, String name2) {
+    private void createGamePlayers(boolean isComputer, String name1, String name2) {
         players = new ArrayList<>();
-        Player player1 = new HumanPlayer(name1, ships);
+        Player player1 = new HumanPlayer(name1, "red");
         Player player2;
         if (isComputer) {
-            player2 = new ComputerPlayer(name2, ships);
+            player2 = new ComputerPlayer(name2, "blue");
         } else {
-            player2 = new HumanPlayer(name2, ships);
+            player2 = new HumanPlayer(name2, "blue");
         }
         players.add(player1);
         players.add(player2);
@@ -75,37 +76,32 @@ public class BattleshipModel {
         activeIndex = 0;
     }
 
-    /*create grids*/
-    public void createGameGrids() {
-        grids = new HashMap<>();
+    /*create gameboards*/
+    private void createGameGrids() {
+        gameboards = new HashMap<>();
         for (Player player:players) {
-            grids.put(player, new GameBoard(GRIDSIZE));
+            gameboards.put(player, new GameBoard(GRIDSIZE));
         }
     }
 
     /*allows every player to position ships on the map*/
-    public void prepareGrids() {
-        for (Player ignored : players) {
-            grids.get(activePlayer).addShips(activePlayer.positionShips());
-            togglePlayer();
-        }
+    public void prepareGrids(Map<Ship, List<Square>> shipMap) {
+        gameboards.get(activePlayer).addShips(shipMap);
+        togglePlayer();
     }
 
     /*the active player plays his/her turn*/
     public void activePlayerPlays() {
         Square targetSquare = activePlayer.fireRocket();
-        while (grids.get(passivePlayer).hasBeenTargeted(targetSquare)) {
-            //TODO Java FX GUI
+        while (gameboards.get(passivePlayer).hasBeenTargeted(targetSquare)) {
             System.out.println("This cell (" + targetSquare.getCoordinates() + ") has already been targeted.");
             targetSquare = activePlayer.fireRocket();
         }
-        if (!grids.get(passivePlayer).hasBeenTargeted(targetSquare)) {
-            if (grids.get(passivePlayer).hitOrMiss(targetSquare)) {
-                //TODO Java FX GUI
+        if (!gameboards.get(passivePlayer).hasBeenTargeted(targetSquare)) {
+            if (gameboards.get(passivePlayer).hitOrMiss(targetSquare)) {
                 System.out.println("HIT!");
-                grids.get(passivePlayer).hasSunken(targetSquare);
+                gameboards.get(passivePlayer).hasSunken(targetSquare);
             } else {
-                //TODO Java FX GUI
                 System.out.println("MISS!");
             }
         }
@@ -114,11 +110,7 @@ public class BattleshipModel {
 
     /*check if the game is over*/
     public boolean isGameOver() {
-        if (grids.get(passivePlayer).getSinkCounter() == NUMBER_OF_SHIPS) {
-            return true;
-        }
-        //FIXME remove this test if-block when positionShips() is OK
-        if (grids.get(passivePlayer).getSinkCounter() == 1) {
+        if (gameboards.get(passivePlayer).getSinkCounter() == NUMBER_OF_SHIPS) {
             return true;
         }
         return false;
@@ -138,26 +130,19 @@ public class BattleshipModel {
         System.out.println("It's " + activePlayer.getName() + "'s turn now.");
     }
 
-    /*the game ends*/
-    //TODO
+    /*TODO : the game ends*/
     public void endGame() {
         System.out.println("In-game message congratulates winning player " + activePlayer.getName());
         System.out.println("Write away name of the winning player, the date and the amount of turns");
         System.out.println("Close the game.");
     }
 
-    public String getActivePlayerName() {
-        return activePlayer.getName();
+    public Player getActivePlayer() {
+        return activePlayer;
     }
 
-    public String getActivePlayerColor() {
-        String color = "";
-        if (activeIndex == 0) {
-            color = "red";
-        } else if (activeIndex ==1) {
-            color = "blue";
-        }
-        return color;
+    public GameBoard getActivePlayerBoard() {
+        return gameboards.get(activePlayer);
     }
 
     public int[] getAvailableShips() {

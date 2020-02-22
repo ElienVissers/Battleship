@@ -11,7 +11,10 @@ import java.util.Map;
  */
 
 public abstract class Player {
-    abstract Map<Ship, List<Square>> positionShips();
-    abstract Square fireRocket();
-    abstract String getName();
+    public abstract void positionShip();
+    public abstract Square fireRocket();
+    public abstract String getName();
+    public abstract String getColor();
+
+    public abstract Map<Ship, List<Square>> getShipMap();
 }

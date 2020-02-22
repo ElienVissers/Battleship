@@ -74,15 +74,18 @@ public class PrepareGameScreenPresenter {
     public void windowsHandlers() {
         view.getScene().getWindow().setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
-            public void handle(WindowEvent event) { UISettings.getCloseAlert(event, view.getScene()); }});
+            public void handle(WindowEvent event) {
+                UISettings.getCloseAlert(event, view.getScene());
+            }
+        });
     }
 
     private void setActivePlayerName() {
-        view.getActivePlayerLabel().setText("Prepare you fleet for battle, " + model.getActivePlayerName());
+        view.getActivePlayerLabel().setText("Prepare you fleet for battle, " + model.getActivePlayer().getName());
         view.getActivePlayerLabel().getStyleClass().add("title");
-        if (model.getActivePlayerColor().equals("red")) {
+        if (model.getActivePlayer().getColor().equals("red")) {
             view.getActivePlayerLabel().getStyleClass().add("red-text");
-        } else if (model.getActivePlayerColor().equals("blue")) {
+        } else if (model.getActivePlayer().getColor().equals("blue")) {
             view.getActivePlayerLabel().getStyleClass().add("blue-text");
         }
     }
@@ -98,7 +101,7 @@ public class PrepareGameScreenPresenter {
         for (int i = 0; i < gridSize; i++) {
             for (int j = 0; j < gridSize; j++) {
                 Label empty = new Label();
-                empty.setPrefSize(50,50);
+                empty.setPrefSize(50, 50);
                 grid.add(empty, i, j);
             }
         }
@@ -107,22 +110,30 @@ public class PrepareGameScreenPresenter {
 
     private int[] loadCounters() {
         int[] counters = new int[4];
-        for (int number: model.getAvailableShips()) {
+        for (int number : model.getAvailableShips()) {
             switch (number) {
-                case 2: counters[0]++; break;
-                case 3: counters[1]++; break;
-                case 4: counters[2]++; break;
-                case 5: counters[3]++; break;
+                case 2:
+                    counters[0]++;
+                    break;
+                case 3:
+                    counters[1]++;
+                    break;
+                case 4:
+                    counters[2]++;
+                    break;
+                case 5:
+                    counters[3]++;
+                    break;
             }
         }
         return counters;
     }
 
     private void setShipLabels(int[] counters) {
-        Image ship2 = new Image("/images/ship_" + model.getActivePlayerColor() + "_2.png", 0, 65, true, true);
-        Image ship3 = new Image("/images/ship_" + model.getActivePlayerColor() + "_3.png", 0, 65, true, true);
-        Image ship4 = new Image("/images/ship_" + model.getActivePlayerColor() + "_4.png", 0, 65, true, true);
-        Image ship5 = new Image("/images/ship_" + model.getActivePlayerColor() + "_5.png", 0, 65, true, true);
+        Image ship2 = new Image("/images/ship_" + model.getActivePlayer().getColor() + "_2.png", 0, 65, true, true);
+        Image ship3 = new Image("/images/ship_" + model.getActivePlayer().getColor() + "_3.png", 0, 65, true, true);
+        Image ship4 = new Image("/images/ship_" + model.getActivePlayer().getColor() + "_4.png", 0, 65, true, true);
+        Image ship5 = new Image("/images/ship_" + model.getActivePlayer().getColor() + "_5.png", 0, 65, true, true);
         view.getShipLabel2().setGraphic(new ImageView(ship2));
         view.getShipLabel3().setGraphic(new ImageView(ship3));
         view.getShipLabel4().setGraphic(new ImageView(ship4));
@@ -182,5 +193,18 @@ public class PrepareGameScreenPresenter {
             });
 
         }
+    }
+
+    //TODO when clicking in a cell
+    public void positionShip(/*coordinates from GridPane*/) {
+        //adds or changes a ship in the shipMap of the activePlayer
+        model.getActivePlayer().positionShip(/*coordinates from gridpane*/);
+
+    }
+
+    //TODO when pressing "DONE" button
+    public void prepareBoard() {
+        //updates the GameBoard of the activePlayer
+        model.getActivePlayerBoard().addShips(model.getActivePlayer().getShipMap());
     }
 }

@@ -15,11 +15,12 @@ import java.util.Map;
 public class ComputerPlayer extends Player {
 
     private String name;
-    private List<Ship> ships;
+    private String color;
+    private Map<Ship, List<Square>> shipMap;
 
-    public ComputerPlayer(String name, List<Ship> ships) {
+    public ComputerPlayer(String name, String color) {
         this.name = name;
-        this.ships = ships;
+        this.color = color;
     }
 
     @Override
@@ -28,8 +29,16 @@ public class ComputerPlayer extends Player {
     }
 
     @Override
-    public Map<Ship, List<Square>> positionShips() {
-        return null;
+    public String getColor() { return color; }
+
+    @Override
+    public Map<Ship, List<Square>> getShipMap() {
+        return shipMap;
+    }
+
+    @Override
+    public void positionShip() {
+
     }
 
     @Override

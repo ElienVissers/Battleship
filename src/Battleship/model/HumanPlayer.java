@@ -12,11 +12,12 @@ import java.util.*;
 public class HumanPlayer extends Player {
 
     private String name;
-    private List<Ship> ships;
+    private String color;
+    private Map<Ship, List<Square>> shipMap;
 
-    public HumanPlayer(String name, List<Ship> ships) {
+    public HumanPlayer(String name, String color) {
         this.name = name;
-        this.ships = ships;
+        this.color = color;
     }
 
     @Override
@@ -25,30 +26,35 @@ public class HumanPlayer extends Player {
     }
 
     @Override
-    public Map<Ship, List<Square>> positionShips() {
+    public String getColor() { return color; }
+
+    public Map<Ship, List<Square>> getShipMap() {
+        return shipMap;
+    }
+
+    @Override
+    public void positionShip() {
         System.out.println(name + " positions ships.");
+        //updates the shipMap
+         /*
+            TODO
+             Map<Ship, List<Cell>> positionMap = new HashMap<>();
+             for (Ship ship : ships) {
+                --> separate method positionShip() [SINGULAR]
+                  ship.getSize();
+                  --> position a correctly sized ship on the map (graphically)
+                  --> this way, the coordinates of all cells are generated
+                  --> save the cells in an ArrayList coordinatesList
+                  positionMap.put(ship, coordinatesList)
+             }
+             return positionMap;
+         */
 
-     /*
-        TODO
-         Map<Ship, List<Cell>> positionMap = new HashMap<>();
-         for (Ship ship : ships) {
-            --> separate method positionShip() [SINGULAR]
-              ship.getSize();
-              --> position a correctly sized ship on the map (graphically)
-              --> this way, the coordinates of all cells are generated
-              --> save the cells in an ArrayList coordinatesList
-              positionMap.put(ship, coordinatesList)
-         }
-         return positionMap;
-     */
-
-        //FIXME replace testMap with the new positionMap!
         Map<Ship, List<Square>> testMap = new HashMap<>();
         List<Square> list = new ArrayList<>();
         list.add(new Square("A3"));
         list.add(new Square("A4"));
         testMap.put(Ship.STARFIGHTER, list);
-        return testMap;
     }
 
     @Override
