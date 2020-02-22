@@ -163,4 +163,8 @@ public class BattleshipModel {
     public int[] getAvailableShips() {
         return availableShips;
     }
+
+    public int getGridSize() {
+        return GRIDSIZE;
+    }
 }

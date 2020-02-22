@@ -27,6 +27,8 @@
     -fx-text-fill: -fx-my-white-color;
 }
 
+/* CONTROL SUBCLASSES (only Control subclasses have default CSS classes)*/
+
 /* MENU BAR */
 .menu-bar {
     -fx-background-color: -fx-my-menu-color;
@@ -136,6 +138,20 @@
 
 .ship-label:hover, .ship-label-selected {
     -fx-background-color: -fx-my-highlight-color;
+    -fx-cursor: hand;
+}
+
+.grid-pane {
+}
+
+.grid-pane > * {
+    -fx-border-color: -fx-my-white-color;
+    -fx-border-width: 1 1 1 1 ;
+}
+
+.grid-pane-selected {
+    -fx-background-color: -fx-my-highlight-color;
+    -fx-cursor: hand;
 }
 
 /* TO DO */

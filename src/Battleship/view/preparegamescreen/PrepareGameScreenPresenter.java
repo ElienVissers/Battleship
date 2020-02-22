@@ -3,10 +3,14 @@ package Battleship.view.preparegamescreen;
 import Battleship.model.BattleshipModel;
 import Battleship.view.UISettings;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.RowConstraints;
 import javafx.stage.WindowEvent;
 
 /**
@@ -32,16 +36,30 @@ public class PrepareGameScreenPresenter {
     private void updateView() {
         setActivePlayerName();
         setShipLabels(loadCounters());
+        createGridPane(view.getGrid());
 
-        //TODO how to update?? important for model? actually not! --> IF SHIP = POSITIONED, EVENT?
+        //set a dummy spaceship
+        setDummyShip();
+
+        //TODO how to update? important for model? actually not! --> IF SHIP = POSITIONED, EVENT?
         //updateAmounts(counter2, counter3, counter4, counter5);
     }
+
+    //TODO remove later
+    private void setDummyShip() {
+        ImageView ship = new ImageView(new Image("/images/ship_red_2.png"));
+        ship.setFitHeight(50);
+        ship.setFitWidth(100);
+        view.getGrid().add(ship, 5, 5, 2, 1);
+    }
+
 
     private void EventHandlers() {
         addClickHandler(view.getShipLabel2());
         addClickHandler(view.getShipLabel3());
         addClickHandler(view.getShipLabel4());
         addClickHandler(view.getShipLabel5());
+        addCellHoverHandler();
     }
 
     public void windowsHandlers() {
@@ -58,6 +76,24 @@ public class PrepareGameScreenPresenter {
         } else if (model.getActivePlayerColor().equals("blue")) {
             view.getActivePlayerLabel().getStyleClass().add("blue-text");
         }
+    }
+
+    private void createGridPane(GridPane grid) {
+        int gridSize = model.getGridSize();
+        for (int i = 0; i < gridSize; i++) {
+            ColumnConstraints column = new ColumnConstraints(50);
+            RowConstraints row = new RowConstraints(50);
+            grid.getColumnConstraints().add(column);
+            grid.getRowConstraints().add(row);
+        }
+        for (int i = 0; i < gridSize; i++) {
+            for (int j = 0; j < gridSize; j++) {
+                Label empty = new Label();
+                empty.setPrefSize(50,50);
+                grid.add(empty, i, j);
+            }
+        }
+        grid.getStyleClass().add("grid-pane");
     }
 
     private int[] loadCounters() {
@@ -109,6 +145,40 @@ public class PrepareGameScreenPresenter {
                 label.getStyleClass().add("ship-label-selected");
             }
         });
+    }
+
+    private void addCellHoverHandler() {
+        for (Node targetNode : view.getGrid().getChildren()) {
+            //ATTENTION: the gridlines are also a child... this sets a null value at the Integer targetIndex
+            //SOLUTION: filter out the null values with additional if-clauses
+            Integer targetColumnIndex = GridPane.getColumnIndex(targetNode);
+            Integer targetRowIndex = GridPane.getRowIndex(targetNode);
+            if (targetColumnIndex != null && targetRowIndex != null) {
+                targetNode.setOnMouseEntered(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent t) {
+                        for (Node n : view.getGrid().getChildren()) {
+                            //TODO highlight based on shipsize
+                            Integer columnIndex = GridPane.getColumnIndex(n);
+                            Integer rowIndex = GridPane.getRowIndex(n);
+                            if (columnIndex != null && rowIndex != null) {
+                                if (columnIndex == targetColumnIndex && rowIndex == targetRowIndex) {
+                                    n.getStyleClass().add("grid-pane-selected");
+                                }
+                            }
+                        }
+                    }
+                });
+                targetNode.setOnMouseExited(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent t) {
+                        for (Node n : view.getGrid().getChildren()) {
+                            n.getStyleClass().remove("grid-pane-selected");
+                        }
+                    }
+                });
+            }
+        }
     }
 
 }

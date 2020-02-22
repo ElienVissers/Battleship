@@ -17,6 +17,7 @@ public class PrepareGameScreenView extends BorderPane {
     private Label shipLabel3;
     private Label shipLabel4;
     private Label shipLabel5;
+    private GridPane grid;
     private UISettings uiSettings;
 
     public PrepareGameScreenView(UISettings uiSettings) {
@@ -31,7 +32,10 @@ public class PrepareGameScreenView extends BorderPane {
         this.shipLabel3 = new Label();
         this.shipLabel4 = new Label();
         this.shipLabel5 = new Label();
+        this.grid = new GridPane();
     }
+
+
 
     private void layoutNodes() {
         layoutTop();
@@ -46,7 +50,7 @@ public class PrepareGameScreenView extends BorderPane {
 
     private void layoutCenter() {
         HBox content = new HBox();
-        content.getChildren().addAll(createShipBox(), createGridPane());
+        content.getChildren().addAll(createShipBox(), grid);
         this.setCenter(content);
     }
 
@@ -64,21 +68,6 @@ public class PrepareGameScreenView extends BorderPane {
     private void layoutShipLabel(Label label) {
         label.getStyleClass().add("ship-label");
         label.setContentDisplay(ContentDisplay.RIGHT);
-    }
-
-    private GridPane createGridPane() {
-        GridPane grid = new GridPane();
-        //TODO get gridsize from Presenter (< Model)...
-        for (int i = 0; i < 10; i++) {
-            ColumnConstraints column = new ColumnConstraints(50);
-            grid.getColumnConstraints().add(column);
-        }
-        for (int i = 0; i < 10; i++) {
-            RowConstraints row = new RowConstraints(50);
-            grid.getRowConstraints().add(row);
-        }
-        grid.setGridLinesVisible(true);
-        return grid;
     }
 
     Label getActivePlayerLabel() {
@@ -100,4 +89,6 @@ public class PrepareGameScreenView extends BorderPane {
     Label getShipLabel5() {
         return shipLabel5;
     }
+
+    GridPane getGrid() { return grid; }
 }
