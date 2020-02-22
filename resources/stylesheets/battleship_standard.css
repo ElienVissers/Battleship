@@ -5,11 +5,17 @@
 
 * {
     -fx-font-family: 'Chaparral Pro';
-    -fx-text-fill: ivory;
-    -fx-my-menu-color: grey;                /* variable */
+    -fx-text-fill: -fx-my-white-color;
+
+    -fx-my-menu-color: grey;                    /* variable */
     -fx-my-menu-color-highlighted: lightgrey;   /* variable */
     -fx-my-menu-font-color: black;              /* variable */
     -fx-my-menu-font-color-highlighted: black;  /* variable */
+    -fx-my-white-color: ivory;                  /* variable */
+    -fx-my-highlight-color: grey;               /* variable */
+    -fx-my-red-color: #983C32;                  /* variable */
+    -fx-my-blue-color: #36589B;                 /* variable */
+    -fx-my-background-color: #2D2D2D;           /* variable */
 }
 
 .root {
@@ -17,8 +23,8 @@
     -fx-border-width: 2px;
     -fx-border-insets: 5px;
     -fx-border-radius: 5px;
-    -fx-background-color: #2D2D2D;
-    -fx-text-fill: ivory;
+    -fx-background-color: -fx-my-background-color;
+    -fx-text-fill: -fx-my-white-color;
 }
 
 /* MENU BAR */
@@ -84,13 +90,13 @@
 }
 
 #textfield-player1 {
-    -fx-border-color: #983C32;
-    -fx-text-fill: #983C32;
+    -fx-border-color: -fx-my-red-color;
+    -fx-text-fill: -fx-my-red-color;
 }
 
 #textfield-player2 {
-    -fx-border-color: #36589B;
-    -fx-text-fill: #36589B;
+    -fx-border-color: -fx-my-blue-color;
+    -fx-text-fill: -fx-my-blue-color;
 }
 
 /* BUTTON */
@@ -99,19 +105,37 @@
     -fx-background-radius: 0;
     -fx-background-color: transparent;
     -fx-font-size: 15;
-    -fx-border-color: ivory;
-    -fx-text-fill: ivory;
+    -fx-border-color: -fx-my-white-color;
+    -fx-text-fill: -fx-my-white-color;
     -fx-border-width: 1;
     -fx-border-radius: 0;
 }
 
 .button:hover {
-    -fx-background-color: grey;
+    -fx-background-color: -fx-my-highlight-color;
     -fx-cursor: hand;
 }
 
 .button:pressed {
     -fx-padding: 3 5 7 5;
+}
+
+/* SPECIAL CLASSES */
+
+.red-text {
+    -fx-text-fill: -fx-my-red-color;
+}
+
+.blue-text {
+    -fx-text-fill: -fx-my-blue-color;
+}
+
+.title {
+    -fx-font-size: 20;
+}
+
+.ship-label:hover, .ship-label-selected {
+    -fx-background-color: -fx-my-highlight-color;
 }
 
 /* TO DO */

@@ -9,6 +9,7 @@ import javafx.scene.layout.*;
  * @author Elien Vissers-Similon
  * @version 1.0 15.02.2020 17:54
  */
+
 public class PrepareGameScreenView extends BorderPane {
 
     private Label activePlayerLabel;
@@ -61,6 +62,7 @@ public class PrepareGameScreenView extends BorderPane {
     }
 
     private void layoutShipLabel(Label label) {
+        label.getStyleClass().add("ship-label");
         label.setContentDisplay(ContentDisplay.RIGHT);
     }
 

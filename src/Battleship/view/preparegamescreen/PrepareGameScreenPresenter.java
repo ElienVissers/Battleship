@@ -38,10 +38,6 @@ public class PrepareGameScreenPresenter {
     }
 
     private void EventHandlers() {
-        addHoverHandlers(view.getShipLabel2());
-        addHoverHandlers(view.getShipLabel3());
-        addHoverHandlers(view.getShipLabel4());
-        addHoverHandlers(view.getShipLabel5());
         addClickHandler(view.getShipLabel2());
         addClickHandler(view.getShipLabel3());
         addClickHandler(view.getShipLabel4());
@@ -56,10 +52,11 @@ public class PrepareGameScreenPresenter {
 
     private void setActivePlayerName() {
         view.getActivePlayerLabel().setText("Prepare you fleet for battle, " + model.getActivePlayerName());
+        view.getActivePlayerLabel().getStyleClass().add("title");
         if (model.getActivePlayerColor().equals("red")) {
-            view.getActivePlayerLabel().setStyle("-fx-text-fill: #983C32; -fx-font-size: 20;");
+            view.getActivePlayerLabel().getStyleClass().add("red-text");
         } else if (model.getActivePlayerColor().equals("blue")) {
-            view.getActivePlayerLabel().setStyle("-fx-text-fill: #36589B; -fx-font-size: 20;");
+            view.getActivePlayerLabel().getStyleClass().add("blue-text");
         }
     }
 
@@ -100,39 +97,16 @@ public class PrepareGameScreenPresenter {
     }
     */
 
-    private void addHoverHandlers(Label label) {
-        label.setOnMouseEntered(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent t) {
-                if (label.equals(selectedLabel)) {
-                    t.consume();
-                } else {
-                    label.setStyle("-fx-background-color:grey;");
-                }
-            }
-        });
-        label.setOnMouseExited(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent t) {
-                if (label.equals(selectedLabel)) {
-                    t.consume();
-                } else {
-                    label.setStyle("-fx-background-color:#2D2D2D;");
-                }
-            }
-        });
-    }
-
     private void addClickHandler(Label label) {
         label.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent t) {
                 selectedLabel = label;
-                view.getShipLabel2().setStyle("-fx-background-color:#2D2D2D;");
-                view.getShipLabel3().setStyle("-fx-background-color:#2D2D2D;");
-                view.getShipLabel4().setStyle("-fx-background-color:#2D2D2D;");
-                view.getShipLabel5().setStyle("-fx-background-color:#2D2D2D;");
-                label.setStyle("-fx-background-color:grey;");
+                view.getShipLabel2().getStyleClass().remove("ship-label-selected");
+                view.getShipLabel3().getStyleClass().remove("ship-label-selected");
+                view.getShipLabel4().getStyleClass().remove("ship-label-selected");
+                view.getShipLabel5().getStyleClass().remove("ship-label-selected");
+                label.getStyleClass().add("ship-label-selected");
             }
         });
     }

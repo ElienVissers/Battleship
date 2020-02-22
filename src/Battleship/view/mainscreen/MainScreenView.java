@@ -51,8 +51,8 @@ public class MainScreenView extends BorderPane  {
         //CONTENT
         this.player1Label = new Label("Player 1");
         this.player2Label = new Label("Player 2");
-        this.player1Label.setStyle("-fx-text-fill: #983C32; -fx-font-size: 20;");
-        this.player2Label.setStyle("-fx-text-fill: #36589B; -fx-font-size: 20;");
+        this.player1Label.getStyleClass().addAll("title", "red-text");
+        this.player2Label.getStyleClass().addAll("title", "blue-text");
         this.player1Text = new TextField();
         this.player2Text = new TextField();
         this.player1Text.setId("textfield-player1");
