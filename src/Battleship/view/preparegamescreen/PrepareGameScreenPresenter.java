@@ -124,10 +124,10 @@ public class PrepareGameScreenPresenter {
     }
 
     private void setShipLabels(int[] counters) {
-        Image ship2 = new Image("/images/ship_" + model.getActivePlayer().getColor() + "_2.png", 0, 50, true, true);
-        Image ship3 = new Image("/images/ship_" + model.getActivePlayer().getColor() + "_3.png", 0, 50, true, true);
-        Image ship4 = new Image("/images/ship_" + model.getActivePlayer().getColor() + "_4.png", 0, 50, true, true);
-        Image ship5 = new Image("/images/ship_" + model.getActivePlayer().getColor() + "_5.png", 0, 50, true, true);
+        Image ship2 = new Image("/images/ship_" + model.getActivePlayer().getColor() + "_2.png", 100, 50, true, true);
+        Image ship3 = new Image("/images/ship_" + model.getActivePlayer().getColor() + "_3.png", 150, 50, true, true);
+        Image ship4 = new Image("/images/ship_" + model.getActivePlayer().getColor() + "_4.png", 200, 50, true, true);
+        Image ship5 = new Image("/images/ship_" + model.getActivePlayer().getColor() + "_5.png", 250, 50, true, true);
         view.getShipLabel2().setGraphic(new ImageView(ship2));
         view.getShipLabel3().setGraphic(new ImageView(ship3));
         view.getShipLabel4().setGraphic(new ImageView(ship4));
@@ -173,8 +173,9 @@ public class PrepareGameScreenPresenter {
                     for (Node n : view.getGrid().getChildren()) {
                         Integer columnIndex = GridPane.getColumnIndex(n);
                         Integer rowIndex = GridPane.getRowIndex(n);
-                        if (getSelectedShipSize() == 0) {
+                        if (getSelectedShipSize() == 0 || counters[getSelectedShipSize() -2 ] == 0) {
                             t.consume();
+                            break;
                         }
                         highlightShipSize(getSelectedShipSize(), isHorizontal(), columnIndex, rowIndex, targetColumnIndex, targetRowIndex, n);
                     }
