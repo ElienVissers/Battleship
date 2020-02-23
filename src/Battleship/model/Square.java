@@ -8,12 +8,12 @@ package Battleship.model;
  */
 
 public class Square {
-    private String coordinates;
-    boolean isShip;
-    boolean wasTargeted;
+    private int[] coordinates;
+    private boolean isShip;
+    private boolean wasTargeted;
 
-    public Square(String coordinates) {
-        this.coordinates = coordinates;
+    public Square(int x, int y) {
+        this.coordinates = new int[]{x, y};
         this.isShip = false;
         this.wasTargeted = false;
     }
@@ -34,7 +34,7 @@ public class Square {
         return wasTargeted;
     }
 
-    public String getCoordinates() {
+    public int[] getCoordinates() {
         return coordinates;
     }
 }

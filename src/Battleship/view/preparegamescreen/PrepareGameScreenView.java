@@ -35,8 +35,6 @@ public class PrepareGameScreenView extends BorderPane {
         this.grid = new GridPane();
     }
 
-
-
     private void layoutNodes() {
         layoutTop();
         layoutCenter();

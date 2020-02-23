@@ -13,11 +13,12 @@ public class HumanPlayer extends Player {
 
     private String name;
     private String color;
-    private Map<Ship, List<Square>> shipMap;
+    private Map<Ship, StartSquare> startShipMap;
 
     public HumanPlayer(String name, String color) {
         this.name = name;
         this.color = color;
+        this.startShipMap = new HashMap<>();
     }
 
     @Override
@@ -28,33 +29,31 @@ public class HumanPlayer extends Player {
     @Override
     public String getColor() { return color; }
 
-    public Map<Ship, List<Square>> getShipMap() {
-        return shipMap;
+    public Map<Ship, StartSquare> getStartShipMap() {
+        return startShipMap;
     }
 
     @Override
-    public void positionShip() {
-        System.out.println(name + " positions ships.");
+    public void positionShip(int[] currentShipCoordinates) {
         //updates the shipMap
-         /*
-            TODO
-             Map<Ship, List<Cell>> positionMap = new HashMap<>();
-             for (Ship ship : ships) {
-                --> separate method positionShip() [SINGULAR]
-                  ship.getSize();
-                  --> position a correctly sized ship on the map (graphically)
-                  --> this way, the coordinates of all cells are generated
-                  --> save the cells in an ArrayList coordinatesList
-                  positionMap.put(ship, coordinatesList)
-             }
-             return positionMap;
-         */
-
-        Map<Ship, List<Square>> testMap = new HashMap<>();
-        List<Square> list = new ArrayList<>();
-        list.add(new Square("A3"));
-        list.add(new Square("A4"));
-        testMap.put(Ship.STARFIGHTER, list);
+        Ship currentShip = null;
+        switch (currentShipCoordinates[2]) {
+            case 2: currentShip = Ship.STARFIGHTER; break;
+            case 3: currentShip = Ship.STARDISCOVERER; break;
+            case 4: currentShip = Ship.STARDESTROYER; break;
+            case 5: currentShip = Ship.STARCRUISER; break;
+        }
+        int startX = currentShipCoordinates[0];
+        int startY = currentShipCoordinates[1];
+        boolean horizontal;
+        if (currentShipCoordinates[3] == 0) {
+            horizontal = true;
+        } else {
+            horizontal = false;
+        }
+        StartSquare startSquare = new StartSquare(startX, startY);
+        startSquare.setHorizontal(horizontal);
+        startShipMap.put(currentShip, startSquare);
     }
 
     @Override
@@ -71,11 +70,12 @@ public class HumanPlayer extends Player {
             implement to uppercase for char
             Check that number or char isn't above max or min
          */
-        Scanner keyboard = new Scanner(System.in);
-        System.out.println("Which cell do you want to target?");
-        String test = keyboard.next();
-        Square testSquare = new Square(test);
-        System.out.println(name + " fires a rocket on " + testSquare.getCoordinates() + ".");
-        return testSquare;
+//        Scanner keyboard = new Scanner(System.in);
+//        System.out.println("Which cell do you want to target?");
+//        String test = keyboard.next();
+//        Square testSquare = new Square(test);
+//        System.out.println(name + " fires a rocket on " + testSquare.getCoordinates() + ".");
+//        return testSquare;
+        return null;
     }
 }

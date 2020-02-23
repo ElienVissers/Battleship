@@ -1,5 +1,6 @@
 package Battleship.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -16,7 +17,7 @@ public class ComputerPlayer extends Player {
 
     private String name;
     private String color;
-    private Map<Ship, List<Square>> shipMap;
+    private Map<Ship, StartSquare> startShipMap;
 
     public ComputerPlayer(String name, String color) {
         this.name = name;
@@ -32,12 +33,12 @@ public class ComputerPlayer extends Player {
     public String getColor() { return color; }
 
     @Override
-    public Map<Ship, List<Square>> getShipMap() {
-        return shipMap;
+    public Map<Ship, StartSquare> getStartShipMap() {
+        return startShipMap;
     }
 
     @Override
-    public void positionShip() {
+    public void positionShip(int[] currentShipCoordinates) {
 
     }
 

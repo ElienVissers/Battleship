@@ -1,5 +1,6 @@
 package Battleship.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -11,10 +12,10 @@ import java.util.Map;
  */
 
 public abstract class Player {
-    public abstract void positionShip();
+    public abstract void positionShip(int[] currentShipCoordinates);
     public abstract Square fireRocket();
     public abstract String getName();
     public abstract String getColor();
 
-    public abstract Map<Ship, List<Square>> getShipMap();
+    public abstract Map<Ship, StartSquare> getStartShipMap();
 }

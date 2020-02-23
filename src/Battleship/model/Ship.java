@@ -11,6 +11,8 @@ public enum Ship {
     STARFIGHTER(2), STARDISCOVERER(3), STARDESTROYER(4), STARCRUISER(5);
 
     private int size;
+    private int x;
+    private int y;
 
     Ship(int size) {
         this.size = size;
@@ -30,9 +32,4 @@ public enum Ship {
         return name + " spans over " + size + " cells on the grid.";
     }
 
-    /*
-        TODO
-         Start-Cell geven, op basis daarvan de andere coordinaten laten "berekenen" ?
-         90 degrees rotate, Start-Cell as basepoint (= rear end of ship) ?
-     */
 }

@@ -15,7 +15,7 @@ import java.util.Map;
 
 public class GameBoard {
     /*a map that holds the coordinates as a key, and the corresponding cell as a value*/
-    private Map<String, Square> gridMap;
+    private Map<int[], Square> gridMap;
 
     /*a map with all ships on the grid*/
     private Map<Ship, List<Square>> shipMap;
@@ -27,15 +27,14 @@ public class GameBoard {
         sinkCounter = 0;
         gridMap = new HashMap<>();
         shipMap = new HashMap<>();
-        char letter = 'A';
-        for (int letterLoop = 0; letterLoop < gridsize; letterLoop++) {
-            for (int numberLoop = 1; numberLoop <= gridsize; numberLoop++) {
-                String part1 = Character.toString(letter);
-                String part2 = Integer.toString(numberLoop);
-                String coordinate = part1 + part2;
-                gridMap.put(coordinate, new Square(coordinate));
+        for (int hor = 0; hor < gridsize; hor++) {
+            for (int vert = 1; vert <= gridsize; vert++) {
+                int x = hor;
+                int y = vert;
+                int[] coordinates = {x, y};
+                gridMap.put(coordinates, new Square(x, y));
             }
-            letter++;
+            hor++;
         }
     }
 
