@@ -147,9 +147,6 @@
     -fx-cursor: pointer;
 }
 
-.grid-pane {
-}
-
 .grid-pane > * {
     -fx-border-color: -fx-my-white-color;
     -fx-border-width: 1 1 1 1 ;
@@ -158,6 +155,26 @@
 .grid-pane-selected {
     -fx-background-color: -fx-my-highlight-color;
     -fx-cursor: hand;
+}
+
+.button-disabled {
+    -fx-padding: 5 5 5 5;
+    -fx-background-radius: 0;
+    -fx-background-color: transparent;
+    -fx-font-size: 15;
+    -fx-border-color: -fx-my-highlight-color;
+    -fx-text-fill: -fx-my-highlight-color;
+    -fx-border-width: 1;
+    -fx-border-radius: 0;
+}
+
+.button-disabled:hover {
+    -fx-cursor: pointer;
+    -fx-background-color: -fx-my-background-color;
+}
+
+.button:pressed {
+    -fx-padding: 0 0 0 0;
 }
 
 /* TO DO */

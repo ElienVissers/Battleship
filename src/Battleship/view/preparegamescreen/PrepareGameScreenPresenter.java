@@ -4,6 +4,7 @@ import Battleship.model.BattleshipModel;
 import Battleship.model.Ship;
 import Battleship.model.StartSquare;
 import Battleship.view.UISettings;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -30,7 +31,7 @@ public class PrepareGameScreenPresenter {
     private int[] counters;
     private Label selectedLabel;
     private Label[] shipLabels;
-    private boolean horizontal = false;
+    private boolean horizontal = true;
     private int[] currentShipCoordinates;
 
     public PrepareGameScreenPresenter(BattleshipModel model, PrepareGameScreenView view, UISettings uiSettings) {
@@ -48,6 +49,7 @@ public class PrepareGameScreenPresenter {
         this.currentShipCoordinates = new int[4];
 
         this.loadCounters();
+        this.createGridPane(view.getGrid());
         this.updateView();
         this.addEventHandlers();
     }
@@ -58,12 +60,12 @@ public class PrepareGameScreenPresenter {
         }
         addCellHoverHandler();
         addCellClickHandler();
+        addShipDirectionHandler();
     }
 
     private void updateView() {
         setActivePlayerName();
         setShipLabels(counters);
-        createGridPane(view.getGrid());
         loadShips();
     }
 
@@ -107,18 +109,10 @@ public class PrepareGameScreenPresenter {
     private void loadCounters() {
         for (int number : model.getAvailableShips()) {
             switch (number) {
-                case 2:
-                    counters[0]++;
-                    break;
-                case 3:
-                    counters[1]++;
-                    break;
-                case 4:
-                    counters[2]++;
-                    break;
-                case 5:
-                    counters[3]++;
-                    break;
+                case 2: counters[0]++; break;
+                case 3: counters[1]++; break;
+                case 4: counters[2]++; break;
+                case 5: counters[3]++; break;
             }
         }
     }
@@ -161,7 +155,19 @@ public class PrepareGameScreenPresenter {
         });
     }
 
-    //TODO addShipDirectionHandler() --> toggle boolean horizontal
+    private void addShipDirectionHandler() {
+        view.getRotateButton().setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                horizontal = !horizontal;
+                if (horizontal) {
+                    view.getRotateButton().setText("HORIZONTAL");
+                } else {
+                    view.getRotateButton().setText("VERTICAL");
+                }
+            }
+        });
+    }
 
     private void addCellHoverHandler() {
         for (Node targetNode : view.getGrid().getChildren()) {
@@ -175,9 +181,9 @@ public class PrepareGameScreenPresenter {
                         Integer rowIndex = GridPane.getRowIndex(n);
                         if (getSelectedShipSize() == 0 || counters[getSelectedShipSize() -2 ] == 0) {
                             t.consume();
-                            break;
+                        } else {
+                            highlightShipSize(getSelectedShipSize(), isHorizontal(), columnIndex, rowIndex, targetColumnIndex, targetRowIndex, n);
                         }
-                        highlightShipSize(getSelectedShipSize(), isHorizontal(), columnIndex, rowIndex, targetColumnIndex, targetRowIndex, n);
                     }
                 }
             });
@@ -197,10 +203,28 @@ public class PrepareGameScreenPresenter {
             targetNode.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent t) {
-                    model.getActivePlayer().positionShip(currentShipCoordinates);
-                    counters[currentShipCoordinates[2] - 2]--;
-                    updateView();
-                    addEventHandlers();
+                    if (getSelectedShipSize() == 0 || counters[getSelectedShipSize() -2 ] == 0) {
+                        t.consume();
+                    } else {
+                        model.getActivePlayer().positionShip(currentShipCoordinates);
+                        counters[currentShipCoordinates[2] - 2]--;
+                        int done = 0;
+                        for (int counter : counters) {
+                            if (counter == 0) done++;
+                        }
+                        if (done == 4) {
+                            view.getDoneButton().getStyleClass().remove("button-disabled");
+                            //TODO add clickhandler button here
+//                            private void prepareBoard() {
+//                                //updates the GameBoard of the activePlayer
+//                                //figure out StartSquare <--> Square relation
+//                                //model.getActivePlayerBoard().addShips(model.getActivePlayer().getShipMap());
+//                                //also a different function in the eventhandler to continue to a new screen!!
+//                            }
+                        }
+                        updateView();
+                        addEventHandlers();
+                    }
                 }
             });
         }
@@ -324,13 +348,5 @@ public class PrepareGameScreenPresenter {
             ImageView shipView = new ImageView(shipImage);
             view.getGrid().add(shipView, entry.getValue().getCoordinates()[0], entry.getValue().getCoordinates()[1], colSpan, rowSpan);
         }
-    }
-
-    //TODO when pressing a "DONE" button
-    private void prepareBoard() {
-        //updates the GameBoard of the activePlayer
-        //figure out StartSquare <--> Square relation
-        //model.getActivePlayerBoard().addShips(model.getActivePlayer().getShipMap());
-        //also a different function in the eventhandler to continue to a new screen!!
     }
 }

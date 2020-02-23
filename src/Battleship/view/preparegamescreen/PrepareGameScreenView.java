@@ -1,6 +1,7 @@
 package Battleship.view.preparegamescreen;
 
 import Battleship.view.UISettings;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
@@ -18,6 +19,8 @@ public class PrepareGameScreenView extends BorderPane {
     private Label shipLabel4;
     private Label shipLabel5;
     private GridPane grid;
+    private Button rotateButton;
+    private Button doneButton;
     private UISettings uiSettings;
 
     public PrepareGameScreenView(UISettings uiSettings) {
@@ -33,6 +36,8 @@ public class PrepareGameScreenView extends BorderPane {
         this.shipLabel4 = new Label();
         this.shipLabel5 = new Label();
         this.grid = new GridPane();
+        this.rotateButton = new Button("HORIZONTAL");
+        this.doneButton = new Button("DONE");
     }
 
     private void layoutNodes() {
@@ -42,14 +47,16 @@ public class PrepareGameScreenView extends BorderPane {
 
     private void layoutTop() {
         activePlayerLabel.setPrefHeight(200);
-        this.setTop(activePlayerLabel);
-        this.setAlignment(activePlayerLabel, Pos.CENTER);
+        setTop(activePlayerLabel);
+        setAlignment(activePlayerLabel, Pos.CENTER);
     }
 
     private void layoutCenter() {
         HBox content = new HBox();
-        content.getChildren().addAll(createShipBox(), grid);
-        this.setCenter(content);
+        content.getChildren().addAll(createShipBox(), grid, createButtonBox());
+        content.setSpacing(100);
+        content.setPadding(new Insets(100));
+        setCenter(content);
     }
 
     private VBox createShipBox() {
@@ -66,6 +73,14 @@ public class PrepareGameScreenView extends BorderPane {
     private void layoutShipLabel(Label label) {
         label.getStyleClass().add("ship-label");
         label.setContentDisplay(ContentDisplay.RIGHT);
+    }
+
+    private VBox createButtonBox() {
+        VBox buttonBox = new VBox();
+        doneButton.getStyleClass().add("button-disabled");
+        buttonBox.getChildren().addAll(rotateButton, doneButton);
+        buttonBox.setSpacing(50);
+        return buttonBox;
     }
 
     Label getActivePlayerLabel() {
@@ -89,4 +104,12 @@ public class PrepareGameScreenView extends BorderPane {
     }
 
     GridPane getGrid() { return grid; }
+
+    public Button getRotateButton() {
+        return rotateButton;
+    }
+
+    public Button getDoneButton() {
+        return doneButton;
+    }
 }
