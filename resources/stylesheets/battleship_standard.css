@@ -141,6 +141,12 @@
     -fx-cursor: hand;
 }
 
+.ship-label-empty, .ship-label-empty:hover {
+    -fx-text-fill: -fx-my-highlight-color;
+    -fx-background-color: -fx-my-background-color;
+    -fx-cursor: pointer;
+}
+
 .grid-pane {
 }
 

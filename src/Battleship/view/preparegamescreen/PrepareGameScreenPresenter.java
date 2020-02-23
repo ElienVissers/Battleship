@@ -136,6 +136,16 @@ public class PrepareGameScreenPresenter {
         view.getShipLabel3().setText("stardiscoverer (" + counters[1] + ")\t");
         view.getShipLabel4().setText("stardestroyer (" + counters[2] + ")\t");
         view.getShipLabel5().setText("starcruiser (" + counters[3] + ")\t\t");
+        for (int i = 0; i < counters.length; i++) {
+            if (counters[i] == 0) {
+                switch (i) {
+                    case 0: view.getShipLabel2().getStyleClass().remove("ship-label"); view.getShipLabel2().getStyleClass().add("ship-label-empty"); break;
+                    case 1: view.getShipLabel3().getStyleClass().remove("ship-label"); view.getShipLabel3().getStyleClass().add("ship-label-empty"); break;
+                    case 2: view.getShipLabel4().getStyleClass().remove("ship-label"); view.getShipLabel4().getStyleClass().add("ship-label-empty"); break;
+                    case 3: view.getShipLabel5().getStyleClass().remove("ship-label"); view.getShipLabel5().getStyleClass().add("ship-label-empty"); break;
+                }
+            }
+        }
     }
 
     private void addSelectShipHandler(Label label) {
@@ -216,10 +226,10 @@ public class PrepareGameScreenPresenter {
     private void highlightShipSize(int shipSize, boolean horizontal, int columnIndex, int rowIndex, int targetColumnIndex, int targetRowIndex, Node n) {
         //TODO get ships that are already on the map (from model activePlayer) and make sure overlap is NOT possible
         //per case horizontal/vertical, if there is a ship on the targetCell or in the next x cells --> break
+        currentShipCoordinates[0] = targetColumnIndex;
+        currentShipCoordinates[1] = targetRowIndex;
         switch (shipSize) {
             case 2:
-                currentShipCoordinates[0] = targetColumnIndex;
-                currentShipCoordinates[1] = targetRowIndex;
                 currentShipCoordinates[2] = 2;
                 if (horizontal && targetColumnIndex <= (model.getGridSize() - 2)) {
                     currentShipCoordinates[3] = 0;
@@ -236,8 +246,6 @@ public class PrepareGameScreenPresenter {
                 }
                 break;
             case 3:
-                currentShipCoordinates[0] = targetColumnIndex;
-                currentShipCoordinates[1] = targetRowIndex;
                 currentShipCoordinates[2] = 3;
                 if (horizontal && targetColumnIndex <= (model.getGridSize() - 3)) {
                     currentShipCoordinates[3] = 0;
@@ -254,8 +262,6 @@ public class PrepareGameScreenPresenter {
                 }
                 break;
             case 4:
-                currentShipCoordinates[0] = targetColumnIndex;
-                currentShipCoordinates[1] = targetRowIndex;
                 currentShipCoordinates[2] = 4;
                 if (horizontal && targetColumnIndex <= (model.getGridSize() - 4)) {
                     currentShipCoordinates[3] = 0;
@@ -272,8 +278,6 @@ public class PrepareGameScreenPresenter {
                 }
                 break;
             case 5:
-                currentShipCoordinates[0] = targetColumnIndex;
-                currentShipCoordinates[1] = targetRowIndex;
                 currentShipCoordinates[2] = 5;
                 if (horizontal && targetColumnIndex <= (model.getGridSize() - 5)) {
                     currentShipCoordinates[3] = 0;

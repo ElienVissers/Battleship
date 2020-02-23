@@ -19,8 +19,7 @@ public class BattleshipModel {
     private List<Player> players;
     private Player activePlayer;
     private Player passivePlayer;
-    private int activeIndex;
-    int[] availableShips = new int[NUMBER_OF_SHIPS];
+    private int[] availableShips;
     private List<Ship> ships;
     private Map<Player, GameBoard> gameboards;
     
@@ -30,6 +29,8 @@ public class BattleshipModel {
     private int turnCounter;
 
     public BattleshipModel() {
+        availableShips = new int[NUMBER_OF_SHIPS];
+        ships = new ArrayList<>();
         date = LocalDate.now();
         turnCounter = 0;
     }
@@ -42,18 +43,22 @@ public class BattleshipModel {
 
     /*create ships*/
     private void createGameShips() {
-        for (int i = 0; i < NUMBER_OF_SHIPS; i++) {
+        //minimum one ship of each
+        availableShips[0] = 2;
+        availableShips[1] = 3;
+        availableShips[2] = 4;
+        availableShips[3] = 5;
+        //random other ships
+        for (int i = 4; i < NUMBER_OF_SHIPS; i++) {
             availableShips[i] = rand.nextInt(4) + 2;
         }
-        ships = new ArrayList<>();
         for (int size: availableShips) {
-            Ship ship;
+            Ship ship = null;
             switch (size) {
                 case 2: ship = Ship.STARFIGHTER; break;
                 case 3: ship = Ship.STARDISCOVERER; break;
                 case 4: ship = Ship.STARDESTROYER; break;
                 case 5: ship = Ship.STARCRUISER; break;
-                default: ship = null;
             }
             ships.add(ship);
         }
@@ -73,7 +78,6 @@ public class BattleshipModel {
         players.add(player2);
         activePlayer = players.get(0);
         passivePlayer = players.get(1);
-        activeIndex = 0;
     }
 
     /*create gameboards*/
@@ -121,11 +125,9 @@ public class BattleshipModel {
         if (activePlayer.equals(players.get(0))) {
             activePlayer = players.get(1);
             passivePlayer = players.get(0);
-            activeIndex = 1;
         } else if (activePlayer.equals(players.get(1))) {
             activePlayer = players.get(0);
             passivePlayer = players.get(1);
-            activeIndex = 0;
         }
         System.out.println("It's " + activePlayer.getName() + "'s turn now.");
     }
