@@ -26,6 +26,7 @@ public class PrepareGameScreenPresenter {
 
     private Label selectedLabel;
     private Label[] shipLabels;
+    private boolean direction = true;
 
     public PrepareGameScreenPresenter(BattleshipModel model, PrepareGameScreenView view, UISettings uiSettings) {
         this.model = model;
@@ -162,12 +163,12 @@ public class PrepareGameScreenPresenter {
                 @Override
                 public void handle(MouseEvent t) {
                     for (Node n : view.getGrid().getChildren()) {
-                        //TODO highlight based on shipsize
                         Integer columnIndex = GridPane.getColumnIndex(n);
                         Integer rowIndex = GridPane.getRowIndex(n);
-                        if (columnIndex == targetColumnIndex && rowIndex == targetRowIndex) {
-                            n.getStyleClass().add("grid-pane-selected");
+                        if (getSelectedShipSize() == 0) {
+                            t.consume();
                         }
+                        highlightShipSize(getSelectedShipSize(), getDirection(), columnIndex, rowIndex, targetColumnIndex, targetRowIndex, n);
                     }
                 }
             });
@@ -183,8 +184,83 @@ public class PrepareGameScreenPresenter {
         }
     }
 
+    private int getSelectedShipSize() {
+        int selectedSize = 0;
+        if (selectedLabel.equals(view.getShipLabel2())) {
+            selectedSize = 2;
+        } else if  (selectedLabel.equals(view.getShipLabel3())) {
+            selectedSize = 3;
+        } else if  (selectedLabel.equals(view.getShipLabel4())) {
+            selectedSize = 4;
+        } else if  (selectedLabel.equals(view.getShipLabel5())) {
+            selectedSize = 5;
+        }
+        return selectedSize;
+    }
+
+    private boolean getDirection() {
+        return direction;
+    }
+
+    private void highlightShipSize(int shipSize, boolean horizontal, int columnIndex, int rowIndex, int targetColumnIndex, int targetRowIndex, Node n) {
+        switch (shipSize) {
+            case 2:
+                if (horizontal && targetColumnIndex <= (model.getGridSize() - 2)) {
+                    if (rowIndex == targetRowIndex &&
+                            (columnIndex == targetColumnIndex || columnIndex == (targetColumnIndex + 1))) {
+                        n.getStyleClass().add("grid-pane-selected");
+                    }
+                } else if (!horizontal && targetRowIndex <= (model.getGridSize() - 2)) {
+                    if (columnIndex == targetColumnIndex &&
+                            (rowIndex == targetRowIndex || rowIndex == (targetRowIndex + 1))) {
+                        n.getStyleClass().add("grid-pane-selected");
+                    }
+                }
+                break;
+            case 3:
+                if (horizontal && targetColumnIndex <= (model.getGridSize() - 3)) {
+                    if (rowIndex == targetRowIndex &&
+                            (columnIndex == targetColumnIndex || columnIndex == (targetColumnIndex + 1) || columnIndex == (targetColumnIndex + 2))) {
+                        n.getStyleClass().add("grid-pane-selected");
+                    }
+                } else if (!horizontal && targetRowIndex <= (model.getGridSize() - 3)) {
+                    if (columnIndex == targetColumnIndex &&
+                            (rowIndex == targetRowIndex || rowIndex == (targetRowIndex + 1) || rowIndex == (targetRowIndex + 2))) {
+                        n.getStyleClass().add("grid-pane-selected");
+                    }
+                }
+                break;
+            case 4:
+                if (horizontal && targetColumnIndex <= (model.getGridSize() - 4)) {
+                    if (rowIndex == targetRowIndex &&
+                            (columnIndex == targetColumnIndex || columnIndex == (targetColumnIndex + 1) || columnIndex == (targetColumnIndex + 2) || columnIndex == (targetColumnIndex + 3))) {
+                        n.getStyleClass().add("grid-pane-selected");
+                    }
+                } else if (!horizontal && targetRowIndex <= (model.getGridSize() - 4)) {
+                    if (columnIndex == targetColumnIndex &&
+                            (rowIndex == targetRowIndex || rowIndex == (targetRowIndex + 1) || rowIndex == (targetRowIndex + 2) || rowIndex == (targetRowIndex + 3))) {
+                        n.getStyleClass().add("grid-pane-selected");
+                    }
+                }
+                break;
+            case 5:
+                if (horizontal && targetColumnIndex <= (model.getGridSize() - 5)) {
+                    if (rowIndex == targetRowIndex &&
+                            (columnIndex == targetColumnIndex || columnIndex == (targetColumnIndex + 1) || columnIndex == (targetColumnIndex + 2) || columnIndex == (targetColumnIndex + 3) || columnIndex == (targetColumnIndex + 4))) {
+                        n.getStyleClass().add("grid-pane-selected");
+                    }
+                } else if (!horizontal && targetRowIndex <= (model.getGridSize() - 5)) {
+                    if (columnIndex == targetColumnIndex &&
+                            (rowIndex == targetRowIndex || rowIndex == (targetRowIndex + 1) || rowIndex == (targetRowIndex + 2) || rowIndex == (targetRowIndex + 3) || rowIndex == (targetRowIndex + 4))) {
+                        n.getStyleClass().add("grid-pane-selected");
+                    }
+                }
+                break;
+        }
+    }
+
     //TODO when clicking in a cell --> updateView() wordt aangeroepen in de eventhandler (zie Mastermind voorbeeld)
-    public void positionShip(/*coordinates from GridPane*/) {
+    private void positionShip(/*coordinates from GridPane*/) {
         //adds or changes a ship in the shipMap of the activePlayer
         model.getActivePlayer().positionShip(/*coordinates from gridpane*/);
         //updateAmounts(counter2, counter3, counter4, counter5);
@@ -199,7 +275,7 @@ public class PrepareGameScreenPresenter {
     }
 
     //TODO when pressing "DONE" button
-    public void prepareBoard() {
+    private void prepareBoard() {
         //updates the GameBoard of the activePlayer
         model.getActivePlayerBoard().addShips(model.getActivePlayer().getShipMap());
         //continues to a new screen!!
