@@ -6,6 +6,7 @@ import Battleship.view.mainscreen.MainScreenPresenter;
 import Battleship.view.mainscreen.MainScreenView;
 import javafx.event.*;
 import javafx.scene.control.Alert;
+import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import java.net.MalformedURLException;
 
@@ -43,12 +44,11 @@ public class StartScreenPresenter {
                 } catch (MalformedURLException ex) {
                     // do nothing, if toURL-conversion fails, program can continue
                 }
+
                 msView.getScene().getWindow().sizeToScene();
                 //open new window fullscreen
-                msView.getScene().getWindow().setX(0);
-                msView.getScene().getWindow().setY(0);
-                msView.getScene().getWindow().setHeight(uiSettings.getResY());
-                msView.getScene().getWindow().setWidth(uiSettings.getResX());
+                Stage currentStage = (Stage) msView.getScene().getWindow();
+                currentStage.setMaximized(true);
                 msPresenter.windowsHandler();
             }
         });

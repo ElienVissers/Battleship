@@ -14,18 +14,18 @@ public class BattleshipModel_OLD_MAIN {
     private static boolean gameRuns = true;
 
     public static void start(Boolean playerMode, String name1, String name2) {
-        System.out.println("Run Zeeslag App.");
-        BattleshipModel currentBattleshipModel = new BattleshipModel();
-
-        currentBattleshipModel.prepareGrids();
-        while (gameRuns) {
-            currentBattleshipModel.activePlayerPlays();
-            if (currentBattleshipModel.isGameOver()) {
-                gameRuns = false;
-                break;
-            }
-            currentBattleshipModel.togglePlayer();
-        }
-        currentBattleshipModel.endGame();
+//        System.out.println("Run Zeeslag App.");
+//        BattleshipModel currentBattleshipModel = new BattleshipModel();
+//
+//        currentBattleshipModel.prepareGrids();
+//        while (gameRuns) {
+//            currentBattleshipModel.activePlayerPlays();
+//            if (currentBattleshipModel.isGameOver()) {
+//                gameRuns = false;
+//                break;
+//            }
+//            currentBattleshipModel.togglePlayer();
+//        }
+//        currentBattleshipModel.endGame();
     }
 }

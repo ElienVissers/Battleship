@@ -47,12 +47,9 @@ public class PrepareGameScreenPresenter {
         setActivePlayerName();
         setShipLabels(loadCounters());
         createGridPane(view.getGrid());
-
+        //load the ships from getActivePlayer getShipMap en zet ze op het gridpane!
         //set a dummy spaceship
         setDummyShip();
-
-        //TODO how to update? important for model? actually not! --> IF SHIP = POSITIONED, EVENT?
-        //updateAmounts(counter2, counter3, counter4, counter5);
     }
 
     //TODO remove later
@@ -144,15 +141,6 @@ public class PrepareGameScreenPresenter {
         view.getShipLabel5().setText("starcruiser (" + counters[3] + ")\t\t");
     }
 
-    /*
-    private void updateAmounts(int[] counters) {
-        view.getShipLabel2().setText("starfighter (" + counters[0] + ")");
-        view.getShipLabel3().setText("stardiscoverer (" + counters[1] + ")");
-        view.getShipLabel4().setText("stardestroyer (" + counters[2] + ")");
-        view.getShipLabel5().setText("starcruiser (" + counters[3] + ")");
-    }
-    */
-
     private void addSelectShipHandler(Label label) {
         label.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -195,16 +183,25 @@ public class PrepareGameScreenPresenter {
         }
     }
 
-    //TODO when clicking in a cell
+    //TODO when clicking in a cell --> updateView() wordt aangeroepen in de eventhandler (zie Mastermind voorbeeld)
     public void positionShip(/*coordinates from GridPane*/) {
         //adds or changes a ship in the shipMap of the activePlayer
         model.getActivePlayer().positionShip(/*coordinates from gridpane*/);
-
+        //updateAmounts(counter2, counter3, counter4, counter5);
+        /*
+        private void updateAmounts(int[] counters) {
+            view.getShipLabel2().setText("starfighter (" + counters[0] + ")");
+            view.getShipLabel3().setText("stardiscoverer (" + counters[1] + ")");
+            view.getShipLabel4().setText("stardestroyer (" + counters[2] + ")");
+            view.getShipLabel5().setText("starcruiser (" + counters[3] + ")");
+        }
+        */
     }
 
     //TODO when pressing "DONE" button
     public void prepareBoard() {
         //updates the GameBoard of the activePlayer
         model.getActivePlayerBoard().addShips(model.getActivePlayer().getShipMap());
+        //continues to a new screen!!
     }
 }
