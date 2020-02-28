@@ -17,5 +17,5 @@ public abstract class Player {
     public abstract String getName();
     public abstract String getColor();
 
-    public abstract Map<Ship, StartSquare> getStartShipMap();
+    public abstract List<StartSquare> getStartShipList();
 }

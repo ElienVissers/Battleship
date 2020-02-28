@@ -17,7 +17,7 @@ public class ComputerPlayer extends Player {
 
     private String name;
     private String color;
-    private Map<Ship, StartSquare> startShipMap;
+    private List<StartSquare> startShipList;
 
     public ComputerPlayer(String name, String color) {
         this.name = name;
@@ -33,8 +33,8 @@ public class ComputerPlayer extends Player {
     public String getColor() { return color; }
 
     @Override
-    public Map<Ship, StartSquare> getStartShipMap() {
-        return startShipMap;
+    public List<StartSquare> getStartShipList() {
+        return startShipList;
     }
 
     @Override

@@ -56,7 +56,9 @@ public class PrepareGameScreenView extends BorderPane {
         content.getChildren().addAll(createShipBox(), grid, createButtonBox());
         content.setSpacing(100);
         content.setPadding(new Insets(100));
+        content.setAlignment(Pos.CENTER);
         setCenter(content);
+        setAlignment(content, Pos.CENTER);
     }
 
     private VBox createShipBox() {
@@ -67,12 +69,8 @@ public class PrepareGameScreenView extends BorderPane {
         layoutShipLabel(shipLabel5);
         shipBox.getChildren().addAll(shipLabel2, shipLabel3, shipLabel4, shipLabel5);
         shipBox.setSpacing(50);
+        shipBox.setPrefWidth(400);
         return shipBox;
-    }
-
-    private void layoutShipLabel(Label label) {
-        label.getStyleClass().add("ship-label");
-        label.setContentDisplay(ContentDisplay.RIGHT);
     }
 
     private VBox createButtonBox() {
@@ -80,7 +78,13 @@ public class PrepareGameScreenView extends BorderPane {
         doneButton.getStyleClass().add("button-disabled");
         buttonBox.getChildren().addAll(rotateButton, doneButton);
         buttonBox.setSpacing(50);
+        buttonBox.setPrefWidth(400);
         return buttonBox;
+    }
+
+    private void layoutShipLabel(Label label) {
+        label.getStyleClass().add("ship-label");
+        label.setContentDisplay(ContentDisplay.RIGHT);
     }
 
     Label getActivePlayerLabel() {
@@ -105,11 +109,11 @@ public class PrepareGameScreenView extends BorderPane {
 
     GridPane getGrid() { return grid; }
 
-    public Button getRotateButton() {
+    Button getRotateButton() {
         return rotateButton;
     }
 
-    public Button getDoneButton() {
+    Button getDoneButton() {
         return doneButton;
     }
 }

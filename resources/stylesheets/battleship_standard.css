@@ -86,8 +86,8 @@
 .text-field {
     -fx-border-width: 0 0 2 0; /*top, right, bottom, left*/
     -fx-background-color: transparent;
-    -fx-pref-width: 150;
-    -fx-font-size: 15;
+    -fx-pref-width: 250;
+    -fx-font-size: 30;
     -fx-alignment: center;
 }
 
@@ -106,11 +106,12 @@
     -fx-padding: 5 5 5 5;
     -fx-background-radius: 0;
     -fx-background-color: transparent;
-    -fx-font-size: 15;
+    -fx-font-size: 20;
     -fx-border-color: -fx-my-white-color;
     -fx-text-fill: -fx-my-white-color;
     -fx-border-width: 1;
     -fx-border-radius: 0;
+    -fx-pref-width: 170;
 }
 
 .button:hover {
@@ -119,7 +120,7 @@
 }
 
 .button:pressed {
-    -fx-padding: 3 5 7 5;
+    -fx-translate-y: 5;
 }
 
 /* SPECIAL CLASSES */
@@ -133,7 +134,11 @@
 }
 
 .title {
-    -fx-font-size: 20;
+    -fx-font-size: 30;
+}
+
+.ship-label {
+    -fx-font-size: 15;
 }
 
 .ship-label:hover, .ship-label-selected {
@@ -145,6 +150,7 @@
     -fx-text-fill: -fx-my-highlight-color;
     -fx-background-color: -fx-my-background-color;
     -fx-cursor: pointer;
+    -fx-font-size: 15;
 }
 
 .grid-pane > * {
@@ -161,7 +167,7 @@
     -fx-padding: 5 5 5 5;
     -fx-background-radius: 0;
     -fx-background-color: transparent;
-    -fx-font-size: 15;
+    -fx-font-size: 20;
     -fx-border-color: -fx-my-highlight-color;
     -fx-text-fill: -fx-my-highlight-color;
     -fx-border-width: 1;
@@ -173,15 +179,6 @@
     -fx-background-color: -fx-my-background-color;
 }
 
-.button:pressed {
-    -fx-padding: 0 0 0 0;
-}
-
-/* TO DO */
-.radio-button {
-    -fx-padding: 8px;
-}
-
-.button-clicked {
-    -fx-text-fill: red;
+.button-disabled:pressed {
+    -fx-translate-y: 0;
 }

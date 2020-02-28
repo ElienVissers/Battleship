@@ -10,19 +10,22 @@ package Battleship.model;
 public class StartSquare {
     private int[] coordinates;
     private boolean horizontal;
+    private int size;
 
-    public StartSquare(int x, int y) {
+    StartSquare(int x, int y, boolean horizontal, int size) {
         this.coordinates = new int[]{x, y};
+        this.horizontal = horizontal;
+        this.size = size;
     }
     public int[] getCoordinates() {
         return coordinates;
     }
 
-    public void setHorizontal(boolean horizontal) {
-        this.horizontal = horizontal;
-    }
-
     public boolean isHorizontal() {
         return horizontal;
+    }
+
+    public int getSize() {
+        return size;
     }
 }

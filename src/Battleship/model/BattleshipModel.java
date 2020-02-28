@@ -89,8 +89,8 @@ public class BattleshipModel {
     }
 
     /*allows every player to position ships on the map*/
-    public void prepareGrids(Map<Ship, List<Square>> shipMap) {
-        gameboards.get(activePlayer).addShips(shipMap);
+    public void prepareGrid() {
+        //TODO load ships from activePlayer --> gameboards.get(activePlayer).addShips(...)
         togglePlayer();
     }
 
@@ -141,10 +141,6 @@ public class BattleshipModel {
 
     public Player getActivePlayer() {
         return activePlayer;
-    }
-
-    public GameBoard getActivePlayerBoard() {
-        return gameboards.get(activePlayer);
     }
 
     public int[] getAvailableShips() {

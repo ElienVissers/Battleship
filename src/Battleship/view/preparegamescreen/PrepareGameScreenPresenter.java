@@ -1,9 +1,11 @@
 package Battleship.view.preparegamescreen;
 
 import Battleship.model.BattleshipModel;
-import Battleship.model.Ship;
 import Battleship.model.StartSquare;
 import Battleship.view.UISettings;
+
+import Battleship.view.toggleplayerscreen.TogglePlayerScreenPresenter;
+import Battleship.view.toggleplayerscreen.TogglePlayerScreenView;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -15,7 +17,10 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.stage.WindowEvent;
-import java.util.Map;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author Elien Vissers-Similon
@@ -33,6 +38,7 @@ public class PrepareGameScreenPresenter {
     private Label[] shipLabels;
     private boolean horizontal = true;
     private int[] currentShipCoordinates;
+    private List<List<int[]>> shipCoordinatesList;
 
     public PrepareGameScreenPresenter(BattleshipModel model, PrepareGameScreenView view, UISettings uiSettings) {
         this.model = model;
@@ -48,10 +54,11 @@ public class PrepareGameScreenPresenter {
         this.shipLabels[3] = view.getShipLabel5();
         this.currentShipCoordinates = new int[4];
 
-        this.loadCounters();
-        this.createGridPane(view.getGrid());
-        this.updateView();
-        this.addEventHandlers();
+        setActivePlayerName();
+        loadCounters();
+        createGridPane(view.getGrid());
+        updateView();
+        addEventHandlers();
     }
 
     private void addEventHandlers() {
@@ -64,9 +71,9 @@ public class PrepareGameScreenPresenter {
     }
 
     private void updateView() {
-        setActivePlayerName();
         setShipLabels(counters);
-        loadShips();
+        loadNewShip();
+        shipCoordinatesList = getShipCoordinates();
     }
 
     public void windowsHandlers() {
@@ -79,7 +86,7 @@ public class PrepareGameScreenPresenter {
     }
 
     private void setActivePlayerName() {
-        view.getActivePlayerLabel().setText("Prepare you fleet for battle, " + model.getActivePlayer().getName());
+        view.getActivePlayerLabel().setText("Prepare you fleet for battle, " + model.getActivePlayer().getName() + "!");
         view.getActivePlayerLabel().getStyleClass().add("title");
         if (model.getActivePlayer().getColor().equals("red")) {
             view.getActivePlayerLabel().getStyleClass().add("red-text");
@@ -88,6 +95,7 @@ public class PrepareGameScreenPresenter {
         }
     }
 
+    //TODO IMPROVEMENT add "A1 --> J10" in color activePlayer (this will also trigger some changes in highlightShipSize() because the startindex for the ships will be 1 instead of 0)
     private void createGridPane(GridPane grid) {
         int gridSize = model.getGridSize();
         for (int i = 0; i < gridSize; i++) {
@@ -104,6 +112,10 @@ public class PrepareGameScreenPresenter {
             }
         }
         grid.getStyleClass().add("grid-pane");
+    }
+
+    private boolean isHorizontal() {
+        return horizontal;
     }
 
     private void loadCounters() {
@@ -128,7 +140,7 @@ public class PrepareGameScreenPresenter {
         view.getShipLabel5().setGraphic(new ImageView(ship5));
         view.getShipLabel2().setText("starfighter (" + counters[0] + ")\t\t");
         view.getShipLabel3().setText("stardiscoverer (" + counters[1] + ")\t");
-        view.getShipLabel4().setText("stardestroyer (" + counters[2] + ")\t");
+        view.getShipLabel4().setText("stardestroyer (" + counters[2] + ")\t\t");
         view.getShipLabel5().setText("starcruiser (" + counters[3] + ")\t\t");
         for (int i = 0; i < counters.length; i++) {
             if (counters[i] == 0) {
@@ -203,7 +215,7 @@ public class PrepareGameScreenPresenter {
             targetNode.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent t) {
-                    if (getSelectedShipSize() == 0 || counters[getSelectedShipSize() -2 ] == 0) {
+                    if (getSelectedShipSize() == 0 || counters[getSelectedShipSize() -2 ] == 0 || currentShipCoordinates[0] == -1) {
                         t.consume();
                     } else {
                         model.getActivePlayer().positionShip(currentShipCoordinates);
@@ -214,16 +226,27 @@ public class PrepareGameScreenPresenter {
                         }
                         if (done == 4) {
                             view.getDoneButton().getStyleClass().remove("button-disabled");
-                            //TODO add clickhandler button here
-//                            private void prepareBoard() {
-//                                //updates the GameBoard of the activePlayer
-//                                //figure out StartSquare <--> Square relation
-//                                //model.getActivePlayerBoard().addShips(model.getActivePlayer().getShipMap());
-//                                //also a different function in the eventhandler to continue to a new screen!!
-//                            }
+                            view.getDoneButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
+                                @Override
+                                public void handle(MouseEvent t) {
+                                    model.prepareGrid();
+                                    //TODO
+                                    //write prepareGrid() function (the ships are already saved in the activePlayer)
+                                    //figure out StartSquare <--> Square relation
+
+                                    TogglePlayerScreenView togglePlayerScreenView = new TogglePlayerScreenView(uiSettings);
+                                    TogglePlayerScreenPresenter togglePlayerScreenPresenter = new TogglePlayerScreenPresenter(model, togglePlayerScreenView, uiSettings);
+                                    view.getScene().setRoot(togglePlayerScreenView);
+                                    togglePlayerScreenPresenter.windowsHandler();
+                                }
+                            });
                         }
                         updateView();
-                        addEventHandlers();
+                        //disable a direct second click and remove highlight:
+                        Arrays.fill(currentShipCoordinates, -1);
+                        for (Node n : view.getGrid().getChildren()) {
+                            n.getStyleClass().remove("grid-pane-selected");
+                        }
                     }
                 }
             });
@@ -244,101 +267,55 @@ public class PrepareGameScreenPresenter {
         return selectedSize;
     }
 
-    private boolean isHorizontal() {
-        return horizontal;
-    }
-
-    private void highlightShipSize(int shipSize, boolean horizontal, int columnIndex, int rowIndex, int targetColumnIndex, int targetRowIndex, Node n) {
-        //TODO get ships that are already on the map (from model activePlayer) and make sure overlap is NOT possible
-        //per case horizontal/vertical, if there is a ship on the targetCell or in the next x cells --> break
-        currentShipCoordinates[0] = targetColumnIndex;
-        currentShipCoordinates[1] = targetRowIndex;
-        switch (shipSize) {
-            case 2:
-                currentShipCoordinates[2] = 2;
-                if (horizontal && targetColumnIndex <= (model.getGridSize() - 2)) {
-                    currentShipCoordinates[3] = 0;
-                    if (rowIndex == targetRowIndex &&
-                            (columnIndex == targetColumnIndex || columnIndex == (targetColumnIndex + 1))) {
-                        n.getStyleClass().add("grid-pane-selected");
-                    }
-                } else if (!horizontal && targetRowIndex <= (model.getGridSize() - 2)) {
-                    currentShipCoordinates[3] = 1;
-                    if (columnIndex == targetColumnIndex &&
-                            (rowIndex == targetRowIndex || rowIndex == (targetRowIndex + 1))) {
-                        n.getStyleClass().add("grid-pane-selected");
-                    }
+    //TODO IMPROVEMENT move this functionality to the Player class (default method in the abstract class?)
+    private List<List<int[]>> getShipCoordinates() {
+        List<List<int[]>> shipCoordinates = new ArrayList<>();
+        for (StartSquare startSquare : model.getActivePlayer().getStartShipList()) {
+            int[] startCoordinates = startSquare.getCoordinates();
+            List<int[]> coordinates = new ArrayList<>();
+            coordinates.add(startCoordinates);
+            int x = startCoordinates[0];
+            int y = startCoordinates[1];
+            if (startSquare.isHorizontal()) {
+                switch (startSquare.getSize()) {
+                    case 2: coordinates.add(new int[]{x + 1, y}); break;
+                    case 3: coordinates.add(new int[]{x + 1, y}); coordinates.add(new int[]{x + 2, y}); break;
+                    case 4: coordinates.add(new int[]{x + 1, y}); coordinates.add(new int[]{x + 2, y}); coordinates.add(new int[]{x + 3, y}); break;
+                    case 5: coordinates.add(new int[]{x + 1, y}); coordinates.add(new int[]{x + 2, y}); coordinates.add(new int[]{x + 3, y}); coordinates.add(new int[]{x + 4, y}); break;
                 }
-                break;
-            case 3:
-                currentShipCoordinates[2] = 3;
-                if (horizontal && targetColumnIndex <= (model.getGridSize() - 3)) {
-                    currentShipCoordinates[3] = 0;
-                    if (rowIndex == targetRowIndex &&
-                            (columnIndex == targetColumnIndex || columnIndex == (targetColumnIndex + 1) || columnIndex == (targetColumnIndex + 2))) {
-                        n.getStyleClass().add("grid-pane-selected");
-                    }
-                } else if (!horizontal && targetRowIndex <= (model.getGridSize() - 3)) {
-                    currentShipCoordinates[3] = 1;
-                    if (columnIndex == targetColumnIndex &&
-                            (rowIndex == targetRowIndex || rowIndex == (targetRowIndex + 1) || rowIndex == (targetRowIndex + 2))) {
-                        n.getStyleClass().add("grid-pane-selected");
-                    }
+            } else {
+                switch (startSquare.getSize()) {
+                    case 2: coordinates.add(new int[]{x, y + 1}); break;
+                    case 3: coordinates.add(new int[]{x, y + 1}); coordinates.add(new int[]{x, y + 2}); break;
+                    case 4: coordinates.add(new int[]{x, y + 1}); coordinates.add(new int[]{x, y + 2}); coordinates.add(new int[]{x, y + 3}); break;
+                    case 5: coordinates.add(new int[]{x, y + 1}); coordinates.add(new int[]{x, y + 2}); coordinates.add(new int[]{x, y + 3}); coordinates.add(new int[]{x, y + 4}); break;
                 }
-                break;
-            case 4:
-                currentShipCoordinates[2] = 4;
-                if (horizontal && targetColumnIndex <= (model.getGridSize() - 4)) {
-                    currentShipCoordinates[3] = 0;
-                    if (rowIndex == targetRowIndex &&
-                            (columnIndex == targetColumnIndex || columnIndex == (targetColumnIndex + 1) || columnIndex == (targetColumnIndex + 2) || columnIndex == (targetColumnIndex + 3))) {
-                        n.getStyleClass().add("grid-pane-selected");
-                    }
-                } else if (!horizontal && targetRowIndex <= (model.getGridSize() - 4)) {
-                    currentShipCoordinates[3] = 1;
-                    if (columnIndex == targetColumnIndex &&
-                            (rowIndex == targetRowIndex || rowIndex == (targetRowIndex + 1) || rowIndex == (targetRowIndex + 2) || rowIndex == (targetRowIndex + 3))) {
-                        n.getStyleClass().add("grid-pane-selected");
-                    }
-                }
-                break;
-            case 5:
-                currentShipCoordinates[2] = 5;
-                if (horizontal && targetColumnIndex <= (model.getGridSize() - 5)) {
-                    currentShipCoordinates[3] = 0;
-                    if (rowIndex == targetRowIndex &&
-                            (columnIndex == targetColumnIndex || columnIndex == (targetColumnIndex + 1) || columnIndex == (targetColumnIndex + 2) || columnIndex == (targetColumnIndex + 3) || columnIndex == (targetColumnIndex + 4))) {
-                        n.getStyleClass().add("grid-pane-selected");
-                    }
-                } else if (!horizontal && targetRowIndex <= (model.getGridSize() - 5)) {
-                    currentShipCoordinates[3] = 1;
-                    if (columnIndex == targetColumnIndex &&
-                            (rowIndex == targetRowIndex || rowIndex == (targetRowIndex + 1) || rowIndex == (targetRowIndex + 2) || rowIndex == (targetRowIndex + 3) || rowIndex == (targetRowIndex + 4))) {
-                        n.getStyleClass().add("grid-pane-selected");
-                    }
-                }
-                break;
+            }
+            shipCoordinates.add(coordinates);
         }
+        return shipCoordinates;
     }
 
-    private void loadShips() {
-        for (Map.Entry<Ship, StartSquare> entry : model.getActivePlayer().getStartShipMap().entrySet()) {
+    private void loadNewShip() {
+        if (model.getActivePlayer().getStartShipList().size() > 0) {
+            int amountOfShipsPlaced = model.getActivePlayer().getStartShipList().size();
+            StartSquare startSquare = model.getActivePlayer().getStartShipList().get(amountOfShipsPlaced - 1);
             Image shipImage = null;
             int rowSpan;
             int colSpan;
-            if (entry.getValue().isHorizontal()) {
+            if (startSquare.isHorizontal()) {
                 rowSpan = 1;
-                colSpan = entry.getKey().getSize();
-                switch (entry.getKey().getSize()) {
+                colSpan = startSquare.getSize();
+                switch (startSquare.getSize()) {
                     case 2: shipImage = new Image("/images/ship_" + model.getActivePlayer().getColor() + "_2.png", 100, 50, true, true); break;
                     case 3: shipImage = new Image("/images/ship_" + model.getActivePlayer().getColor() + "_3.png", 150, 50, true, true); break;
                     case 4: shipImage = new Image("/images/ship_" + model.getActivePlayer().getColor() + "_4.png", 200, 50, true, true); break;
                     case 5: shipImage = new Image("/images/ship_" + model.getActivePlayer().getColor() + "_5.png", 250, 50, true, true); break;
                 }
             } else {
-                rowSpan = entry.getKey().getSize();
+                rowSpan = startSquare.getSize();
                 colSpan = 1;
-                switch (entry.getKey().getSize()) {
+                switch (startSquare.getSize()) {
                     case 2: shipImage = new Image("/images/ship_" + model.getActivePlayer().getColor() + "_2_vert.png", 50, 100, true, true); break;
                     case 3: shipImage = new Image("/images/ship_" + model.getActivePlayer().getColor() + "_3_vert.png", 50, 150, true, true); break;
                     case 4: shipImage = new Image("/images/ship_" + model.getActivePlayer().getColor() + "_4_vert.png", 50, 200, true, true); break;
@@ -346,7 +323,190 @@ public class PrepareGameScreenPresenter {
                 }
             }
             ImageView shipView = new ImageView(shipImage);
-            view.getGrid().add(shipView, entry.getValue().getCoordinates()[0], entry.getValue().getCoordinates()[1], colSpan, rowSpan);
+            view.getGrid().add(shipView, startSquare.getCoordinates()[0], startSquare.getCoordinates()[1], colSpan, rowSpan);
         }
+    }
+
+    private void highlightShipSize(int shipSize, boolean horizontal, int columnIndex, int rowIndex, int targetColumnIndex, int targetRowIndex, Node n) {
+        switch (shipSize) {
+            case 2:
+                if (horizontal && targetColumnIndex <= (model.getGridSize() - 2)) {
+                    if (rowIndex == targetRowIndex &&
+                            (columnIndex == targetColumnIndex || columnIndex == (targetColumnIndex + 1))) {
+                        for (List<int[]> aShipCoordinateList : shipCoordinatesList) {
+                            for (int[] aCoordinate : aShipCoordinateList) {
+                                int x = aCoordinate[0];
+                                int y = aCoordinate[1];
+                                if ((x == targetColumnIndex && y == targetRowIndex)
+                                        || (x == (targetColumnIndex + 1) && y == targetRowIndex)) {
+                                    Arrays.fill(currentShipCoordinates, -1);
+                                    return;
+                                }
+                            }
+                        }
+                        n.getStyleClass().add("grid-pane-selected");
+                    }
+                    currentShipCoordinates[3] = 0;
+                } else if (!horizontal && targetRowIndex <= (model.getGridSize() - 2)) {
+                    if (columnIndex == targetColumnIndex &&
+                            (rowIndex == targetRowIndex || rowIndex == (targetRowIndex + 1))) {
+                        for (List<int[]> aShipCoordinateList : shipCoordinatesList) {
+                            for (int[] aCoordinate : aShipCoordinateList) {
+                                int x = aCoordinate[0];
+                                int y = aCoordinate[1];
+                                if ((x == targetColumnIndex && y == targetRowIndex)
+                                        || (x == targetColumnIndex && y == (targetRowIndex + 1))) {
+                                    Arrays.fill(currentShipCoordinates, -1);
+                                    return;
+                                }
+                            }
+                        }
+                        n.getStyleClass().add("grid-pane-selected");
+                    }
+                    currentShipCoordinates[3] = 1;
+                } else {
+                    Arrays.fill(currentShipCoordinates, -1);
+                    return;
+                }
+                currentShipCoordinates[2] = 2;
+                break;
+            case 3:
+                if (horizontal && targetColumnIndex <= (model.getGridSize() - 3)) {
+                    if (rowIndex == targetRowIndex &&
+                            (columnIndex == targetColumnIndex || columnIndex == (targetColumnIndex + 1) || columnIndex == (targetColumnIndex + 2))) {
+                        for (List<int[]> aShipCoordinateList : shipCoordinatesList) {
+                            for (int[] aCoordinate : aShipCoordinateList) {
+                                int x = aCoordinate[0];
+                                int y = aCoordinate[1];
+                                if ((x == targetColumnIndex && y == targetRowIndex)
+                                        || (x == (targetColumnIndex + 1) && y == targetRowIndex)
+                                        || (x == (targetColumnIndex + 2) && y == targetRowIndex)) {
+                                    Arrays.fill(currentShipCoordinates, -1);
+                                    return;
+                                }
+                            }
+                        }
+                        n.getStyleClass().add("grid-pane-selected");
+                    }
+                    currentShipCoordinates[3] = 0;
+                } else if (!horizontal && targetRowIndex <= (model.getGridSize() - 3)) {
+                    if (columnIndex == targetColumnIndex &&
+                            (rowIndex == targetRowIndex || rowIndex == (targetRowIndex + 1) || rowIndex == (targetRowIndex + 2))) {
+                        for (List<int[]> aShipCoordinateList : shipCoordinatesList) {
+                            for (int[] aCoordinate : aShipCoordinateList) {
+                                int x = aCoordinate[0];
+                                int y = aCoordinate[1];
+                                if ((x == targetColumnIndex && y == targetRowIndex)
+                                        || (x == targetColumnIndex && y == (targetRowIndex + 1))
+                                        || (x == targetColumnIndex && y == (targetRowIndex + 2))) {
+                                    Arrays.fill(currentShipCoordinates, -1);
+                                    return;
+                                }
+                            }
+                        }
+                        n.getStyleClass().add("grid-pane-selected");
+                    }
+                    currentShipCoordinates[3] = 1;
+                } else {
+                    Arrays.fill(currentShipCoordinates, -1);
+                    return;
+                }
+                currentShipCoordinates[2] = 3;
+                break;
+            case 4:
+                if (horizontal && targetColumnIndex <= (model.getGridSize() - 4)) {
+                    if (rowIndex == targetRowIndex &&
+                            (columnIndex == targetColumnIndex || columnIndex == (targetColumnIndex + 1) || columnIndex == (targetColumnIndex + 2) || columnIndex == (targetColumnIndex + 3))) {
+                        for (List<int[]> aShipCoordinateList : shipCoordinatesList) {
+                            for (int[] aCoordinate : aShipCoordinateList) {
+                                int x = aCoordinate[0];
+                                int y = aCoordinate[1];
+                                if ((x == targetColumnIndex && y == targetRowIndex)
+                                        || (x == (targetColumnIndex + 1) && y == targetRowIndex)
+                                        || (x == (targetColumnIndex + 2) && y == targetRowIndex)
+                                        || (x == (targetColumnIndex + 3) && y == targetRowIndex)) {
+                                    Arrays.fill(currentShipCoordinates, -1);
+                                    return;
+                                }
+                            }
+                        }
+                        n.getStyleClass().add("grid-pane-selected");
+                    }
+                    currentShipCoordinates[3] = 0;
+                } else if (!horizontal && targetRowIndex <= (model.getGridSize() - 4)) {
+                    if (columnIndex == targetColumnIndex &&
+                            (rowIndex == targetRowIndex || rowIndex == (targetRowIndex + 1) || rowIndex == (targetRowIndex + 2) || rowIndex == (targetRowIndex + 3))) {
+                        for (List<int[]> aShipCoordinateList : shipCoordinatesList) {
+                            for (int[] aCoordinate : aShipCoordinateList) {
+                                int x = aCoordinate[0];
+                                int y = aCoordinate[1];
+                                if ((x == targetColumnIndex && y == targetRowIndex)
+                                        || (x == targetColumnIndex && y == (targetRowIndex + 1))
+                                        || (x == targetColumnIndex && y == (targetRowIndex + 2))
+                                        || (x == targetColumnIndex && y == (targetRowIndex + 3))) {
+                                    Arrays.fill(currentShipCoordinates, -1);
+                                    return;
+                                }
+                            }
+                        }
+                        n.getStyleClass().add("grid-pane-selected");
+                    }
+                    currentShipCoordinates[3] = 1;
+                } else {
+                    Arrays.fill(currentShipCoordinates, -1);
+                    return;
+                }
+                currentShipCoordinates[2] = 4;
+                break;
+            case 5:
+                if (horizontal && targetColumnIndex <= (model.getGridSize() - 5)) {
+                    if (rowIndex == targetRowIndex &&
+                            (columnIndex == targetColumnIndex || columnIndex == (targetColumnIndex + 1) || columnIndex == (targetColumnIndex + 2) || columnIndex == (targetColumnIndex + 3) || columnIndex == (targetColumnIndex + 4))) {
+                        for (List<int[]> aShipCoordinateList : shipCoordinatesList) {
+                            for (int[] aCoordinate : aShipCoordinateList) {
+                                int x = aCoordinate[0];
+                                int y = aCoordinate[1];
+                                if ((x == targetColumnIndex && y == targetRowIndex)
+                                        || (x == (targetColumnIndex + 1) && y == targetRowIndex)
+                                        || (x == (targetColumnIndex + 2) && y == targetRowIndex)
+                                        || (x == (targetColumnIndex + 3) && y == targetRowIndex)
+                                        || (x == (targetColumnIndex + 4) && y == targetRowIndex)) {
+                                    Arrays.fill(currentShipCoordinates, -1);
+                                    return;
+                                }
+                            }
+                        }
+                        n.getStyleClass().add("grid-pane-selected");
+                    }
+                    currentShipCoordinates[3] = 0;
+                } else if (!horizontal && targetRowIndex <= (model.getGridSize() - 5)) {
+                    if (columnIndex == targetColumnIndex &&
+                            (rowIndex == targetRowIndex || rowIndex == (targetRowIndex + 1) || rowIndex == (targetRowIndex + 2) || rowIndex == (targetRowIndex + 3) || rowIndex == (targetRowIndex + 4))) {
+                        for (List<int[]> aShipCoordinateList : shipCoordinatesList) {
+                            for (int[] aCoordinate : aShipCoordinateList) {
+                                int x = aCoordinate[0];
+                                int y = aCoordinate[1];
+                                if ((x == targetColumnIndex && y == targetRowIndex)
+                                        || (x == targetColumnIndex && y == (targetRowIndex + 1))
+                                        || (x == targetColumnIndex && y == (targetRowIndex + 2))
+                                        || (x == targetColumnIndex && y == (targetRowIndex + 3))
+                                        || (x == targetColumnIndex && y == (targetRowIndex + 4))) {
+                                    Arrays.fill(currentShipCoordinates, -1);
+                                    return;
+                                }
+                            }
+                        }
+                        n.getStyleClass().add("grid-pane-selected");
+                    }
+                    currentShipCoordinates[3] = 1;
+                } else {
+                    Arrays.fill(currentShipCoordinates, -1);
+                    return;
+                }
+                currentShipCoordinates[2] = 5;
+                break;
+        }
+        currentShipCoordinates[0] = targetColumnIndex;
+        currentShipCoordinates[1] = targetRowIndex;
     }
 }

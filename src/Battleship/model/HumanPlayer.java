@@ -13,12 +13,12 @@ public class HumanPlayer extends Player {
 
     private String name;
     private String color;
-    private Map<Ship, StartSquare> startShipMap;
+    private List<StartSquare> startShipList;
 
     public HumanPlayer(String name, String color) {
         this.name = name;
         this.color = color;
-        this.startShipMap = new HashMap<>();
+        this.startShipList = new ArrayList<>();
     }
 
     @Override
@@ -29,31 +29,19 @@ public class HumanPlayer extends Player {
     @Override
     public String getColor() { return color; }
 
-    public Map<Ship, StartSquare> getStartShipMap() {
-        return startShipMap;
+    public List<StartSquare> getStartShipList() {
+        return startShipList;
     }
 
     @Override
     public void positionShip(int[] currentShipCoordinates) {
-        //updates the shipMap
-        Ship currentShip = null;
-        switch (currentShipCoordinates[2]) {
-            case 2: currentShip = Ship.STARFIGHTER; break;
-            case 3: currentShip = Ship.STARDISCOVERER; break;
-            case 4: currentShip = Ship.STARDESTROYER; break;
-            case 5: currentShip = Ship.STARCRUISER; break;
-        }
+        //updates startShipList
         int startX = currentShipCoordinates[0];
         int startY = currentShipCoordinates[1];
-        boolean horizontal;
-        if (currentShipCoordinates[3] == 0) {
-            horizontal = true;
-        } else {
-            horizontal = false;
-        }
-        StartSquare startSquare = new StartSquare(startX, startY);
-        startSquare.setHorizontal(horizontal);
-        startShipMap.put(currentShip, startSquare);
+        int size = currentShipCoordinates[2];
+        boolean horizontal = currentShipCoordinates[3] == 0;
+        StartSquare startSquare = new StartSquare(startX, startY, horizontal, size);
+        startShipList.add(startSquare);
     }
 
     @Override
