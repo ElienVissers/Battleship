@@ -163,6 +163,25 @@
     -fx-cursor: hand;
 }
 
+.grid-edge-corner {
+    -fx-border-width: 0 0 0 0;
+}
+
+.grid-edge-left {
+    -fx-border-width: 0 1 0 0;
+}
+
+.grid-edge-top {
+    -fx-border-width: 0 0 1 0;
+}
+
+.grid-legend {
+    -fx-font-size: 30;
+    -fx-border-width: 0;
+    -fx-pref-width: 50;
+    -fx-alignment: center;
+}
+
 .button-disabled {
     -fx-padding: 5 5 5 5;
     -fx-background-radius: 0;

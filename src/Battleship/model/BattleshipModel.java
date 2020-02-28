@@ -91,6 +91,7 @@ public class BattleshipModel {
     /*allows every player to position ships on the map*/
     public void prepareGrid() {
         //TODO load ships from activePlayer --> gameboards.get(activePlayer).addShips(...)
+        //gameboards.get(activePlayer).addShips(activePlayer.getStartShipList());
         togglePlayer();
     }
 

@@ -67,7 +67,9 @@ public class PrepareGameScreenView extends BorderPane {
         layoutShipLabel(shipLabel3);
         layoutShipLabel(shipLabel4);
         layoutShipLabel(shipLabel5);
-        shipBox.getChildren().addAll(shipLabel2, shipLabel3, shipLabel4, shipLabel5);
+        Region empty = new Region();
+        empty.setPrefHeight(50);
+        shipBox.getChildren().addAll(empty, shipLabel2, shipLabel3, shipLabel4, shipLabel5);
         shipBox.setSpacing(50);
         shipBox.setPrefWidth(400);
         return shipBox;
@@ -75,10 +77,12 @@ public class PrepareGameScreenView extends BorderPane {
 
     private VBox createButtonBox() {
         VBox buttonBox = new VBox();
+        Region empty = new Region();
+        empty.setPrefHeight(50);
         doneButton.getStyleClass().add("button-disabled");
-        buttonBox.getChildren().addAll(rotateButton, doneButton);
+        buttonBox.getChildren().addAll(empty, rotateButton, doneButton);
         buttonBox.setSpacing(50);
-        buttonBox.setPrefWidth(400);
+        buttonBox.setPrefWidth(450);
         return buttonBox;
     }
 

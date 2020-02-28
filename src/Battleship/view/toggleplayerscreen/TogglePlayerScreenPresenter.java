@@ -10,7 +10,6 @@ import Battleship.view.UISettings;
 import Battleship.view.preparegamescreen.PrepareGameScreenPresenter;
 import Battleship.view.preparegamescreen.PrepareGameScreenView;
 import javafx.event.*;
-import javafx.scene.*;
 import javafx.stage.WindowEvent;
 
 /**
