@@ -37,9 +37,9 @@ public class BattleshipModel {
 
     }
 
-    private final Random rand = new Random();
+    private final Random rand = new Random(); //possible game extension; random "verdeling" zodat de kans op kleinere getallen groter is
     private final int GRIDSIZE = 10; //possible game extension; when custom: check GUI what is the maximum that fits on the screen... OR different stylesheets
-    private final int NUMBER_OF_SHIPS = 10; //possible game extension; dependant on GRIDSIZE
+    private final int NUMBER_OF_SHIPS = 10; //possible game extension; dependant on GRIDSIZE > 5 - 15?
 
     private List<Player> players;
     private Player activePlayer;

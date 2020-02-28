@@ -69,7 +69,7 @@ class GameBoard {
         return hit;
     }
 
-    //TODO loop through the shipList, if all coordinates of 1 ship have been hit, then return true --> this will trigger the GameScreenPresenter to show and black out the ship
+    //TODO --> this will trigger the GameScreenPresenter to show and black out the ship
     boolean hasSunken(int x, int y) {
         boolean sunken = false;
         for (List<Square> aShipCoordinateList : shipList) {
