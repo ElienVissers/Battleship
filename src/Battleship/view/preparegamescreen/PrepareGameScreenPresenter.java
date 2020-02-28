@@ -1,11 +1,10 @@
 package Battleship.view.preparegamescreen;
 
 import Battleship.model.BattleshipModel;
-import Battleship.model.StartSquare;
 import Battleship.view.UISettings;
-
 import Battleship.view.toggleplayerscreen.TogglePlayerScreenPresenter;
 import Battleship.view.toggleplayerscreen.TogglePlayerScreenView;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -71,7 +70,6 @@ public class PrepareGameScreenPresenter {
 
     private void updateView() {
         setShipLabels(counters);
-        loadNewShip();
         shipCoordinatesList = model.getActivePlayer().getShipCoordinates();
     }
 
@@ -240,6 +238,7 @@ public class PrepareGameScreenPresenter {
                     } else {
                         model.getActivePlayer().positionShip(currentShipCoordinates);
                         counters[currentShipCoordinates[2] - 2]--;
+                        addShipToGrid();
                         int done = 0;
                         for (int counter : counters) {
                             if (counter == 0) done++;
@@ -261,12 +260,12 @@ public class PrepareGameScreenPresenter {
                                 }
                             });
                         }
-                        updateView();
-                        //disable a direct second click and remove highlight:
+                        //disable a second click and remove highlights:
                         Arrays.fill(currentShipCoordinates, -1);
                         for (Node n : view.getGrid().getChildren()) {
                             n.getStyleClass().remove("grid-pane-selected");
                         }
+                        updateView();
                     }
                 }
             });
@@ -287,35 +286,34 @@ public class PrepareGameScreenPresenter {
         return selectedSize;
     }
 
-    private void loadNewShip() {
-        if (model.getActivePlayer().getStartShipList().size() > 0) {
-            int amountOfShipsPlaced = model.getActivePlayer().getStartShipList().size();
-            StartSquare startSquare = model.getActivePlayer().getStartShipList().get(amountOfShipsPlaced - 1);
-            Image shipImage = null;
-            int rowSpan;
-            int colSpan;
-            if (startSquare.isHorizontal()) {
-                rowSpan = 1;
-                colSpan = startSquare.getSize();
-                switch (startSquare.getSize()) {
-                    case 2: shipImage = new Image("/images/ship_" + model.getActivePlayer().getColor() + "_2.png", 100, 50, true, true); break;
-                    case 3: shipImage = new Image("/images/ship_" + model.getActivePlayer().getColor() + "_3.png", 150, 50, true, true); break;
-                    case 4: shipImage = new Image("/images/ship_" + model.getActivePlayer().getColor() + "_4.png", 200, 50, true, true); break;
-                    case 5: shipImage = new Image("/images/ship_" + model.getActivePlayer().getColor() + "_5.png", 250, 50, true, true); break;
-                }
-            } else {
-                rowSpan = startSquare.getSize();
-                colSpan = 1;
-                switch (startSquare.getSize()) {
-                    case 2: shipImage = new Image("/images/ship_" + model.getActivePlayer().getColor() + "_2_vert.png", 50, 100, true, true); break;
-                    case 3: shipImage = new Image("/images/ship_" + model.getActivePlayer().getColor() + "_3_vert.png", 50, 150, true, true); break;
-                    case 4: shipImage = new Image("/images/ship_" + model.getActivePlayer().getColor() + "_4_vert.png", 50, 200, true, true); break;
-                    case 5: shipImage = new Image("/images/ship_" + model.getActivePlayer().getColor() + "_5_vert.png", 50, 250, true, true); break;
-                }
+    private void addShipToGrid() {
+        Image shipImage = null;
+        if (horizontal) {
+            switch (currentShipCoordinates[2]) {
+                case 2: shipImage = new Image("/images/ship_" + model.getActivePlayer().getColor() + "_2.png", 100, 50, true, true); break;
+                case 3: shipImage = new Image("/images/ship_" + model.getActivePlayer().getColor() + "_3.png", 150, 50, true, true); break;
+                case 4: shipImage = new Image("/images/ship_" + model.getActivePlayer().getColor() + "_4.png", 200, 50, true, true); break;
+                case 5: shipImage = new Image("/images/ship_" + model.getActivePlayer().getColor() + "_5.png", 250, 50, true, true); break;
             }
-            ImageView shipView = new ImageView(shipImage);
-            view.getGrid().add(shipView, startSquare.getCoordinates()[0], startSquare.getCoordinates()[1], colSpan, rowSpan);
+        } else {
+            switch (currentShipCoordinates[2]) {
+                case 2: shipImage = new Image("/images/ship_" + model.getActivePlayer().getColor() + "_2_vert.png", 50, 100, true, true); break;
+                case 3: shipImage = new Image("/images/ship_" + model.getActivePlayer().getColor() + "_3_vert.png", 50, 150, true, true); break;
+                case 4: shipImage = new Image("/images/ship_" + model.getActivePlayer().getColor() + "_4_vert.png", 50, 200, true, true); break;
+                case 5: shipImage = new Image("/images/ship_" + model.getActivePlayer().getColor() + "_5_vert.png", 50, 250, true, true); break;
+            }
         }
+        ImageView shipView = new ImageView(shipImage);
+        int rowSpan;
+        int colSpan;
+        if (horizontal) {
+            rowSpan = 1;
+            colSpan = currentShipCoordinates[2];
+        } else {
+            rowSpan = currentShipCoordinates[2];
+            colSpan = 1;
+        }
+        view.getGrid().add(shipView, currentShipCoordinates[0], currentShipCoordinates[1], colSpan, rowSpan);
     }
 
     private void highlightShipSize(int shipSize, boolean horizontal, int columnIndex, int rowIndex, int targetColumnIndex, int targetRowIndex, Node n) {

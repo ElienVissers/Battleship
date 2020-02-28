@@ -11,6 +11,30 @@ import java.util.List;
  */
 
 public abstract class Player {
+
+    static class StartSquare {
+        private int[] coordinates;
+        private boolean horizontal;
+        private int size;
+
+        StartSquare(int x, int y, boolean horizontal, int size) {
+            this.coordinates = new int[]{x, y};
+            this.horizontal = horizontal;
+            this.size = size;
+        }
+        int[] getCoordinates() {
+            return coordinates;
+        }
+
+        boolean isHorizontal() {
+            return horizontal;
+        }
+
+        int getSize() {
+            return size;
+        }
+    }
+
     public abstract void positionShip(int[] currentShipCoordinates);
     public abstract Square fireRocket();
     public abstract String getName();
@@ -45,4 +69,5 @@ public abstract class Player {
         }
         return shipCoordinates;
     }
+
 }
