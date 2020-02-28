@@ -18,7 +18,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.stage.WindowEvent;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -73,7 +72,7 @@ public class PrepareGameScreenPresenter {
     private void updateView() {
         setShipLabels(counters);
         loadNewShip();
-        shipCoordinatesList = getShipCoordinates();
+        shipCoordinatesList = model.getActivePlayer().getShipCoordinates();
     }
 
     public void windowsHandlers() {
@@ -286,35 +285,6 @@ public class PrepareGameScreenPresenter {
             selectedSize = 5;
         }
         return selectedSize;
-    }
-
-    //TODO IMPROVEMENT move this functionality to the Player class (default method in the abstract class?)
-    private List<List<int[]>> getShipCoordinates() {
-        List<List<int[]>> shipCoordinates = new ArrayList<>();
-        for (StartSquare startSquare : model.getActivePlayer().getStartShipList()) {
-            int[] startCoordinates = startSquare.getCoordinates();
-            List<int[]> coordinates = new ArrayList<>();
-            coordinates.add(startCoordinates);
-            int x = startCoordinates[0];
-            int y = startCoordinates[1];
-            if (startSquare.isHorizontal()) {
-                switch (startSquare.getSize()) {
-                    case 2: coordinates.add(new int[]{x + 1, y}); break;
-                    case 3: coordinates.add(new int[]{x + 1, y}); coordinates.add(new int[]{x + 2, y}); break;
-                    case 4: coordinates.add(new int[]{x + 1, y}); coordinates.add(new int[]{x + 2, y}); coordinates.add(new int[]{x + 3, y}); break;
-                    case 5: coordinates.add(new int[]{x + 1, y}); coordinates.add(new int[]{x + 2, y}); coordinates.add(new int[]{x + 3, y}); coordinates.add(new int[]{x + 4, y}); break;
-                }
-            } else {
-                switch (startSquare.getSize()) {
-                    case 2: coordinates.add(new int[]{x, y + 1}); break;
-                    case 3: coordinates.add(new int[]{x, y + 1}); coordinates.add(new int[]{x, y + 2}); break;
-                    case 4: coordinates.add(new int[]{x, y + 1}); coordinates.add(new int[]{x, y + 2}); coordinates.add(new int[]{x, y + 3}); break;
-                    case 5: coordinates.add(new int[]{x, y + 1}); coordinates.add(new int[]{x, y + 2}); coordinates.add(new int[]{x, y + 3}); coordinates.add(new int[]{x, y + 4}); break;
-                }
-            }
-            shipCoordinates.add(coordinates);
-        }
-        return shipCoordinates;
     }
 
     private void loadNewShip() {

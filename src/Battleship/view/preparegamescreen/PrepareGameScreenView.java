@@ -46,7 +46,7 @@ public class PrepareGameScreenView extends BorderPane {
     }
 
     private void layoutTop() {
-        activePlayerLabel.setPrefHeight(200);
+        activePlayerLabel.setPrefHeight(150);
         setTop(activePlayerLabel);
         setAlignment(activePlayerLabel, Pos.CENTER);
     }
