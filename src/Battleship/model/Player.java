@@ -10,7 +10,7 @@ import java.util.List;
  * controls the behaviour of a player
  */
 
-public abstract class Player {
+public class Player {
 
     static class StartSquare {
         private int[] coordinates;
@@ -35,16 +35,42 @@ public abstract class Player {
         }
     }
 
-    public abstract void positionShip(int[] currentShipCoordinates);
-    public abstract Square fireRocket();
-    public abstract String getName();
-    public abstract String getColor();
+    private List<StartSquare> startShipList;
+    private String name;
+    private String color;
+    private boolean isComputer;
 
-    public abstract List<StartSquare> getStartShipList();
+    Player(String name, String color, boolean isComputer) {
+        this.name = name;
+        this.color = color;
+        this.isComputer = isComputer;
+        this.startShipList = new ArrayList<>();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public boolean isComputer() {
+        return isComputer;
+    }
+
+    public void positionShip(int[] currentShipCoordinates) {
+        int startX = currentShipCoordinates[0];
+        int startY = currentShipCoordinates[1];
+        int size = currentShipCoordinates[2];
+        boolean horizontal = currentShipCoordinates[3] == 0;
+        StartSquare startSquare = new StartSquare(startX, startY, horizontal, size);
+        startShipList.add(startSquare);
+    }
 
     public List<List<int[]>> getShipCoordinates() {
         List<List<int[]>> shipCoordinates = new ArrayList<>();
-        for (StartSquare startSquare : getStartShipList()) {
+        for (StartSquare startSquare : startShipList) {
             int[] startCoordinates = startSquare.getCoordinates();
             List<int[]> coordinates = new ArrayList<>();
             coordinates.add(startCoordinates);

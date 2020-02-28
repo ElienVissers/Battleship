@@ -137,8 +137,8 @@ public class PrepareGameScreenPresenter {
     }
 
     private void loadCounters() {
-        for (int number : model.getAvailableShips()) {
-            switch (number) {
+        for (BattleshipModel.Ship ship : model.getShips()) {
+            switch (ship.getSize()) {
                 case 2: counters[0]++; break;
                 case 3: counters[1]++; break;
                 case 4: counters[2]++; break;
@@ -156,10 +156,10 @@ public class PrepareGameScreenPresenter {
         view.getShipLabel3().setGraphic(new ImageView(ship3));
         view.getShipLabel4().setGraphic(new ImageView(ship4));
         view.getShipLabel5().setGraphic(new ImageView(ship5));
-        view.getShipLabel2().setText("starfighter (" + counters[0] + ")\t\t");
-        view.getShipLabel3().setText("stardiscoverer (" + counters[1] + ")\t");
-        view.getShipLabel4().setText("stardestroyer (" + counters[2] + ")\t\t");
-        view.getShipLabel5().setText("starcruiser (" + counters[3] + ")\t\t");
+        view.getShipLabel2().setText(BattleshipModel.Ship.TWO.getName() + " (" + counters[0] + ")\t\t");
+        view.getShipLabel3().setText(BattleshipModel.Ship.THREE.getName() + " (" + counters[1] + ")\t");
+        view.getShipLabel4().setText(BattleshipModel.Ship.FOUR.getName() + " (" + counters[2] + ")\t\t");
+        view.getShipLabel5().setText(BattleshipModel.Ship.FIVE.getName() + " (" + counters[3] + ")\t\t");
         for (int i = 0; i < counters.length; i++) {
             if (counters[i] == 0) {
                 switch (i) {
@@ -249,10 +249,6 @@ public class PrepareGameScreenPresenter {
                                 @Override
                                 public void handle(MouseEvent t) {
                                     model.prepareGrid();
-                                    //TODO
-                                    //write prepareGrid() function (the ships are already saved in the activePlayer)
-                                    //figure out StartSquare <--> Square relation
-
                                     TogglePlayerScreenView togglePlayerScreenView = new TogglePlayerScreenView(uiSettings);
                                     TogglePlayerScreenPresenter togglePlayerScreenPresenter = new TogglePlayerScreenPresenter(model, togglePlayerScreenView, uiSettings);
                                     view.getScene().setRoot(togglePlayerScreenView);

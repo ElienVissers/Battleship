@@ -12,9 +12,34 @@ import java.util.*;
 
 public class BattleshipModel {
 
+    public enum Ship {
+        TWO(2), THREE(3), FOUR(4), FIVE(5);
+
+        private int size;
+
+        Ship(int size) {
+            this.size = size;
+        }
+
+        public int getSize() {
+            return size;
+        }
+
+        public String getName() {
+            switch (getSize()) {
+                case 2: return "Starfighter";
+                case 3: return "Stardiscoverer";
+                case 4: return "Stardestroyer";
+                case 5: return "Starcruiser";
+                default: return "a ship";
+            }
+        }
+
+    }
+
     private final Random rand = new Random();
-    private final int GRIDSIZE = 10; //possible game extension; when custom: MAX 25!
-    private final int NUMBER_OF_SHIPS = 10; //possible game extension
+    private final int GRIDSIZE = 10; //possible game extension; when custom: check GUI what is the maximum that fits on the screen... OR different stylesheets
+    private final int NUMBER_OF_SHIPS = 10; //possible game extension; dependant on GRIDSIZE
 
     private List<Player> players;
     private Player activePlayer;
@@ -26,7 +51,7 @@ public class BattleshipModel {
     private LocalDate date;
     private String winner;
 
-    private int turnCounter;
+    private double turnCounter;
 
     public BattleshipModel() {
         availableShips = new int[NUMBER_OF_SHIPS];
@@ -55,10 +80,10 @@ public class BattleshipModel {
         for (int size: availableShips) {
             Ship ship = null;
             switch (size) {
-                case 2: ship = Ship.STARFIGHTER; break;
-                case 3: ship = Ship.STARDISCOVERER; break;
-                case 4: ship = Ship.STARDESTROYER; break;
-                case 5: ship = Ship.STARCRUISER; break;
+                case 2: ship = Ship.TWO; break;
+                case 3: ship = Ship.THREE; break;
+                case 4: ship = Ship.FOUR; break;
+                case 5: ship = Ship.FIVE; break;
             }
             ships.add(ship);
         }
@@ -67,12 +92,12 @@ public class BattleshipModel {
     /*create players*/
     private void createGamePlayers(boolean isComputer, String name1, String name2) {
         players = new ArrayList<>();
-        Player player1 = new HumanPlayer(name1, "red");
+        Player player1 = new Player(name1, "red", false);
         Player player2;
         if (isComputer) {
-            player2 = new ComputerPlayer(name2, "blue");
+            player2 = new Player(name2, "blue", true);
         } else {
-            player2 = new HumanPlayer(name2, "blue");
+            player2 = new Player(name2, "blue", false);
         }
         players.add(player1);
         players.add(player2);
@@ -84,45 +109,33 @@ public class BattleshipModel {
     private void createGameGrids() {
         gameboards = new HashMap<>();
         for (Player player:players) {
-            gameboards.put(player, new GameBoard(GRIDSIZE));
+            gameboards.put(player, new GameBoard());
         }
     }
 
     /*allows every player to position ships on the map*/
     public void prepareGrid() {
-        //TODO load ships from activePlayer --> gameboards.get(activePlayer).addShips(...)
-        //gameboards.get(activePlayer).addShips(activePlayer.getStartShipList());
+        gameboards.get(activePlayer).addShips(activePlayer.getShipCoordinates());
         togglePlayer();
     }
 
-    /*the active player plays his/her turn*/
-    public void activePlayerPlays() {
-        Square targetSquare = activePlayer.fireRocket();
-        while (gameboards.get(passivePlayer).hasBeenTargeted(targetSquare)) {
-            System.out.println("This cell (" + targetSquare.getCoordinates() + ") has already been targeted.");
-            targetSquare = activePlayer.fireRocket();
+    public int activePlayerPlays(int x, int y) {
+        if (gameboards.get(passivePlayer).hitOrMiss(x, y)) {
+            System.out.println("HIT!");
+            gameboards.get(passivePlayer).hasSunken(x, y);
+        } else {
+            System.out.println("MISS!");
         }
-        if (!gameboards.get(passivePlayer).hasBeenTargeted(targetSquare)) {
-            if (gameboards.get(passivePlayer).hitOrMiss(targetSquare)) {
-                System.out.println("HIT!");
-                gameboards.get(passivePlayer).hasSunken(targetSquare);
-            } else {
-                System.out.println("MISS!");
-            }
-        }
-        turnCounter++; //TODO divide by 2 at end of the game
+        turnCounter += 0.5;
+        togglePlayer();
+        return gameboards.get(passivePlayer).getSinkCounter(); //TODO Presenter will check if sinkCounter is maxed out (isGameOver()) --> then call endGame()
     }
 
-    /*check if the game is over*/
-    public boolean isGameOver() {
-        if (gameboards.get(passivePlayer).getSinkCounter() == NUMBER_OF_SHIPS) {
-            return true;
-        }
-        return false;
+    private boolean isGameOver() {
+        return gameboards.get(passivePlayer).getSinkCounter() == NUMBER_OF_SHIPS;
     }
 
-    /*the players switch turns*/
-    public void togglePlayer() {
+    private void togglePlayer() {
         if (activePlayer.equals(players.get(0))) {
             activePlayer = players.get(1);
             passivePlayer = players.get(0);
@@ -130,11 +143,11 @@ public class BattleshipModel {
             activePlayer = players.get(0);
             passivePlayer = players.get(1);
         }
-        System.out.println("It's " + activePlayer.getName() + "'s turn now.");
     }
 
     /*TODO : the game ends*/
-    public void endGame() {
+    private void endGame() {
+        turnCounter = Math.round(turnCounter);
         System.out.println("In-game message congratulates winning player " + activePlayer.getName());
         System.out.println("Write away name of the winning player, the date and the amount of turns");
         System.out.println("Close the game.");
@@ -150,5 +163,9 @@ public class BattleshipModel {
 
     public int getGridSize() {
         return GRIDSIZE;
+    }
+
+    public List<Ship> getShips() {
+        return ships;
     }
 }

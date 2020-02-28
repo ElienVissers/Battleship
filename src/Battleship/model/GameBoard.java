@@ -1,8 +1,7 @@
 package Battleship.model;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Elien Vissers-Similon
@@ -13,90 +12,86 @@ import java.util.Map;
  * counts how many ships have sunk;
  */
 
-public class GameBoard {
-    /*a map that holds the coordinates as a key, and the corresponding cell as a value*/
-    private Map<int[], Square> gridMap;
+class GameBoard {
 
-    /*a map with all ships on the grid*/
-    private Map<Ship, List<Square>> shipMap;
+    public static class Square {
+        private int[] coordinates;
+        private boolean wasTargeted;
 
-    /*an integer that counts how many ships have sunken*/
+        Square(int x, int y) {
+            this.coordinates = new int[]{x, y};
+            this.wasTargeted = false;
+        }
+
+        void setTargeted() {
+            wasTargeted = true;
+        }
+
+        boolean wasTargeted() {
+            return wasTargeted;
+        }
+
+        int[] getCoordinates() {
+            return coordinates;
+        }
+    }
+
+    private List<List<Square>> shipList;
     private int sinkCounter;
 
-    public GameBoard(int gridsize) {
+    GameBoard() {
         sinkCounter = 0;
-        gridMap = new HashMap<>();
-        shipMap = new HashMap<>();
-        for (int hor = 0; hor < gridsize; hor++) {
-            for (int vert = 1; vert <= gridsize; vert++) {
-                int x = hor;
-                int y = vert;
-                int[] coordinates = {x, y};
-                gridMap.put(coordinates, new Square(x, y));
+        shipList = new ArrayList<>();
+    }
+
+    void addShips(List<List<int[]>> shipCoordinates) {
+        for (List<int[]> aShipCoordinateList : shipCoordinates) {
+            List<Square> aShip = new ArrayList<>();
+            for (int[] aCoordinate : aShipCoordinateList) {
+                Square square = new Square(aCoordinate[0], aCoordinate[1]);
+                aShip.add(square);
             }
-            hor++;
+            shipList.add(aShip);
         }
     }
 
-    public int getSinkCounter() {
+    //TODO GamePresenter: mark the cell as targeted with css (hit/miss), plus remove that clickhandler from the gridpane, call this function
+    boolean hitOrMiss(int x, int y) {
+        boolean hit = false;
+        for (List<Square> aShipCoordinateList : shipList) {
+            for (Square square : aShipCoordinateList) {
+                if (square.getCoordinates()[0] == x && square.getCoordinates()[1] == y) {
+                    square.setTargeted();
+                    hit = true;
+                }
+            }
+        }
+        return hit;
+    }
+
+    //TODO loop through the shipList, if all coordinates of 1 ship have been hit, then return true --> this will trigger the GameScreenPresenter to show and black out the ship
+    boolean hasSunken(int x, int y) {
+        boolean sunken = false;
+        for (List<Square> aShipCoordinateList : shipList) {
+            boolean targetedShip = false;
+            int shipSize = aShipCoordinateList.size();
+            int counter = 0;
+            for (Square square : aShipCoordinateList) {
+                if (square.getCoordinates()[0] == x && square.getCoordinates()[1] == y) {
+                    targetedShip = true;
+                }
+                if (square.wasTargeted()) {
+                    counter++;
+                }
+            }
+            if (targetedShip && counter == shipSize) {
+                sunken = true;
+            }
+        }
+        return sunken;
+    }
+
+    int getSinkCounter() {
         return sinkCounter;
-    }
-
-    /*add ships to the grid: update shipMap and gridMap*/
-    public void addShips(Map<Ship, List<Square>> shipMapArg) {
-        for (Ship ship : shipMapArg.keySet()) {
-            this.shipMap.put(ship, shipMapArg.get(ship));
-            for (Square square : shipMapArg.get(ship)) {
-                gridMap.get(square.getCoordinates()).setShip();
-            }
-        }
-    }
-
-    /*checks if a cell on the grid has been targeted before*/
-    public boolean hasBeenTargeted(Square square) {
-        if (gridMap.get(square.getCoordinates()).wasTargeted()) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    /*marks the cell as targeted and checks if the rocket hit a ship (hit) or not (miss)*/
-    public boolean hitOrMiss(Square square) {
-        gridMap.get(square.getCoordinates()).setTargeted();
-        if (gridMap.get(square.getCoordinates()).isShip()) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    /*checks if the rocket delivered the final blow to a ship*/
-    public void hasSunken(Square square) {
-        //identify the targeted ship in shipMap
-        Ship targetedShip = null;
-        for (Ship ship : shipMap.keySet()) {
-            for (Square c : shipMap.get(ship)) {
-                if (c.getCoordinates().equals(square.getCoordinates())) {
-                    targetedShip = ship;
-                }
-            }
-        }
-        //loop through the status of the cells on the ship in gridMap
-        if (targetedShip != null) {
-            int i = 0;
-            int j = 0;
-            for (i = 0; i < shipMap.get(targetedShip).size(); i++) {
-                if (gridMap.get(shipMap.get(targetedShip).get(i).getCoordinates()).wasTargeted()) {
-                    j++;
-                }
-            }
-            if (i == j) {
-                sinkCounter++;
-                //TODO Java FX GUI
-                System.out.println("The enemy's ship '" + targetedShip.getName() + "' has sunken!");
-                System.out.println("A total of " + sinkCounter + " ships have been destroyed.");
-            }
-        }
     }
 }

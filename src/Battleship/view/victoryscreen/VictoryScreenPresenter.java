@@ -1,6 +1,6 @@
 package Battleship.view.victoryscreen;
 
-import Battleship.model.BattleshipModel_OLD_MAIN;
+import Battleship.model.BattleshipModel;
 import Battleship.view.UISettings;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -19,11 +19,11 @@ import java.util.Formatter;
  */
 public class VictoryScreenPresenter {
 
-    private BattleshipModel_OLD_MAIN model;
+    private BattleshipModel model;
     private VictoryScreenView view;
     private UISettings uiSettings;
 
-    public VictoryScreenPresenter(BattleshipModel_OLD_MAIN model, VictoryScreenView view, UISettings uiSettings) {
+    public VictoryScreenPresenter(BattleshipModel model, VictoryScreenView view, UISettings uiSettings) {
         this.model = model;
         this.view = view;
         this.uiSettings = uiSettings;
