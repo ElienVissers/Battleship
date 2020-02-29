@@ -7,6 +7,8 @@ package Battleship.view.toggleplayerscreen;
 
 import Battleship.model.*;
 import Battleship.view.UISettings;
+import Battleship.view.gamescreen.GameScreenPresenter;
+import Battleship.view.gamescreen.GameScreenView;
 import Battleship.view.preparegamescreen.PrepareGameScreenPresenter;
 import Battleship.view.preparegamescreen.PrepareGameScreenView;
 import javafx.event.*;
@@ -52,11 +54,10 @@ public class TogglePlayerScreenPresenter {
                     view.getScene().setRoot(prepareGameScreenView);
                     prepareGameScreenpresenter.windowsHandlers();
                 } else {
-                    //TODO un-comment when GameScreen is created
-//                    GameScreenView gameScreenView = new GameScreenView(uiSettings);
-//                    GameScreenPresenter gameScreenpresenter = new GameScreenPresenter(model, gameScreenView, uiSettings);
-//                    view.getScene().setRoot(gameScreenView);
-//                    gameScreenpresenter.windowsHandlers();
+                    GameScreenView gameScreenView = new GameScreenView(uiSettings);
+                    GameScreenPresenter gameScreenpresenter = new GameScreenPresenter(model, gameScreenView, uiSettings);
+                    view.getScene().setRoot(gameScreenView);
+                    gameScreenpresenter.windowsHandlers();
                 }
             }});
     }

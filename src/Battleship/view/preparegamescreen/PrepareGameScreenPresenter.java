@@ -239,6 +239,12 @@ public class PrepareGameScreenPresenter {
                         model.getActivePlayer().positionShip(currentShipCoordinates);
                         counters[currentShipCoordinates[2] - 2]--;
                         addShipToGrid();
+                        //disable a second click and remove highlights:
+                        Arrays.fill(currentShipCoordinates, -1);
+                        for (Node n : view.getGrid().getChildren()) {
+                            n.getStyleClass().remove("grid-pane-selected");
+                        }
+                        updateView();
                         int done = 0;
                         for (int counter : counters) {
                             if (counter == 0) done++;
@@ -256,12 +262,6 @@ public class PrepareGameScreenPresenter {
                                 }
                             });
                         }
-                        //disable a second click and remove highlights:
-                        Arrays.fill(currentShipCoordinates, -1);
-                        for (Node n : view.getGrid().getChildren()) {
-                            n.getStyleClass().remove("grid-pane-selected");
-                        }
-                        updateView();
                     }
                 }
             });

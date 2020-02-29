@@ -137,6 +137,10 @@
     -fx-font-size: 30;
 }
 
+.stats-label {
+    -fx-font-size: 15;
+}
+
 .ship-label {
     -fx-font-size: 15;
 }

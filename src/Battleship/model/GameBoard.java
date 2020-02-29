@@ -17,10 +17,12 @@ class GameBoard {
     public static class Square {
         private int[] coordinates;
         private boolean wasTargeted;
+        private boolean isStartSquare;
 
-        Square(int x, int y) {
+        Square(int x, int y, boolean isStartSquare) {
             this.coordinates = new int[]{x, y};
             this.wasTargeted = false;
+            this.isStartSquare = isStartSquare;
         }
 
         void setTargeted() {
@@ -31,6 +33,10 @@ class GameBoard {
             return wasTargeted;
         }
 
+        public boolean isStartSquare() {
+            return isStartSquare;
+        }
+
         int[] getCoordinates() {
             return coordinates;
         }
@@ -38,9 +44,15 @@ class GameBoard {
 
     private List<List<Square>> shipList;
     private int sinkCounter;
+    private int sinkSize;
+    private int sinkX;
+    private int sinkY;
 
     GameBoard() {
         sinkCounter = 0;
+        sinkSize = 0;
+        sinkX = 0;
+        sinkY = 0;
         shipList = new ArrayList<>();
     }
 
@@ -48,14 +60,18 @@ class GameBoard {
         for (List<int[]> aShipCoordinateList : shipCoordinates) {
             List<Square> aShip = new ArrayList<>();
             for (int[] aCoordinate : aShipCoordinateList) {
-                Square square = new Square(aCoordinate[0], aCoordinate[1]);
+                Square square;
+                if (aCoordinate.length == 2) {
+                    square = new Square(aCoordinate[0], aCoordinate[1], false);
+                } else {
+                    square = new Square(aCoordinate[0], aCoordinate[1], true);
+                }
                 aShip.add(square);
             }
             shipList.add(aShip);
         }
     }
 
-    //TODO GamePresenter: mark the cell as targeted with css (hit/miss), plus remove that clickhandler from the gridpane, call this function
     boolean hitOrMiss(int x, int y) {
         boolean hit = false;
         for (List<Square> aShipCoordinateList : shipList) {
@@ -76,6 +92,8 @@ class GameBoard {
             boolean targetedShip = false;
             int shipSize = aShipCoordinateList.size();
             int counter = 0;
+            int startX = 0;
+            int startY = 0;
             for (Square square : aShipCoordinateList) {
                 if (square.getCoordinates()[0] == x && square.getCoordinates()[1] == y) {
                     targetedShip = true;
@@ -83,15 +101,23 @@ class GameBoard {
                 if (square.wasTargeted()) {
                     counter++;
                 }
+                if (square.isStartSquare()) {
+                    startX = square.getCoordinates()[0];
+                    startY = square.getCoordinates()[1];
+                }
             }
             if (targetedShip && counter == shipSize) {
                 sunken = true;
+                sinkSize = shipSize;
+                sinkX = startX;
+                sinkY = startY;
             }
         }
         return sunken;
     }
 
-    int getSinkCounter() {
-        return sinkCounter;
-    }
+    int getSinkCounter() { return sinkCounter; }
+    int getSinkSize() { return sinkSize; }
+    int getSinkX() { return sinkX; }
+    int getSinkY() { return sinkY; }
 }

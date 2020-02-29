@@ -27,7 +27,6 @@ public class TogglePlayerScreenView extends VBox  {
     private void initialiseNodes() {
         this.playerLabel = new Label();
         this.playerLabel.getStyleClass().add("title");
-
         this.startButton = new Button("START");
     }
 

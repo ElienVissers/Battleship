@@ -118,19 +118,26 @@ public class BattleshipModel {
         togglePlayer();
     }
 
-    public int activePlayerPlays(int x, int y) {
+    public int[] activePlayerPlays(int x, int y) {
+        int[] returnValue = new int[]{0, 0, 0, 0, 0};
         if (gameboards.get(passivePlayer).hitOrMiss(x, y)) {
-            System.out.println("HIT!");
-            gameboards.get(passivePlayer).hasSunken(x, y);
-        } else {
-            System.out.println("MISS!");
+            returnValue[0] = 1;
+            if (gameboards.get(passivePlayer).hasSunken(x, y)) {
+                returnValue[1] = 1;
+                returnValue[2] = gameboards.get(passivePlayer).getSinkSize();
+                returnValue[3] = gameboards.get(passivePlayer).getSinkX();
+                returnValue[4] = gameboards.get(passivePlayer).getSinkY();
+            }
         }
         turnCounter += 0.5;
         togglePlayer();
-        return gameboards.get(passivePlayer).getSinkCounter(); //TODO Presenter will check if sinkCounter is maxed out (isGameOver()) --> then call endGame()
+        return returnValue;
     }
 
-    private boolean isGameOver() {
+
+    //TODO Presenter will check if sinkCounter is maxed out (isGameOver()) --> then call endGame()
+
+    public boolean isGameOver() {
         return gameboards.get(passivePlayer).getSinkCounter() == NUMBER_OF_SHIPS;
     }
 
@@ -145,7 +152,7 @@ public class BattleshipModel {
     }
 
     /*TODO : the game ends*/
-    private void endGame() {
+    public void endGame() {
         turnCounter = Math.round(turnCounter);
         System.out.println("In-game message congratulates winning player " + activePlayer.getName());
         System.out.println("Write away name of the winning player, the date and the amount of turns");
@@ -156,12 +163,20 @@ public class BattleshipModel {
         return activePlayer;
     }
 
+    public int getPassiveSinkCounter() {
+        return gameboards.get(passivePlayer).getSinkCounter();
+    }
+
     public double getGameStarted() {
         return gameStarted;
     }
 
     public int getGridSize() {
         return GRIDSIZE;
+    }
+
+    public int getNUMBER_OF_SHIPS() {
+        return NUMBER_OF_SHIPS;
     }
 
     public List<Ship> getShips() {

@@ -71,7 +71,7 @@ public class Player {
     public List<List<int[]>> getShipCoordinates() {
         List<List<int[]>> shipCoordinates = new ArrayList<>();
         for (StartSquare startSquare : startShipList) {
-            int[] startCoordinates = startSquare.getCoordinates();
+            int[] startCoordinates = new int[]{startSquare.getCoordinates()[0], startSquare.getCoordinates()[1], 1};
             List<int[]> coordinates = new ArrayList<>();
             coordinates.add(startCoordinates);
             int x = startCoordinates[0];
