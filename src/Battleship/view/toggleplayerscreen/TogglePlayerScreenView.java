@@ -16,8 +16,6 @@ public class TogglePlayerScreenView extends VBox  {
     private Button startButton;
     private UISettings uiSettings;
 
-    //TODO add animation: transition from and to black screen?
-
     public TogglePlayerScreenView(UISettings uiSettings) {
         this.uiSettings = uiSettings;
         initialiseNodes();

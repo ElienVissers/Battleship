@@ -13,10 +13,12 @@ import javafx.scene.layout.*;
 
 public class GameScreenView extends BorderPane {
 
-    private Label activePlayerLabel;
-    private Label sunkenStatsLabel;
-    private GridPane activeGrid;
-    private GridPane passiveGrid;
+    private Label firstPlayerLabel;
+    private Label secondPlayerLabel;
+    private Label firstSunkenStatsLabel;
+    private Label secondSunkenStatsLabel;
+    private GridPane firstGrid;
+    private GridPane secondGrid;
     private UISettings uiSettings;
 
     public GameScreenView(UISettings uiSettings) {
@@ -26,50 +28,82 @@ public class GameScreenView extends BorderPane {
     }
 
     private void initialiseNodes() {
-        this.activePlayerLabel = new Label();
-        this.sunkenStatsLabel = new Label();
-        this.activeGrid = new GridPane();
-        this.passiveGrid = new GridPane();
+        this.firstPlayerLabel = new Label();
+        this.secondPlayerLabel = new Label();
+        this.firstSunkenStatsLabel = new Label();
+        this.secondSunkenStatsLabel = new Label();
+        this.firstGrid = new GridPane();
+        this.secondGrid = new GridPane();
     }
 
     private void layoutNodes() {
-        layoutTop();
         layoutCenter();
-        layoutBottom();
-    }
-
-    private void layoutTop() {
-        activePlayerLabel.setPrefHeight(150);
-        setTop(activePlayerLabel);
-        setAlignment(activePlayerLabel, Pos.CENTER);
     }
 
     private void layoutCenter() {
+        layoutPlayerLabel(firstPlayerLabel, "red");
+        layoutPlayerLabel(secondPlayerLabel, "blue");
+        layoutStatsLabel(firstSunkenStatsLabel);
+        layoutStatsLabel(secondSunkenStatsLabel);
+        VBox first = new VBox();
+        VBox second = new VBox();
+        layoutVBox(first);
+        layoutVBox(second);
+        first.getChildren().addAll(firstPlayerLabel, firstGrid, firstSunkenStatsLabel);
+        second.getChildren().addAll(secondPlayerLabel, secondGrid, secondSunkenStatsLabel);
         HBox content = new HBox();
-        content.getChildren().addAll(activeGrid, passiveGrid);
-        content.setSpacing(300);
-        content.setPadding(new Insets(100));
-        content.setAlignment(Pos.CENTER);
-        setCenter(content);
-        setAlignment(content, Pos.CENTER);
+        layoutHBox(content);
+        content.getChildren().addAll(first, second);
     }
 
-    private void layoutBottom() {
-        sunkenStatsLabel.setPrefHeight(150);
-        sunkenStatsLabel.getStyleClass().add("stats-label");
-        setBottom(sunkenStatsLabel);
-        setAlignment(sunkenStatsLabel, Pos.CENTER);
+    private void layoutPlayerLabel(Label label, String color) {
+        label.setPrefHeight(150);
+        label.getStyleClass().add("title");
+        if (color.equals("red")) {
+            label.getStyleClass().add("red-text");
+        } else if (color.equals("blue")) {
+            label.getStyleClass().add("blue-text");
+        }
+        label.setPadding(new Insets(0, 0, 50, 50));
+        setAlignment(label, Pos.CENTER);
     }
 
-    Label getActivePlayerLabel() {
-        return activePlayerLabel;
+    private void layoutStatsLabel(Label label) {
+        label.setPrefHeight(150);
+        label.getStyleClass().add("stats-label");
+        label.setPadding(new Insets(0, 0, 0, 50));
+        setAlignment(label, Pos.CENTER);
     }
 
-    GridPane getActiveGrid() { return activeGrid; }
+    private void layoutVBox(VBox box) {
+        box.setAlignment(Pos.CENTER);
+    }
 
-    GridPane getPassiveGrid() { return passiveGrid; }
+    private void layoutHBox(HBox box) {
+        box.setSpacing(uiSettings.getLowestRes()/3.0);
+        box.setPadding(new Insets(100, 150, 100, 100));
+        box.setAlignment(Pos.CENTER);
+        setAlignment(box, Pos.CENTER);
+        setCenter(box);
+    }
 
-    public Label getSunkenStatsLabel() {
-        return sunkenStatsLabel;
+    Label getFirstPlayerLabel() {
+        return firstPlayerLabel;
+    }
+
+    Label getSecondPlayerLabel() {
+        return secondPlayerLabel;
+    }
+
+    GridPane getFirstGrid() { return firstGrid; }
+
+    GridPane getSecondGrid() { return secondGrid; }
+
+    Label getFirstSunkenStatsLabel() {
+        return firstSunkenStatsLabel;
+    }
+
+    Label getSecondSunkenStatsLabel() {
+        return secondSunkenStatsLabel;
     }
 }

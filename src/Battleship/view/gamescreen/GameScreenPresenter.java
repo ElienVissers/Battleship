@@ -33,11 +33,12 @@ public class GameScreenPresenter {
         this.uiSettings = uiSettings;
 
         this.currentTargetCoordinates = new int[2];
-        activeShipCoordinatesList = model.getActivePlayer().getShipCoordinates();
 
-        setActivePlayerName();
-        createGridPane(view.getPassiveGrid(), false);
-        createGridPane(view.getActiveGrid(), true);
+        createGridPane(view.getFirstGrid(), "red");
+        createGridPane(view.getSecondGrid(), "blue");
+        view.getFirstSunkenStatsLabel().setText("sunken ships: 0/" + model.getNUMBER_OF_SHIPS());
+        view.getSecondSunkenStatsLabel().setText("sunken ships: 0/" + model.getNUMBER_OF_SHIPS());
+
         updateView();
         addEventHandlers();
     }
@@ -48,8 +49,10 @@ public class GameScreenPresenter {
     }
 
     private void updateView() {
-        setActiveShips();
-        setPassiveShips();
+        activeShipCoordinatesList = model.getActivePlayer().getShipCoordinates();
+        setActivePlayerName();
+        setSunkenShips(view.getFirstGrid());
+        setSunkenShips(view.getSecondGrid());
         loadStats();
     }
 
@@ -63,16 +66,16 @@ public class GameScreenPresenter {
     }
 
     private void setActivePlayerName() {
-        view.getActivePlayerLabel().setText("Select your target, " + model.getActivePlayer().getName() + "!");
-        view.getActivePlayerLabel().getStyleClass().add("title");
         if (model.getActivePlayer().getColor().equals("red")) {
-            view.getActivePlayerLabel().getStyleClass().add("red-text");
+            view.getFirstPlayerLabel().setText("Select your target, " + model.getActivePlayer().getName() + "!");
+            view.getSecondPlayerLabel().setText("");
         } else if (model.getActivePlayer().getColor().equals("blue")) {
-            view.getActivePlayerLabel().getStyleClass().add("blue-text");
+            view.getFirstPlayerLabel().setText("");
+            view.getSecondPlayerLabel().setText("Select your target, " + model.getActivePlayer().getName() + "!");
         }
     }
 
-    private void createGridPane(GridPane grid, boolean active) {
+    private void createGridPane(GridPane grid, String color) {
         int gridSize = model.getGridSize();
         for (int i = 0; i < gridSize + 1; i++) {
             ColumnConstraints column = new ColumnConstraints(50);
@@ -98,22 +101,12 @@ public class GameScreenPresenter {
         for (int i = 1; i <= gridSize; i++) {
             Label letterText = new Label(Character.toString(letter));
             Label numberText = new Label(Integer.toString(i));
-            if (active) {
-                if (model.getActivePlayer().getColor().equals("red")) {
-                    letterText.getStyleClass().addAll("red-text", "grid-legend");
-                    numberText.getStyleClass().addAll("red-text", "grid-legend");
-                } else if (model.getActivePlayer().getColor().equals("blue")) {
-                    letterText.getStyleClass().addAll("blue-text", "grid-legend");
-                    numberText.getStyleClass().addAll("blue-text", "grid-legend");
-                }
-            } else {
-                if (model.getActivePlayer().getColor().equals("blue")) {
-                    letterText.getStyleClass().addAll("red-text", "grid-legend");
-                    numberText.getStyleClass().addAll("red-text", "grid-legend");
-                } else if (model.getActivePlayer().getColor().equals("red")) {
-                    letterText.getStyleClass().addAll("blue-text", "grid-legend");
-                    numberText.getStyleClass().addAll("blue-text", "grid-legend");
-                }
+            if (color.equals("red")) {
+                letterText.getStyleClass().addAll("red-text", "grid-legend");
+                numberText.getStyleClass().addAll("red-text", "grid-legend");
+            } else if (color.equals("blue")) {
+                letterText.getStyleClass().addAll("blue-text", "grid-legend");
+                numberText.getStyleClass().addAll("blue-text", "grid-legend");
             }
             grid.add(letterText, i, 0);
             grid.add(numberText, 0, i);
@@ -123,15 +116,15 @@ public class GameScreenPresenter {
     }
 
     private void loadStats() {
-        view.getSunkenStatsLabel().setText("sunken enemy ships: " + model.getPassiveSinkCounter() + "/" + model.getNUMBER_OF_SHIPS());
+        if (model.getActivePlayer().getColor().equals("red")) {
+            view.getSecondSunkenStatsLabel().setText("sunken ships: " + model.getPassiveSinkCounter() + "/" + model.getNUMBER_OF_SHIPS());
+        } else if (model.getActivePlayer().getColor().equals("blue")) {
+            view.getFirstSunkenStatsLabel().setText("sunken ships: " + model.getPassiveSinkCounter() + "/" + model.getNUMBER_OF_SHIPS());
+        }
+
     }
 
-    private void setActiveShips() {
-        //addShip
-        //including the damage
-    }
-
-    private void setPassiveShips() {
+    private void setSunkenShips(GridPane grid) {
         //addShip
         //position passive hits/misses/sunken ships
     }
@@ -197,6 +190,7 @@ public class GameScreenPresenter {
 ////                        n.getStyleClass().remove("grid-pane-selected");
 ////                    }
 //                    updateView();
+                        //togglePlayer() als allerlaatste!! (na de updateView)
 //                }
 //            });
 //        }

@@ -5,12 +5,13 @@ import Battleship.view.aboutscreen.*;
 import Battleship.view.highscoresscreen.HighscoresScreenView;
 import Battleship.view.highscoresscreen.HighscoresScreenPresenter;
 import Battleship.view.infoscreen.*;
+import Battleship.view.toggleplayerscreen.TogglePlayerScreenPresenter;
+import Battleship.view.toggleplayerscreen.TogglePlayerScreenView;
 import Battleship.view.universescreen.*;
 import Battleship.view.UISettings;
-import Battleship.view.preparegamescreen.PrepareGameScreenPresenter;
-import Battleship.view.preparegamescreen.PrepareGameScreenView;
 import javafx.event.*;
 import javafx.scene.*;
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -46,12 +47,19 @@ public class MainScreenPresenter {
         view.getStartButton().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                //TODO throw exception (or consume event, create Alert,...?) when one or two names are empty Strings!
-                model.startGame(view.isComputer(), view.getPlayer1Text().getText(), view.getPlayer2Text().getText());
-                PrepareGameScreenView prepareGameScreenView = new PrepareGameScreenView(uiSettings);
-                PrepareGameScreenPresenter prepareGameScreenpresenter = new PrepareGameScreenPresenter(model, prepareGameScreenView, uiSettings);
-                view.getScene().setRoot(prepareGameScreenView);
-                prepareGameScreenpresenter.windowsHandlers();
+                if (view.getPlayer1Text().getText().isEmpty() || view.getPlayer2Text().getText().isEmpty()) {
+                    final Alert stopWindow = new Alert(Alert.AlertType.ERROR);
+                    stopWindow.setHeaderText("You can not yet start the game.");
+                    stopWindow.setContentText("Please fill in a name for both players.");
+                    stopWindow.showAndWait();
+                    event.consume();
+                } else {
+                    model.startGame(view.isComputer(), view.getPlayer1Text().getText(), view.getPlayer2Text().getText());
+                    TogglePlayerScreenView togglePlayerScreenView = new TogglePlayerScreenView(uiSettings);
+                    TogglePlayerScreenPresenter togglePlayerScreenpresenter = new TogglePlayerScreenPresenter(model, togglePlayerScreenView, uiSettings);
+                    view.getScene().setRoot(togglePlayerScreenView);
+                    togglePlayerScreenpresenter.windowsHandlers();
+                }
             }});
     }
 

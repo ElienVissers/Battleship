@@ -30,11 +30,15 @@ public class TogglePlayerScreenPresenter {
         this.view = view;
         this.uiSettings = uiSettings;
 
-        view.getPlayerLabel().setText(model.getActivePlayer().getName() + ", are you ready to make a move?");
-        if (model.getActivePlayer().getColor().equals("red")) {
-            view.getPlayerLabel().getStyleClass().add("red-text");
-        } else if (model.getActivePlayer().getColor().equals("blue")) {
-            view.getPlayerLabel().getStyleClass().add("blue-text");
+        if (model.getGameStarted() < 1) {
+            view.getPlayerLabel().setText(model.getActivePlayer().getName() + ", are you ready to position your ships?");
+            if (model.getActivePlayer().getColor().equals("red")) {
+                view.getPlayerLabel().getStyleClass().add("red-text");
+            } else if (model.getActivePlayer().getColor().equals("blue")) {
+                view.getPlayerLabel().getStyleClass().add("blue-text");
+            }
+        } else {
+            view.getPlayerLabel().setText("Players, are you ready for battle?");
         }
 
         updateView();
@@ -62,7 +66,7 @@ public class TogglePlayerScreenPresenter {
             }});
     }
 
-    public void windowsHandler() {
+    public void windowsHandlers() {
         view.getScene().getWindow().setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent event) { UISettings.getCloseAlert(event, view.getScene()); }});
