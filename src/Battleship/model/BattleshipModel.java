@@ -52,21 +52,22 @@ public class BattleshipModel {
     private String winner;
 
     private double turnCounter;
+    private double gameStarted;
 
     public BattleshipModel() {
         availableShips = new int[NUMBER_OF_SHIPS];
         ships = new ArrayList<>();
         date = LocalDate.now();
+        gameStarted = 0;
         turnCounter = 0;
     }
 
     public void startGame(Boolean isComputer, String name1, String name2) {
         createGameShips();
         createGamePlayers(isComputer, name1, name2);
-        createGameGrids();
+        createGameBoards();
     }
 
-    /*create ships*/
     private void createGameShips() {
         //minimum one ship of each
         availableShips[0] = 2;
@@ -89,7 +90,6 @@ public class BattleshipModel {
         }
     }
 
-    /*create players*/
     private void createGamePlayers(boolean isComputer, String name1, String name2) {
         players = new ArrayList<>();
         Player player1 = new Player(name1, "red", false);
@@ -105,17 +105,16 @@ public class BattleshipModel {
         passivePlayer = players.get(1);
     }
 
-    /*create gameboards*/
-    private void createGameGrids() {
+    private void createGameBoards() {
         gameboards = new HashMap<>();
         for (Player player:players) {
             gameboards.put(player, new GameBoard());
         }
     }
 
-    /*allows every player to position ships on the map*/
-    public void prepareGrid() {
+    public void prepareBoard() {
         gameboards.get(activePlayer).addShips(activePlayer.getShipCoordinates());
+        gameStarted += 0.5;
         togglePlayer();
     }
 
@@ -157,8 +156,8 @@ public class BattleshipModel {
         return activePlayer;
     }
 
-    public int[] getAvailableShips() {
-        return availableShips;
+    public double getGameStarted() {
+        return gameStarted;
     }
 
     public int getGridSize() {

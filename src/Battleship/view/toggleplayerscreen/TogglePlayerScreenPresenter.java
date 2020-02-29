@@ -46,11 +46,18 @@ public class TogglePlayerScreenPresenter {
         view.getStartButton().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                //TODO either open PrepareGameScreen or GameScreen
-                PrepareGameScreenView prepareGameScreenView = new PrepareGameScreenView(uiSettings);
-                PrepareGameScreenPresenter prepareGameScreenpresenter = new PrepareGameScreenPresenter(model, prepareGameScreenView, uiSettings);
-                view.getScene().setRoot(prepareGameScreenView);
-                prepareGameScreenpresenter.windowsHandlers();
+                if (model.getGameStarted() < 1) {
+                    PrepareGameScreenView prepareGameScreenView = new PrepareGameScreenView(uiSettings);
+                    PrepareGameScreenPresenter prepareGameScreenpresenter = new PrepareGameScreenPresenter(model, prepareGameScreenView, uiSettings);
+                    view.getScene().setRoot(prepareGameScreenView);
+                    prepareGameScreenpresenter.windowsHandlers();
+                } else {
+                    //TODO un-comment when GameScreen is created
+//                    GameScreenView gameScreenView = new GameScreenView(uiSettings);
+//                    GameScreenPresenter gameScreenpresenter = new GameScreenPresenter(model, gameScreenView, uiSettings);
+//                    view.getScene().setRoot(gameScreenView);
+//                    gameScreenpresenter.windowsHandlers();
+                }
             }});
     }
 

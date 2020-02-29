@@ -248,7 +248,7 @@ public class PrepareGameScreenPresenter {
                             view.getDoneButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
                                 @Override
                                 public void handle(MouseEvent t) {
-                                    model.prepareGrid();
+                                    model.prepareBoard();
                                     TogglePlayerScreenView togglePlayerScreenView = new TogglePlayerScreenView(uiSettings);
                                     TogglePlayerScreenPresenter togglePlayerScreenPresenter = new TogglePlayerScreenPresenter(model, togglePlayerScreenView, uiSettings);
                                     view.getScene().setRoot(togglePlayerScreenView);
