@@ -6,10 +6,12 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.stage.WindowEvent;
+import javafx.scene.Node;
 
 import java.util.List;
 
@@ -44,7 +46,8 @@ public class GameScreenPresenter {
     }
 
     private void addEventHandlers() {
-        addCellHoverHandler();
+        addCellHoverHandler(view.getFirstGrid());
+        addCellHoverHandler(view.getSecondGrid());
         addCellClickHandler();
     }
 
@@ -129,34 +132,32 @@ public class GameScreenPresenter {
         //position passive hits/misses/sunken ships
     }
 
-    private void addCellHoverHandler() {
-//        for (Node targetNode : view.getGrid().getChildren()) {
-//            Integer targetColumnIndex = GridPane.getColumnIndex(targetNode);
-//            Integer targetRowIndex = GridPane.getRowIndex(targetNode);
-//            //TODO if cell has been targeted before OR if cell has not been targeted before
-//            targetNode.setOnMouseEntered(new EventHandler<MouseEvent>() {
-//                @Override
-//                public void handle(MouseEvent t) {
-//                    for (Node n : view.getGrid().getChildren()) {
-//                        Integer columnIndex = GridPane.getColumnIndex(n);
-//                        Integer rowIndex = GridPane.getRowIndex(n);
-//                        if (getSelectedShipSize() == 0 || counters[getSelectedShipSize() -2 ] == 0) {
-//                            t.consume();
-//                        } else {
-//                            highlightShipSize(getSelectedShipSize(), isHorizontal(), columnIndex, rowIndex, targetColumnIndex, targetRowIndex, n);
-//                        }
-//                    }
-//                }
-//            });
-//            targetNode.setOnMouseExited(new EventHandler<MouseEvent>() {
-//                @Override
-//                public void handle(MouseEvent t) {
-//                    for (Node n : view.getGrid().getChildren()) {
-//                        n.getStyleClass().remove("grid-pane-selected");
-//                    }
-//                }
-//            });
-//        }
+    private void addCellHoverHandler(GridPane grid) {
+        for (Node targetNode : grid.getChildren()) {
+            Integer targetColumnIndex = GridPane.getColumnIndex(targetNode);
+            Integer targetRowIndex = GridPane.getRowIndex(targetNode);
+            targetNode.setOnMouseEntered(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent t) {
+                    if ((model.getActivePlayer().getColor().equals("red") && grid.equals(view.getFirstGrid()))
+                            || (model.getActivePlayer().getColor().equals("blue") && grid.equals(view.getSecondGrid()))
+                            || (targetColumnIndex == 0 || targetRowIndex == 0)) {
+                        t.consume();
+                    } else {
+                        //TODO check if cell was targeted before, if yes, consume()
+                        targetNode.getStyleClass().add("grid-pane-selected");
+                        currentTargetCoordinates[0] = targetColumnIndex;
+                        currentTargetCoordinates[1] = targetRowIndex;
+                    }
+                }
+            });
+            targetNode.setOnMouseExited(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent t) {
+                    targetNode.getStyleClass().remove("grid-pane-selected");
+                }
+            });
+        }
     }
 
     private void addCellClickHandler() {
@@ -190,6 +191,7 @@ public class GameScreenPresenter {
 ////                        n.getStyleClass().remove("grid-pane-selected");
 ////                    }
 //                    updateView();
+                        //addEventHandlers();
                         //togglePlayer() als allerlaatste!! (na de updateView)
 //                }
 //            });

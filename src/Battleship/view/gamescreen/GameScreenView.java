@@ -87,23 +87,15 @@ public class GameScreenView extends BorderPane {
         setCenter(box);
     }
 
-    Label getFirstPlayerLabel() {
-        return firstPlayerLabel;
-    }
+    Label getFirstPlayerLabel() { return firstPlayerLabel; }
 
-    Label getSecondPlayerLabel() {
-        return secondPlayerLabel;
-    }
+    Label getSecondPlayerLabel() { return secondPlayerLabel; }
 
     GridPane getFirstGrid() { return firstGrid; }
 
     GridPane getSecondGrid() { return secondGrid; }
 
-    Label getFirstSunkenStatsLabel() {
-        return firstSunkenStatsLabel;
-    }
+    Label getFirstSunkenStatsLabel() { return firstSunkenStatsLabel; }
 
-    Label getSecondSunkenStatsLabel() {
-        return secondSunkenStatsLabel;
-    }
+    Label getSecondSunkenStatsLabel() { return secondSunkenStatsLabel; }
 }
