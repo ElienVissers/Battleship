@@ -119,7 +119,7 @@ public class BattleshipModel {
     }
 
     public int[] activePlayerPlays(int x, int y) {
-        int[] returnValue = new int[]{0, 0, 0, 0, 0};
+        int[] returnValue = new int[]{0, 0, 0, 0, 0, 0};
         if (gameboards.get(passivePlayer).hitOrMiss(x, y)) {
             returnValue[0] = 1;
             if (gameboards.get(passivePlayer).hasSunken(x, y)) {
@@ -127,6 +127,7 @@ public class BattleshipModel {
                 returnValue[2] = gameboards.get(passivePlayer).getSinkSize();
                 returnValue[3] = gameboards.get(passivePlayer).getSinkX();
                 returnValue[4] = gameboards.get(passivePlayer).getSinkY();
+                returnValue[5] = gameboards.get(passivePlayer).getSinkDirection();
             }
         }
         turnCounter += 0.5;
@@ -134,11 +135,8 @@ public class BattleshipModel {
         return returnValue;
     }
 
-
-    //TODO Presenter will check if sinkCounter is maxed out (isGameOver()) --> then call endGame()
-
     public boolean isGameOver() {
-        return gameboards.get(passivePlayer).getSinkCounter() == NUMBER_OF_SHIPS;
+        return gameboards.get(activePlayer).getSinkCounter() == NUMBER_OF_SHIPS;
     }
 
     private void togglePlayer() {
@@ -154,7 +152,7 @@ public class BattleshipModel {
     /*TODO : the game ends*/
     public void endGame() {
         turnCounter = Math.round(turnCounter);
-        System.out.println("In-game message congratulates winning player " + activePlayer.getName());
+        System.out.println("In-game message congratulates winning player " + passivePlayer.getName());
         System.out.println("Write away name of the winning player, the date and the amount of turns");
         System.out.println("Close the game.");
     }
@@ -163,12 +161,8 @@ public class BattleshipModel {
         return activePlayer;
     }
 
-    public Player getPassivePlayer() {
-        return passivePlayer;
-    }
-
-    public int getPassiveSinkCounter() {
-        return gameboards.get(passivePlayer).getSinkCounter();
+    public int getActiveSinkCounter() {
+        return gameboards.get(activePlayer).getSinkCounter();
     }
 
     public double getGameStarted() {

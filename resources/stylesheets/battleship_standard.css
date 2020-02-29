@@ -13,6 +13,7 @@
     -fx-my-menu-font-color-highlighted: black;  /* variable */
     -fx-my-white-color: ivory;                  /* variable */
     -fx-my-highlight-color: grey;               /* variable */
+    -fx-my-lowlight-color: #575757;             /* variable */
     -fx-my-red-color: #983C32;                  /* variable */
     -fx-my-blue-color: #36589B;                 /* variable */
     -fx-my-background-color: #2D2D2D;           /* variable */
@@ -165,6 +166,16 @@
 .grid-pane-selected {
     -fx-background-color: -fx-my-highlight-color;
     -fx-cursor: hand;
+}
+
+.grid-pane-hit {
+    -fx-background-color: -fx-my-background-color;
+    -fx-cursor: pointer;
+}
+
+.grid-pane-miss {
+    -fx-background-color: -fx-my-lowlight-color;
+    -fx-cursor: pointer;
 }
 
 .grid-edge-corner {

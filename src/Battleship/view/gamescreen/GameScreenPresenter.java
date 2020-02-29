@@ -2,6 +2,8 @@ package Battleship.view.gamescreen;
 
 import Battleship.model.BattleshipModel;
 import Battleship.view.UISettings;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -13,7 +15,9 @@ import javafx.scene.layout.RowConstraints;
 import javafx.stage.WindowEvent;
 import javafx.scene.Node;
 
-import java.util.List;
+import javafx.util.Duration;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * @author Elien Vissers-Similon
@@ -27,7 +31,8 @@ public class GameScreenPresenter {
     private UISettings uiSettings;
 
     private int[] currentTargetCoordinates;
-    private List<List<int[]>> activeShipCoordinatesList;
+    private int[] sunkenShipValues;
+    private boolean sunkenShipFlag;
 
     public GameScreenPresenter(BattleshipModel model, GameScreenView view, UISettings uiSettings) {
         this.model = model;
@@ -35,6 +40,8 @@ public class GameScreenPresenter {
         this.uiSettings = uiSettings;
 
         this.currentTargetCoordinates = new int[2];
+        this.sunkenShipValues = new int[6];
+        this.sunkenShipFlag = false;
 
         createGridPane(view.getFirstGrid(), "red");
         createGridPane(view.getSecondGrid(), "blue");
@@ -48,15 +55,27 @@ public class GameScreenPresenter {
     private void addEventHandlers() {
         addCellHoverHandler(view.getFirstGrid());
         addCellHoverHandler(view.getSecondGrid());
-        addCellClickHandler();
+        addCellClickHandler(view.getFirstGrid());
+        addCellClickHandler(view.getSecondGrid());
     }
 
     private void updateView() {
-        activeShipCoordinatesList = model.getActivePlayer().getShipCoordinates();
         setActivePlayerName();
-        setSunkenShips(view.getFirstGrid());
-        setSunkenShips(view.getSecondGrid());
+        if (sunkenShipFlag) {
+            new Timeline(new KeyFrame(Duration.millis(750), ae -> updateSunkenView())).play();
+        }
+    }
+
+    private void updateSunkenView() {
         loadStats();
+        if (model.getActivePlayer().getColor().equals("red")) {
+            removeFlames(view.getFirstGrid(), sunkenShipValues[2], sunkenShipValues[3], sunkenShipValues[4], sunkenShipValues[5]);
+            setSunkenShip(view.getFirstGrid(), sunkenShipValues[2], sunkenShipValues[3], sunkenShipValues[4], sunkenShipValues[5]);
+        } else if (model.getActivePlayer().getColor().equals("blue")) {
+            removeFlames(view.getSecondGrid(), sunkenShipValues[2], sunkenShipValues[3], sunkenShipValues[4], sunkenShipValues[5]);
+            setSunkenShip(view.getSecondGrid(), sunkenShipValues[2], sunkenShipValues[3], sunkenShipValues[4], sunkenShipValues[5]);
+        }
+        sunkenShipFlag = false;
     }
 
     public void windowsHandlers() {
@@ -120,16 +139,10 @@ public class GameScreenPresenter {
 
     private void loadStats() {
         if (model.getActivePlayer().getColor().equals("red")) {
-            view.getSecondSunkenStatsLabel().setText("sunken ships: " + model.getPassiveSinkCounter() + "/" + model.getNUMBER_OF_SHIPS());
+            view.getFirstSunkenStatsLabel().setText("sunken ships: " + model.getActiveSinkCounter() + "/" + model.getNUMBER_OF_SHIPS());
         } else if (model.getActivePlayer().getColor().equals("blue")) {
-            view.getFirstSunkenStatsLabel().setText("sunken ships: " + model.getPassiveSinkCounter() + "/" + model.getNUMBER_OF_SHIPS());
+            view.getSecondSunkenStatsLabel().setText("sunken ships: " + model.getActiveSinkCounter() + "/" + model.getNUMBER_OF_SHIPS());
         }
-
-    }
-
-    private void setSunkenShips(GridPane grid) {
-        //addShip
-        //position passive hits/misses/sunken ships
     }
 
     private void addCellHoverHandler(GridPane grid) {
@@ -141,10 +154,11 @@ public class GameScreenPresenter {
                 public void handle(MouseEvent t) {
                     if ((model.getActivePlayer().getColor().equals("red") && grid.equals(view.getFirstGrid()))
                             || (model.getActivePlayer().getColor().equals("blue") && grid.equals(view.getSecondGrid()))
-                            || (targetColumnIndex == 0 || targetRowIndex == 0)) {
+                            || (targetColumnIndex == 0 || targetRowIndex == 0)
+                            || (targetNode.getStyleClass().contains("grid-pane-miss"))
+                            || (targetNode.getStyleClass().contains("grid-pane-hit"))) {
                         t.consume();
                     } else {
-                        //TODO check if cell was targeted before, if yes, consume()
                         targetNode.getStyleClass().add("grid-pane-selected");
                         currentTargetCoordinates[0] = targetColumnIndex;
                         currentTargetCoordinates[1] = targetRowIndex;
@@ -160,71 +174,133 @@ public class GameScreenPresenter {
         }
     }
 
-    private void addCellClickHandler() {
-//        for (Node targetNode : view.getEnemyGrid().getChildren()) {
-//            targetNode.setOnMouseClicked(new EventHandler<MouseEvent>() {
-//                @Override
-//                public void handle(MouseEvent t) {
-//                    if (/*targetNode was targeted before OR coordinates contain zero*/) {
-//                        t.consume();
-//                    } else {
-//                        if (model.activePlayerPlays(targetNodeX, targetNodeY)[0] == 1) {
-//                            //hit, mark flame on grid
-//                            if (model.getPassiveBoard().hasSunken()) {
-//                                showSunkenShip();
-//                                if (isGameOver()) {
-//                                    model.endGame();
-//                                    //TODO create VictoryScreen + set a timeout of 5 seconds?
-////                                    VictoryScreenView victoryScreenView = new VictoryScreenView(uiSettings);
-////                                    VictoryScreenPresenter victoryScreenPresenter = new VictoryScreenPresenter(model, victoryScreenView, uiSettings);
-////                                    view.getScene().setRoot(victoryScreenView);
-////                                    victoryScreenPresenter.windowsHandler();
-//                                }
-//                            }
-//                        } else {
-//                            //miss, mark highlight on grid
-//                        }
-//                    }
-//                    //disable a second click and remove highlights:
-////                    Arrays.fill(currentCoordinates, -1);
-////                    for (Node n : view.getGrid().getChildren()) {
-////                        n.getStyleClass().remove("grid-pane-selected");
-////                    }
-//                    updateView();
-                        //addEventHandlers();
-                        //togglePlayer() als allerlaatste!! (na de updateView)
-//                }
-//            });
-//        }
+    private void addCellClickHandler(GridPane grid) {
+        for (Node targetNode : grid.getChildren()) {
+            targetNode.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent t) {
+                    if (targetNode.getStyleClass().contains("grid-pane-miss") || targetNode.getStyleClass().contains("grid-pane-hit")
+                            || currentTargetCoordinates[0] == 0 || currentTargetCoordinates[1] == 0) {
+                        t.consume();
+                    } else {
+                        int[] returnValue = model.activePlayerPlays(currentTargetCoordinates[0], currentTargetCoordinates[1]);
+                        if (returnValue[0] == 1) {
+                            targetNode.getStyleClass().add("grid-pane-hit");
+                            Image flameImage = new Image("/images/flame_" + model.getActivePlayer().getColor() + ".png", 50, 50, true, true);
+                            ImageView flameView = new ImageView(flameImage);
+                            grid.add(flameView, currentTargetCoordinates[0], currentTargetCoordinates[1]);
+                            if (returnValue[1] == 1) {
+                                sunkenShipValues = returnValue;
+                                sunkenShipFlag = true;
+                                if (model.isGameOver()) {
+                                    model.endGame();
+                                    //TODO create VictoryScreen + set a timeout of 5 seconds?
+//                                    VictoryScreenView victoryScreenView = new VictoryScreenView(uiSettings);
+//                                    VictoryScreenPresenter victoryScreenPresenter = new VictoryScreenPresenter(model, victoryScreenView, uiSettings);
+//                                    view.getScene().setRoot(victoryScreenView);
+//                                    victoryScreenPresenter.windowsHandler();
+                                }
+                            }
+                        } else {
+                            targetNode.getStyleClass().add("grid-pane-miss");
+                        }
+                        Arrays.fill(currentTargetCoordinates, 0);
+                        updateView();
+                    }
+                }
+            });
+        }
     }
 
-    private void addShip() {
-//        Image shipImage = null;
-//        if (horizontal) {
-//            switch (shipSize) {
-//                case 2: shipImage = new Image("/images/ship_" + model.getActivePlayer().getColor() + "_2.png", 100, 50, true, true); break;
-//                case 3: shipImage = new Image("/images/ship_" + model.getActivePlayer().getColor() + "_3.png", 150, 50, true, true); break;
-//                case 4: shipImage = new Image("/images/ship_" + model.getActivePlayer().getColor() + "_4.png", 200, 50, true, true); break;
-//                case 5: shipImage = new Image("/images/ship_" + model.getActivePlayer().getColor() + "_5.png", 250, 50, true, true); break;
-//            }
-//        } else {
-//            switch (shipSize) {
-//                case 2: shipImage = new Image("/images/ship_" + model.getActivePlayer().getColor() + "_2_vert.png", 50, 100, true, true); break;
-//                case 3: shipImage = new Image("/images/ship_" + model.getActivePlayer().getColor() + "_3_vert.png", 50, 150, true, true); break;
-//                case 4: shipImage = new Image("/images/ship_" + model.getActivePlayer().getColor() + "_4_vert.png", 50, 200, true, true); break;
-//                case 5: shipImage = new Image("/images/ship_" + model.getActivePlayer().getColor() + "_5_vert.png", 50, 250, true, true); break;
-//            }
-//        }
-//        ImageView shipView = new ImageView(shipImage);
-//        int rowSpan;
-//        int colSpan;
-//        if (horizontal) {
-//            rowSpan = 1;
-//            colSpan = shipSize;
-//        } else {
-//            rowSpan = shipSize;
-//            colSpan = 1;
-//        }
-//        view.getPassiveGrid().add(shipView, x, y, colSpan, rowSpan);
+    private void setSunkenShip(GridPane grid, int size, int x, int y, int direction) {
+        Image shipImage = null;
+        if (direction == 0) {
+            switch (size) {
+                case 2: shipImage = new Image("/images/ship_destroyed_2.png", 100, 50, true, true); break;
+                case 3: shipImage = new Image("/images/ship_destroyed_3.png", 150, 50, true, true); break;
+                case 4: shipImage = new Image("/images/ship_destroyed_4.png", 200, 50, true, true); break;
+                case 5: shipImage = new Image("/images/ship_destroyed_5.png", 250, 50, true, true); break;
+            }
+        } else {
+            switch (size) {
+                case 2: shipImage = new Image("/images/ship_destroyed_2_vert.png", 50, 100, true, true); break;
+                case 3: shipImage = new Image("/images/ship_destroyed_3_vert.png", 50, 150, true, true); break;
+                case 4: shipImage = new Image("/images/ship_destroyed_4_vert.png", 50, 200, true, true); break;
+                case 5: shipImage = new Image("/images/ship_destroyed_5_vert.png", 50, 250, true, true); break;
+            }
+        }
+        ImageView shipView = new ImageView(shipImage);
+        int rowSpan;
+        int colSpan;
+        if (direction == 0) {
+            rowSpan = 1;
+            colSpan = size;
+        } else {
+            rowSpan = size;
+            colSpan = 1;
+        }
+        grid.add(shipView, x, y, colSpan, rowSpan);
+    }
+
+    private void removeFlames(GridPane grid, int size, int startX, int startY, int direction) {
+        ArrayList<Node> nodeList = new ArrayList<>();
+        for (Node n : grid.getChildren()) {
+            int nodeX = GridPane.getColumnIndex(n);
+            int nodeY = GridPane.getRowIndex(n);
+            if (direction == 0 && n instanceof ImageView) {
+                switch (size) {
+                    case 2:
+                        if((nodeX == startX && nodeY == startY) || (nodeX - 1 == startX && nodeY == startY)) {
+                            nodeList.add(n);
+                        }
+                        break;
+                    case 3:
+                        if((nodeX == startX && nodeY == startY) || (nodeX - 1 == startX && nodeY == startY) || (nodeX - 2 == startX && nodeY == startY)) {
+                            nodeList.add(n);
+                        }
+                        break;
+                    case 4:
+                        if((nodeX == startX && nodeY == startY) || (nodeX - 1 == startX && nodeY == startY) || (nodeX - 2 == startX && nodeY == startY)
+                                        || (nodeX - 3 == startX && nodeY == startY)) {
+                            nodeList.add(n);
+                        }
+                        break;
+                    case 5:
+                        if((nodeX == startX && nodeY == startY) || (nodeX - 1 == startX && nodeY == startY) || (nodeX - 2 == startX && nodeY == startY)
+                                        || (nodeX - 3 == startX && nodeY == startY) || (nodeX - 4 == startX && nodeY == startY)) {
+                            nodeList.add(n);
+                        }
+                        break;
+                }
+            } else if (direction == 1 && n instanceof ImageView){
+                switch (size) {
+                    case 2:
+                        if(nodeX == startX && nodeY == startY || nodeX == startX && nodeY - 1 == startY) {
+                            nodeList.add(n);
+                        }
+                        break;
+                    case 3:
+                        if((nodeX == startX && nodeY == startY) || (nodeX == startX && nodeY - 1 == startY) || (nodeX == startX && nodeY - 2 == startY)) {
+                            nodeList.add(n);
+                        }
+                        break;
+                    case 4:
+                        if((nodeX == startX && nodeY == startY) || (nodeX == startX && nodeY - 1 == startY) || (nodeX == startX && nodeY - 2 == startY)
+                                        || (nodeX == startX && nodeY - 3 == startY)) {
+                            nodeList.add(n);
+                        }
+                        break;
+                    case 5:
+                        if((nodeX == startX && nodeY == startY) || (nodeX == startX && nodeY - 1 == startY) || (nodeX == startX && nodeY - 2 == startY)
+                                        || (nodeX == startX && nodeY - 3 == startY) || (nodeX == startX && nodeY - 4 == startY)) {
+                            nodeList.add(n);
+                        }
+                        break;
+                }
+            }
+        }
+        for (Node n : nodeList) {
+            grid.getChildren().remove(n);
+        }
     }
 }

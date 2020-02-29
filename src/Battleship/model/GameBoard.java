@@ -47,12 +47,14 @@ class GameBoard {
     private int sinkSize;
     private int sinkX;
     private int sinkY;
+    private int sinkDirection;
 
     GameBoard() {
         sinkCounter = 0;
         sinkSize = 0;
         sinkX = 0;
         sinkY = 0;
+        sinkDirection = 0;
         shipList = new ArrayList<>();
     }
 
@@ -85,7 +87,6 @@ class GameBoard {
         return hit;
     }
 
-    //TODO --> this will trigger the GameScreenPresenter to show and black out the ship
     boolean hasSunken(int x, int y) {
         boolean sunken = false;
         for (List<Square> aShipCoordinateList : shipList) {
@@ -94,12 +95,14 @@ class GameBoard {
             int counter = 0;
             int startX = 0;
             int startY = 0;
+            ArrayList<Integer> tempX = new ArrayList<>();
             for (Square square : aShipCoordinateList) {
                 if (square.getCoordinates()[0] == x && square.getCoordinates()[1] == y) {
                     targetedShip = true;
                 }
                 if (square.wasTargeted()) {
                     counter++;
+                    tempX.add(square.getCoordinates()[0]);
                 }
                 if (square.isStartSquare()) {
                     startX = square.getCoordinates()[0];
@@ -108,9 +111,18 @@ class GameBoard {
             }
             if (targetedShip && counter == shipSize) {
                 sunken = true;
+                sinkCounter++;
                 sinkSize = shipSize;
                 sinkX = startX;
                 sinkY = startY;
+                {
+                    counter = 0;
+                    int tempX0 = tempX.get(0);
+                    for (int xCoord : tempX) {
+                        if (xCoord == tempX0) counter++;
+                    }
+                    if (counter == tempX.size()) sinkDirection = 1;
+                }
             }
         }
         return sunken;
@@ -120,4 +132,5 @@ class GameBoard {
     int getSinkSize() { return sinkSize; }
     int getSinkX() { return sinkX; }
     int getSinkY() { return sinkY; }
+    int getSinkDirection() { return sinkDirection; }
 }
