@@ -1,10 +1,18 @@
 package Battleship.view.mainscreen;
 
 import Battleship.view.UISettings;
+import javafx.animation.Interpolator;
+import javafx.animation.ParallelTransition;
+import javafx.animation.Timeline;
+import javafx.animation.TranslateTransition;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
+import javafx.util.Duration;
 
 import java.util.Random;
 
@@ -27,17 +35,17 @@ public class MainScreenView extends BorderPane  {
     private TextField player2Text;
     private Button startButton;
     private UISettings uiSettings;
+    private ImageView animatedShip1;
+    private ImageView animatedShip2;
 
     private String[] enemies = {"Yoda", "Anakin Skywalker", "Darth Vader", "Obi-Wan Kenobi", "Luke Skywalker", "Han Solo", "R2-D2", "C-3PO"};
     private Boolean isComputer = false;
-
-    //TODO add animation: ships flying accros the screen?
-    //TODO add animation: transition to black screen after pressing startButton?
 
     public MainScreenView(UISettings uiSettings) {
         this.uiSettings = uiSettings;
         initialiseNodes();
         layoutNodes();
+        animate();
     }
 
     private void initialiseNodes() {
@@ -58,11 +66,15 @@ public class MainScreenView extends BorderPane  {
         this.player1Text.setId("textfield-player1");
         this.player2Text.setId("textfield-player2");
         this.startButton = new Button("START");
+        //ANIMATION
+        this.animatedShip1 = new ImageView(new Image("/images/ship_red_3.png", 150, 50, true, true));
+        this.animatedShip2 = new ImageView(new Image("/images/ship_blue_4_left.png", 200, 50, true, true));
     }
 
     private void layoutNodes() {
         addMenu();
         addContent();
+        addAnimation();
     }
 
     private void addMenu() {
@@ -84,6 +96,7 @@ public class MainScreenView extends BorderPane  {
         layoutButton(startButton);
         //--content
         VBox content = new VBox();
+        content.setPadding(new Insets(200, 0, 0, 0));
         layoutVBox(content, playerBox, startButton, 100);
         this.setCenter(content);
     }
@@ -98,6 +111,35 @@ public class MainScreenView extends BorderPane  {
         box.getChildren().addAll(childBox1, childBox2);
         box.setAlignment(Pos.CENTER);
         box.setSpacing(200);
+    }
+
+    private void addAnimation() {
+        animatedShip1.setTranslateX(-350);
+        animatedShip2.setTranslateX(uiSettings.getResX() + 1350);
+        VBox animatedShipBox = new VBox();
+        animatedShipBox.getChildren().addAll(animatedShip1, animatedShip2);
+        animatedShipBox.setSpacing(100);
+        animatedShipBox.setPadding(new Insets(0, 0, 50, 0));
+        setBottom(animatedShipBox);
+    }
+
+    private void animate() {
+        TranslateTransition fly1 = new TranslateTransition();
+        fly1.setNode(animatedShip1);
+        fly1.setDuration(Duration.seconds(25));
+        fly1.setByX(uiSettings.getResX() + 500);
+        fly1.setCycleCount(1);
+        fly1.setInterpolator(Interpolator.LINEAR);
+        TranslateTransition fly2 = new TranslateTransition();
+        fly2.setNode(animatedShip2);
+        fly2.setDuration(Duration.seconds(25));
+        fly2.setByX(- uiSettings.getResX() - 1700);
+        fly2.setCycleCount(1);
+        fly2.setInterpolator(Interpolator.LINEAR);
+        ParallelTransition fly = new ParallelTransition();
+        fly.getChildren().addAll(fly1, fly2);
+        fly.setCycleCount(Timeline.INDEFINITE);
+        fly.play();
     }
 
     private void layoutButton(Button button) {
