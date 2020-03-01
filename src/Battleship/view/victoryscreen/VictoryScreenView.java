@@ -1,7 +1,6 @@
 package Battleship.view.victoryscreen;
 
 import Battleship.view.UISettings;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 

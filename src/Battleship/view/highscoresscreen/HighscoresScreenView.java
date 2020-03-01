@@ -1,12 +1,7 @@
 package Battleship.view.highscoresscreen;
 
 import Battleship.view.UISettings;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 
 /**
  * @author Elien Vissers-Similon

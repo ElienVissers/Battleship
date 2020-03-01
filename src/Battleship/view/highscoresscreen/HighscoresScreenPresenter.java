@@ -2,7 +2,6 @@ package Battleship.view.highscoresscreen;
 
 import Battleship.model.BattleshipModel;
 import Battleship.view.UISettings;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.stage.WindowEvent;
 

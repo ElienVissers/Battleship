@@ -36,7 +36,7 @@ public class UISettings {
         this.insetsMargin = this.getLowestRes()/100;
         this.homeDir = System.getProperties().getProperty("user.dir");
         this.ApplicationName = "Battleship";
-    };
+    }
 
     public int getResX () {return this.resX;}
 
