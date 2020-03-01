@@ -62,7 +62,7 @@ public class GameScreenPresenter {
     private void updateView() {
         setActivePlayerName();
         if (sunkenShipFlag) {
-            new Timeline(new KeyFrame(Duration.millis(750), ae -> updateSunkenView())).play();
+            new Timeline(new KeyFrame(Duration.millis(350), ae -> updateSunkenView())).play();
         }
     }
 
