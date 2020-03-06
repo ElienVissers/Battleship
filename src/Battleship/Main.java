@@ -1,12 +1,14 @@
 package Battleship;
 
-import Battleship.view.startscreen.*;
-import Battleship.model.*;
-import Battleship.view.*;
+import Battleship.model.BattleshipModel;
+import Battleship.view.UISettings;
+import Battleship.view.startscreen.StartScreenPresenter;
+import Battleship.view.startscreen.StartScreenView;
 import javafx.application.Application;
-import javafx.scene.*;
+import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.stage.*;
+import javafx.stage.Stage;
+
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 

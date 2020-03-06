@@ -8,6 +8,7 @@ import Battleship.view.infoscreen.*;
 import Battleship.view.toggleplayerscreen.TogglePlayerScreenPresenter;
 import Battleship.view.toggleplayerscreen.TogglePlayerScreenView;
 import Battleship.view.universescreen.*;
+import Battleship.view.settingsscreen.*;
 import Battleship.view.UISettings;
 import javafx.event.*;
 import javafx.scene.*;
@@ -72,7 +73,14 @@ public class MainScreenPresenter {
                 Stage mainOptionsStage = new Stage();
                 openMenuWindow(mainOptionsStage, universeScreenView, "Universe settings"); //open UNIVERSE SETTINGS MENU window
                 universeScreenPresenter.windowsHandler();
-            }
+            }/*
+            public void handle(ActionEvent event) {
+                SettingsScreenView settingsScreenView = new SettingsScreenView(uiSettings);
+                SettingsScreenPresenter settingsScreenPresenter = new SettingsScreenPresenter(model, settingsScreenView, uiSettings);
+                Stage mainOptionsStage = new Stage();
+                openMenuWindow(mainOptionsStage, settingsScreenView, "Universe settings"); //open UNIVERSE SETTINGS MENU window
+                settingsScreenPresenter.windowsHandler();
+            }*/
         });
         view.getHighscoresItem().setOnAction(new EventHandler<ActionEvent>() {
             @Override
