@@ -64,6 +64,10 @@ public class UISettings {
 
     public String getApplicationName () {return this.ApplicationName;}
 
+    public static char getFileSeparator() {
+        return FILE_SEPARATOR;
+    }
+
     public static void getCloseAlert(Event event, Scene scene) {
         final Alert stopWindow = new Alert(Alert.AlertType.CONFIRMATION);
         stopWindow.setHeaderText("You're closing the application.");

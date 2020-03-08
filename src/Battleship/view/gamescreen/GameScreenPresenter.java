@@ -2,6 +2,8 @@ package Battleship.view.gamescreen;
 
 import Battleship.model.BattleshipModel;
 import Battleship.view.UISettings;
+import Battleship.view.victoryscreen.VictoryScreenPresenter;
+import Battleship.view.victoryscreen.VictoryScreenView;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.EventHandler;
@@ -12,10 +14,15 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.WindowEvent;
 import javafx.scene.Node;
 
 import javafx.util.Duration;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -29,6 +36,8 @@ public class GameScreenPresenter {
     private BattleshipModel model;
     private GameScreenView view;
     private UISettings uiSettings;
+
+    private MediaPlayer mediaPlayer;
 
     private int[] currentTargetCoordinates;
     private int[] sunkenShipValues;
@@ -184,28 +193,31 @@ public class GameScreenPresenter {
                         t.consume();
                     } else {
                         int[] returnValue = model.activePlayerPlays(currentTargetCoordinates[0], currentTargetCoordinates[1]);
+                        String musicFile;
                         if (returnValue[0] == 1) {
                             targetNode.getStyleClass().add("grid-pane-hit");
                             Image flameImage = new Image("/images/flame_" + model.getActivePlayer().getColor() + ".png", 50, 50, true, true);
                             ImageView flameView = new ImageView(flameImage);
                             grid.add(flameView, currentTargetCoordinates[0], currentTargetCoordinates[1]);
+                            musicFile = "hit.mp3";
                             if (returnValue[1] == 1) {
                                 sunkenShipValues = returnValue;
                                 sunkenShipFlag = true;
                                 if (model.isGameOver()) {
                                     model.endGame();
-                                    //TODO create VictoryScreen + set a timeout of 5 seconds?
-//                                    VictoryScreenView victoryScreenView = new VictoryScreenView(uiSettings);
-//                                    VictoryScreenPresenter victoryScreenPresenter = new VictoryScreenPresenter(model, victoryScreenView, uiSettings);
-//                                    view.getScene().setRoot(victoryScreenView);
-//                                    victoryScreenPresenter.windowsHandler();
+                                    new Timeline(new KeyFrame(Duration.millis(1000), ae -> openVictoryScreen())).play();
                                 }
                             }
                         } else {
                             targetNode.getStyleClass().add("grid-pane-miss");
+                            musicFile = "miss.mp3";
                         }
                         Arrays.fill(currentTargetCoordinates, 0);
                         updateView();
+                        Path musicPath = Paths.get("resources" + UISettings.getFileSeparator() +"other"+ UISettings.getFileSeparator() + musicFile);
+                        Media sound = new Media(musicPath.toUri().toString());
+                        mediaPlayer = new MediaPlayer(sound);
+                        mediaPlayer.play();
                     }
                 }
             });
@@ -303,4 +315,16 @@ public class GameScreenPresenter {
             grid.getChildren().remove(n);
         }
     }
+
+    private void openVictoryScreen() {
+        Path musicPath = Paths.get("resources" + UISettings.getFileSeparator() +"other"+ UISettings.getFileSeparator() + "victory.mp3");
+        Media sound = new Media(musicPath.toUri().toString());
+        mediaPlayer = new MediaPlayer(sound);
+        mediaPlayer.play();
+        VictoryScreenView victoryScreenView = new VictoryScreenView(uiSettings);
+        VictoryScreenPresenter victoryScreenPresenter = new VictoryScreenPresenter(model, victoryScreenView, uiSettings);
+        view.getScene().setRoot(victoryScreenView);
+        victoryScreenPresenter.windowsHandler();
+    }
+
 }

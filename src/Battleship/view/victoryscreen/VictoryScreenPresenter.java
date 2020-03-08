@@ -69,4 +69,6 @@ public class VictoryScreenPresenter {
         });
     }
 
+    public void windowsHandler() {
+    }
 }
