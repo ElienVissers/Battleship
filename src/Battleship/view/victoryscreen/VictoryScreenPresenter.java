@@ -5,6 +5,8 @@ import Battleship.view.UISettings;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 
 import java.io.File;
@@ -27,8 +29,15 @@ public class VictoryScreenPresenter {
         this.model = model;
         this.view = view;
         this.uiSettings = uiSettings;
+
         updateView();
         EventHandlers();
+
+        view.getVictoryLabel().setText("Congratulations, " + model.getPassivePlayer().getName() + "! You are one step closer to ruling the galaxy!");
+        view.getVictoryLabel().getStyleClass().addAll("title", model.getPassivePlayer().getColor() + "-text");
+        view.getAnimatedShip1().setImage(new Image(UISettings.getFileSeparator() + "images" + UISettings.getFileSeparator() + "ship_" + model.getPassivePlayer().getColor() + "_3.png", 150, 50, true, true));
+        view.getAnimatedShip2().setImage(new Image(UISettings.getFileSeparator() + "images" + UISettings.getFileSeparator() + "ship_" + model.getPassivePlayer().getColor() + "_4.png", 200, 50, true, true));
+        view.getAnimatedShip3().setImage(new Image(UISettings.getFileSeparator() + "images" + UISettings.getFileSeparator() + "ship_" + model.getPassivePlayer().getColor() + "_5.png", 250, 50, true, true));
     }
 
     private void updateView() { }
@@ -37,34 +46,34 @@ public class VictoryScreenPresenter {
         view.getSaveButton().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                FileChooser fileChooser = new FileChooser();
-                fileChooser.setTitle("Save Data File");
-                fileChooser.getExtensionFilters().addAll(
-                        new FileChooser.ExtensionFilter("Textfiles", "*.txt"),
-                        new FileChooser.ExtensionFilter("All Files", "*.*"));
-                File selectedFile = fileChooser.showSaveDialog(view.getScene().getWindow());
-                if ((selectedFile != null) ^ (Files.isWritable(Paths.get(selectedFile.toURI())))) {
-                    try {
-                        Files.deleteIfExists(Paths.get(selectedFile.toURI()));
-                    } catch (IOException e) {
-                        //
-                    }
-                    try (Formatter output = new Formatter(selectedFile)) {
-                        // Begin implementeren wegschrijven model-gegevens
-                        output.format("%s%n", "Here comes the data!");
-                        output.format("%s%n", "First record");
-                        output.format("%s%n", "...");
-                        output.format("%s%n", "Last record");
-                        // Einde implementeren wegschrijven model-gegevens
-                    } catch (IOException e) {
-                        //
-                    }
-                } else {
-                    Alert errorWindow = new Alert(Alert.AlertType.ERROR);
-                    errorWindow.setHeaderText("Problem with the selected output file:");
-                    errorWindow.setContentText("File is not writable");
-                    errorWindow.showAndWait();
-                }
+//                FileChooser fileChooser = new FileChooser();
+//                fileChooser.setTitle("Save Data File");
+//                fileChooser.getExtensionFilters().addAll(
+//                        new FileChooser.ExtensionFilter("Textfiles", "*.txt"),
+//                        new FileChooser.ExtensionFilter("All Files", "*.*"));
+//                File selectedFile = fileChooser.showSaveDialog(view.getScene().getWindow());
+//                if ((selectedFile != null) ^ (Files.isWritable(Paths.get(selectedFile.toURI())))) {
+//                    try {
+//                        Files.deleteIfExists(Paths.get(selectedFile.toURI()));
+//                    } catch (IOException e) {
+//                        //
+//                    }
+//                    try (Formatter output = new Formatter(selectedFile)) {
+//                        // Begin implementeren wegschrijven model-gegevens
+//                        output.format("%s%n", "Here comes the data!");
+//                        output.format("%s%n", "First record");
+//                        output.format("%s%n", "...");
+//                        output.format("%s%n", "Last record");
+//                        // Einde implementeren wegschrijven model-gegevens
+//                    } catch (IOException e) {
+//                        //
+//                    }
+//                } else {
+//                    Alert errorWindow = new Alert(Alert.AlertType.ERROR);
+//                    errorWindow.setHeaderText("Problem with the selected output file:");
+//                    errorWindow.setContentText("File is not writable");
+//                    errorWindow.showAndWait();
+//                }
             }
         });
     }

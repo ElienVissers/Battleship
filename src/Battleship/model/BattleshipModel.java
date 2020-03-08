@@ -161,6 +161,10 @@ public class BattleshipModel {
         return activePlayer;
     }
 
+    public Player getPassivePlayer() {
+        return passivePlayer;
+    }
+
     public int getActiveSinkCounter() {
         return gameboards.get(activePlayer).getSinkCounter();
     }
