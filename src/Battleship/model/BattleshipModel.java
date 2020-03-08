@@ -1,5 +1,10 @@
 package Battleship.model;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -39,7 +44,7 @@ public class BattleshipModel {
 
     private final Random rand = new Random(); //possible game extension; random "verdeling" zodat de kans op kleinere getallen groter is
     private final int GRIDSIZE = 10; //possible game extension; when custom: check GUI what is the maximum that fits on the screen... OR different stylesheets
-    private final int NUMBER_OF_SHIPS = 10; //possible game extension; dependant on GRIDSIZE > 5 - 15?
+    private final int NUMBER_OF_SHIPS = 4; //possible game extension; dependant on GRIDSIZE > 5 - 15?
 
     private List<Player> players;
     private Player activePlayer;
@@ -148,11 +153,26 @@ public class BattleshipModel {
         }
     }
 
-    /*TODO : the game ends*/
-    public void endGame() {
+    public void saveGame() {
         turnCounter = Math.round(turnCounter);
-        System.out.println("Write away name of the winning player (" + passivePlayer.getName() + "), the date (" + date.toString() + ") and the amount of turns (" + turnCounter + ")");
-        System.out.println("Close the game.");
+        Path logFile = Paths.get(File.separator + "logFile.txt");
+        if (!Files.exists(logFile)) {
+            try {
+                // TODO logFile.txt is not created, java.nio.file.AccesDeniedException: \logFile.txt
+                Files.createFile(logFile);
+                Formatter fm =  new Formatter("resources/logFile.txt");
+                fm.format("%s;%s;%s;%s;%s%n", "gridsize", "amount of ships", "date", "winner", "amount of turns");
+                fm.close();
+            } catch (IOException ioe) {
+                throw new BattleshipException(ioe);
+            }
+        }
+        // TODO java.nio.file.AccesDeniedException: \logFile.txt
+        try (Formatter output = new Formatter("resources/logFile.txt")) {
+            output.format("%d;%d;%s;%s;%d%n", GRIDSIZE, NUMBER_OF_SHIPS, date.toString(), passivePlayer.getName(), (int) turnCounter);
+        } catch (IOException ioe) {
+            throw new BattleshipException(ioe);
+        }
     }
 
     public Player getActivePlayer() {
@@ -182,4 +202,5 @@ public class BattleshipModel {
     public List<Ship> getShips() {
         return ships;
     }
+
 }

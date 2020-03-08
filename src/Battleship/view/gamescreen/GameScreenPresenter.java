@@ -204,7 +204,6 @@ public class GameScreenPresenter {
                                 sunkenShipValues = returnValue;
                                 sunkenShipFlag = true;
                                 if (model.isGameOver()) {
-                                    model.endGame();
                                     new Timeline(new KeyFrame(Duration.millis(1000), ae -> openVictoryScreen())).play();
                                 }
                             }

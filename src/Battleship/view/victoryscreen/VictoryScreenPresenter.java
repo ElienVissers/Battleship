@@ -1,5 +1,6 @@
 package Battleship.view.victoryscreen;
 
+import Battleship.model.BattleshipException;
 import Battleship.model.BattleshipModel;
 import Battleship.view.UISettings;
 import Battleship.view.mainscreen.MainScreenPresenter;
@@ -8,15 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.stage.FileChooser;
 import javafx.stage.WindowEvent;
-
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.Formatter;
 
 /**
  * @author Elien Vissers-Similon
@@ -36,47 +29,28 @@ public class VictoryScreenPresenter {
         updateView();
         EventHandlers();
 
-        view.getVictoryLabel().setText("Congratulations, " + model.getPassivePlayer().getName() + "! You are one step closer to ruling the galaxy!");
-        view.getVictoryLabel().getStyleClass().addAll("title", model.getPassivePlayer().getColor() + "-text");
-        view.getAnimatedShip1().setImage(new Image(UISettings.getFileSeparator() + "images" + UISettings.getFileSeparator() + "ship_" + model.getPassivePlayer().getColor() + "_3.png", 150, 50, true, true));
-        view.getAnimatedShip2().setImage(new Image(UISettings.getFileSeparator() + "images" + UISettings.getFileSeparator() + "ship_" + model.getPassivePlayer().getColor() + "_4.png", 200, 50, true, true));
-        view.getAnimatedShip3().setImage(new Image(UISettings.getFileSeparator() + "images" + UISettings.getFileSeparator() + "ship_" + model.getPassivePlayer().getColor() + "_5.png", 250, 50, true, true));
+        try {
+            this.model.saveGame();
+        } catch (BattleshipException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("unable to save game");
+            alert.setContentText(e.getMessage());
+            alert.show();
+        }
     }
 
-    private void updateView() { }
+    private void updateView() {
+        this.view.getVictoryLabel().setText("Congratulations, " + model.getPassivePlayer().getName() + "! You are one step closer to ruling the galaxy!");
+        this.view.getVictoryLabel().getStyleClass().addAll("title", model.getPassivePlayer().getColor() + "-text");
+        this.view.getAnimatedShip1().setImage(new Image(UISettings.getFileSeparator() + "images" + UISettings.getFileSeparator() + "ship_" + model.getPassivePlayer().getColor() + "_3.png", 150, 50, true, true));
+        this.view.getAnimatedShip2().setImage(new Image(UISettings.getFileSeparator() + "images" + UISettings.getFileSeparator() + "ship_" + model.getPassivePlayer().getColor() + "_4.png", 200, 50, true, true));
+        this.view.getAnimatedShip3().setImage(new Image(UISettings.getFileSeparator() + "images" + UISettings.getFileSeparator() + "ship_" + model.getPassivePlayer().getColor() + "_5.png", 250, 50, true, true));
+    }
 
     private void EventHandlers() {
-        view.getSaveButton().setOnAction(new EventHandler<ActionEvent>() {
+        view.getButton().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-//                FileChooser fileChooser = new FileChooser();
-//                fileChooser.setTitle("Save Data File");
-//                fileChooser.getExtensionFilters().addAll(
-//                        new FileChooser.ExtensionFilter("Textfiles", "*.txt"),
-//                        new FileChooser.ExtensionFilter("All Files", "*.*"));
-//                File selectedFile = fileChooser.showSaveDialog(view.getScene().getWindow());
-//                if ((selectedFile != null) ^ (Files.isWritable(Paths.get(selectedFile.toURI())))) {
-//                    try {
-//                        Files.deleteIfExists(Paths.get(selectedFile.toURI()));
-//                    } catch (IOException e) {
-//                        //
-//                    }
-//                    try (Formatter output = new Formatter(selectedFile)) {
-//                        // Begin implementeren wegschrijven model-gegevens
-//                        output.format("%s%n", "Here comes the data!");
-//                        output.format("%s%n", "First record");
-//                        output.format("%s%n", "...");
-//                        output.format("%s%n", "Last record");
-//                        // Einde implementeren wegschrijven model-gegevens
-//                    } catch (IOException e) {
-//                        //
-//                    }
-//                } else {
-//                    Alert errorWindow = new Alert(Alert.AlertType.ERROR);
-//                    errorWindow.setHeaderText("Problem with the selected output file:");
-//                    errorWindow.setContentText("File is not writable");
-//                    errorWindow.showAndWait();
-//                }
                 MainScreenView mainScreenView = new MainScreenView(uiSettings);
                 MainScreenPresenter mainScreenpresenter = new MainScreenPresenter(model, mainScreenView, uiSettings);
                 view.getScene().setRoot(mainScreenView);

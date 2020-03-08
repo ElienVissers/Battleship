@@ -22,7 +22,7 @@ public class VictoryScreenView extends BorderPane {
     private UISettings uiSettings;
 
     private Label victoryLabel;
-    private Button saveButton;
+    private Button button;
     private ImageView animatedShip1;
     private ImageView animatedShip2;
     private ImageView animatedShip3;
@@ -38,7 +38,7 @@ public class VictoryScreenView extends BorderPane {
 
     private void initialiseNodes() {
         this.victoryLabel = new Label();
-        this.saveButton = new Button("SAVE GAME");
+        this.button = new Button("NEW GAME");
         this.animatedShip1 = new ImageView();
         this.animatedShip2 = new ImageView();
         this.animatedShip3 = new ImageView();
@@ -47,7 +47,7 @@ public class VictoryScreenView extends BorderPane {
 
     private void layoutNodes() {
         VBox content = new VBox();
-        content.getChildren().addAll(victoryLabel, saveButton);
+        content.getChildren().addAll(victoryLabel, button);
         content.setSpacing(100);
         content.setAlignment(Pos.CENTER);
         setCenter(content);
@@ -74,7 +74,7 @@ public class VictoryScreenView extends BorderPane {
 
     Label getVictoryLabel() { return victoryLabel; }
 
-    Button getSaveButton() {return saveButton;}
+    Button getButton() {return button;}
 
     ImageView getAnimatedShip1() {
         return animatedShip1;
