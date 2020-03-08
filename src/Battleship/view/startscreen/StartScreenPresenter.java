@@ -44,7 +44,6 @@ public class StartScreenPresenter {
                 } catch (MalformedURLException ex) {
                     // do nothing, if toURL-conversion fails, program can continue
                 }
-
                 msView.getScene().getWindow().sizeToScene();
                 //open new window fullscreen
                 Stage currentStage = (Stage) msView.getScene().getWindow();
@@ -62,6 +61,8 @@ public class StartScreenPresenter {
                 stopWindow.setHeaderText("You can not yet close the application.");
                 stopWindow.setContentText("Try again after the program has started");
                 stopWindow.showAndWait();
-                event.consume(); } });
+                event.consume();
+            }
+        });
     }
 }

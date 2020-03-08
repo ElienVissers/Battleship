@@ -118,7 +118,8 @@ public class MainScreenPresenter {
     public void windowsHandler() {
         view.getScene().getWindow().setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
-            public void handle(WindowEvent event) { UISettings.getCloseAlert(event, view.getScene()); }});
+            public void handle(WindowEvent event) { UISettings.getCloseAlert(event, view.getScene()); }
+        });
     }
 
     private void openMenuWindow(Stage stage, Parent newView, String name) {

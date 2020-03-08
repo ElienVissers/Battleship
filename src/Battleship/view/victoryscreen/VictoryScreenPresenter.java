@@ -2,12 +2,15 @@ package Battleship.view.victoryscreen;
 
 import Battleship.model.BattleshipModel;
 import Battleship.view.UISettings;
+import Battleship.view.mainscreen.MainScreenPresenter;
+import Battleship.view.mainscreen.MainScreenView;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
+import javafx.stage.WindowEvent;
 
 import java.io.File;
 import java.io.IOException;
@@ -74,10 +77,18 @@ public class VictoryScreenPresenter {
 //                    errorWindow.setContentText("File is not writable");
 //                    errorWindow.showAndWait();
 //                }
+                MainScreenView mainScreenView = new MainScreenView(uiSettings);
+                MainScreenPresenter mainScreenpresenter = new MainScreenPresenter(model, mainScreenView, uiSettings);
+                view.getScene().setRoot(mainScreenView);
+                mainScreenpresenter.windowsHandler();
             }
         });
     }
 
     public void windowsHandler() {
+        view.getScene().getWindow().setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) { UISettings.getCloseAlert(event, view.getScene()); }
+        });
     }
 }

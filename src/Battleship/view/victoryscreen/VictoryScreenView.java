@@ -73,9 +73,9 @@ public class VictoryScreenView extends BorderPane {
         animatedShip1.setTranslateX(-350);
         animatedShip2.setTranslateX(-550);
         animatedShip3.setTranslateX(-800);
-        animatedShipBox.getChildren().addAll(animatedShip1, animatedShip2, animatedShip3);
-        animatedShipBox.setTranslateX(-1000);
-        animatedShipBox.setSpacing(500);
+        animatedShipBox.getChildren().addAll(animatedShip3, animatedShip2, animatedShip1);
+        animatedShipBox.setTranslateX(-1100);
+        animatedShipBox.setSpacing(300);
         animatedShipBox.setPadding(new Insets(0, 0, 50, 0));
         setBottom(animatedShipBox);
     }
@@ -83,8 +83,8 @@ public class VictoryScreenView extends BorderPane {
     private void animate() {
         TranslateTransition fly = new TranslateTransition();
         fly.setNode(animatedShipBox);
-        fly.setDuration(Duration.seconds(20));
-        fly.setByX(uiSettings.getResX() + 1000);
+        fly.setDuration(Duration.seconds(15));
+        fly.setByX(uiSettings.getResX() + 1100);
         fly.setCycleCount(Timeline.INDEFINITE);
         fly.setInterpolator(Interpolator.LINEAR);
         fly.play();
