@@ -49,20 +49,19 @@ public class BattleshipModel {
     private Map<Player, GameBoard> gameboards;
     
     private LocalDate date;
-    private String winner;
 
     private double turnCounter;
     private double gameStarted;
 
     public BattleshipModel() {
+    }
+
+    public void startGame(Boolean isComputer, String name1, String name2) {
         availableShips = new int[NUMBER_OF_SHIPS];
         ships = new ArrayList<>();
         date = LocalDate.now();
         gameStarted = 0;
         turnCounter = 0;
-    }
-
-    public void startGame(Boolean isComputer, String name1, String name2) {
         createGameShips();
         createGamePlayers(isComputer, name1, name2);
         createGameBoards();
@@ -152,8 +151,7 @@ public class BattleshipModel {
     /*TODO : the game ends*/
     public void endGame() {
         turnCounter = Math.round(turnCounter);
-        System.out.println("In-game message congratulates winning player " + passivePlayer.getName());
-        System.out.println("Write away name of the winning player, the date and the amount of turns");
+        System.out.println("Write away name of the winning player (" + passivePlayer.getName() + "), the date (" + date.toString() + ") and the amount of turns (" + turnCounter + ")");
         System.out.println("Close the game.");
     }
 

@@ -20,12 +20,13 @@ import javafx.util.Duration;
 public class VictoryScreenView extends BorderPane {
 
     private UISettings uiSettings;
+
     private Label victoryLabel;
     private Button saveButton;
-
     private ImageView animatedShip1;
     private ImageView animatedShip2;
     private ImageView animatedShip3;
+
     private HBox animatedShipBox;
 
     public VictoryScreenView(UISettings uiSettings) {
@@ -53,6 +54,24 @@ public class VictoryScreenView extends BorderPane {
         addAnimation();
     }
 
+    private void addAnimation() {
+        animatedShipBox.getChildren().addAll(animatedShip3, animatedShip2, animatedShip1);
+        animatedShipBox.setTranslateX(-1100);
+        animatedShipBox.setSpacing(100);
+        animatedShipBox.setPadding(new Insets(0, 0, 50, 0));
+        setBottom(animatedShipBox);
+    }
+
+    private void animate() {
+        TranslateTransition fly = new TranslateTransition();
+        fly.setNode(animatedShipBox);
+        fly.setDuration(Duration.seconds(15));
+        fly.setByX(uiSettings.getResX() + 1100);
+        fly.setCycleCount(Timeline.INDEFINITE);
+        fly.setInterpolator(Interpolator.LINEAR);
+        fly.play();
+    }
+
     Label getVictoryLabel() { return victoryLabel; }
 
     Button getSaveButton() {return saveButton;}
@@ -67,26 +86,5 @@ public class VictoryScreenView extends BorderPane {
 
     ImageView getAnimatedShip3() {
         return animatedShip3;
-    }
-
-    private void addAnimation() {
-        animatedShip1.setTranslateX(-350);
-        animatedShip2.setTranslateX(-550);
-        animatedShip3.setTranslateX(-800);
-        animatedShipBox.getChildren().addAll(animatedShip3, animatedShip2, animatedShip1);
-        animatedShipBox.setTranslateX(-1100);
-        animatedShipBox.setSpacing(300);
-        animatedShipBox.setPadding(new Insets(0, 0, 50, 0));
-        setBottom(animatedShipBox);
-    }
-
-    private void animate() {
-        TranslateTransition fly = new TranslateTransition();
-        fly.setNode(animatedShipBox);
-        fly.setDuration(Duration.seconds(15));
-        fly.setByX(uiSettings.getResX() + 1100);
-        fly.setCycleCount(Timeline.INDEFINITE);
-        fly.setInterpolator(Interpolator.LINEAR);
-        fly.play();
     }
 }
