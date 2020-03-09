@@ -13,18 +13,19 @@ import javafx.scene.layout.HBox;
  */
 
 public class SettingsScreenView extends BorderPane {
+    private BorderPane settingsBP;
+    private BorderPane gridSettingsBP;
+    private BorderPane fleetSettingsBP;
     private Label gridSizeLabel;
     private Label fleetSizeLabel;
-    private Button confirmButton;
-    private Button cancelButton;
-    private BorderPane settingsBP;
-
     private int maxGridSize;
     private int minGridSize;
     private int maxFleetSize;
     private int minFleetSize;
-    private Slider gridSizeSlider = new Slider(minGridSize, maxGridSize, 10);
-    private Slider fleetSizeSlider = new Slider(minFleetSize, maxFleetSize, 10);
+    private Slider gridSizeSlider;
+    private Slider fleetSizeSlider;
+    private Button confirmButton;
+    private Button cancelButton;
     private UISettings uiSettings;
 
 
@@ -38,6 +39,8 @@ public class SettingsScreenView extends BorderPane {
         //CONTENT
         this.gridSizeLabel = new Label("Grid Size");
         this.fleetSizeLabel = new Label("Fleet Size");
+        this.fleetSizeSlider = new Slider(minFleetSize, maxFleetSize, 10);
+        this.gridSizeSlider = new Slider(minGridSize, maxGridSize, 10);
         this.confirmButton = new Button("CONFIRM");
         this.cancelButton = new Button("CANCEL");
     }
