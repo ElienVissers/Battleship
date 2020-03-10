@@ -146,6 +146,10 @@
     -fx-font-size: 15;
 }
 
+.info-label {
+    -fx-font-size: 15;
+}
+
 .ship-label:hover, .ship-label-selected {
     -fx-background-color: -fx-my-highlight-color;
     -fx-cursor: hand;

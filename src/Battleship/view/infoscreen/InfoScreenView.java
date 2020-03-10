@@ -4,6 +4,7 @@ import Battleship.view.UISettings;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
@@ -11,8 +12,7 @@ import javafx.scene.text.Font;
 public class InfoScreenView extends BorderPane{
 
     private UISettings uiSettings;
-    private TextArea InfoText;
-    private Button okButton;
+    private Label infoText;
 
     public InfoScreenView(UISettings uiSettings) {
         this.uiSettings = uiSettings;
@@ -21,29 +21,14 @@ public class InfoScreenView extends BorderPane{
     }
 
     private void initialiseNodes() {
-        InfoText = new TextArea("test");
-        okButton = new Button("OK");
-        okButton.setPrefWidth(60);
+        infoText = new Label();
     }
 
     private void layoutNodes() {
-        setCenter(InfoText);
-        InfoText.setPrefWidth(Double.MAX_VALUE);
-        InfoText.setPrefHeight(Double.MAX_VALUE);
-        InfoText.setWrapText(true);
-        InfoText.setFont(Font.font("Arial", 12));
-        InfoText.setEditable(false);
+        infoText.getStyleClass().add("info-label");
+        setCenter(infoText);
         setPadding(new Insets(uiSettings.getInsetsMargin()));
-        BorderPane.setAlignment(okButton, Pos.CENTER_RIGHT);
-        BorderPane.setMargin(okButton, new Insets(uiSettings.getInsetsMargin(), 0, 0, 0));
-        setBottom(okButton);
-        setPrefWidth(uiSettings.getLowestRes() / 4);
-        setPrefHeight(uiSettings.getLowestRes() / 4);
     }
 
-    TextArea getInfoText () {return InfoText;}
-
-    Button getBtnOk() {
-        return okButton;
-    }
+    Label getInfoText () {return infoText;}
 }
