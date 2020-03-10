@@ -1,6 +1,7 @@
 package Battleship.model;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -155,23 +156,40 @@ public class BattleshipModel {
 
     public void saveGame() {
         turnCounter = Math.round(turnCounter);
-        Path logFile = Paths.get(File.separator + "logFile.txt");
-        if (!Files.exists(logFile)) {
-            try {
-                // TODO logFile.txt is not created, java.nio.file.AccesDeniedException: \logFile.txt
-                Files.createFile(logFile);
-                Formatter fm =  new Formatter("resources/logFile.txt");
-                fm.format("%s;%s;%s;%s;%s%n", "gridsize", "amount of ships", "date", "winner", "amount of turns");
-                fm.close();
+        String pathString = "resources"+ File.separator + "logFile.txt";
+        Path logFile = Paths.get(pathString);
+        if (Files.exists(logFile)) {
+            List<String> logList = new ArrayList<>();
+            try (Scanner sc = new Scanner(new File(pathString))) {
+                while (sc.hasNext()) {
+                    String log = sc.nextLine();
+                    logList.add(log);
+                }
+            } catch (FileNotFoundException fnfe) {
+                throw new BattleshipException(fnfe);
+            }
+            try (Formatter fm = new Formatter(pathString)) {
+                for (String log : logList) {
+                    fm.format("%s%n", log);
+                }
+                fm.format("%d;%d;%s;%s;%d%n", GRIDSIZE, NUMBER_OF_SHIPS, date.toString(), passivePlayer.getName(), (int) turnCounter);
             } catch (IOException ioe) {
                 throw new BattleshipException(ioe);
             }
-        }
-        // TODO java.nio.file.AccesDeniedException: \logFile.txt
-        try (Formatter output = new Formatter("resources/logFile.txt")) {
-            output.format("%d;%d;%s;%s;%d%n", GRIDSIZE, NUMBER_OF_SHIPS, date.toString(), passivePlayer.getName(), (int) turnCounter);
-        } catch (IOException ioe) {
-            throw new BattleshipException(ioe);
+        } else {
+            Formatter fm = null;
+            try {
+                Files.createFile(logFile);
+                fm =  new Formatter(pathString);
+                fm.format("%s;%s;%s;%s;%s%n%d;%d;%s;%s;%d%n",
+                        "gridsize", "amount of ships", "date", "winner", "amount of turns",
+                        GRIDSIZE, NUMBER_OF_SHIPS, date.toString(), passivePlayer.getName(), (int) turnCounter);
+                fm.close();
+            } catch (IOException ioe) {
+                throw new BattleshipException(ioe);
+            } finally {
+                if (fm != null) fm.close();
+            }
         }
     }
 
