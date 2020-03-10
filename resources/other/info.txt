@@ -1,5 +1,28 @@
+BATTLESHIP
+
 Battleship is a two-player game where both players fight to reign over the universe.
-Each player has its own fleet of spaceships which they can strategically place in between the stars in space.
-Taking turns, they are able to aim and fire lasercanons to destroy the enemy ships.
+Taking turns, they are able to aim and fire lasers strategically to destroy enemy ships.
 
 Will you rule the universe? Play and find out!
+
+
+GAME OPTIONS:
+You won’t need 2 desktops/laptops to play this game, one is enough!
+If you don’t have an opponent it’s possible to add a droid into the game via the option menu.
+You can choose how big the battlefield is and how many ships each player will have in their fleet.
+
+PREPARE FOR BATTLE:
+When you start positioning your spaceships you can only position them in a vertical or horizontal position, not diagonally.
+It’s not possible to place a ship outside of the battlefield or on top of each other.
+You won’t be able to change the position of your ship during the game.
+
+BATTLE RULES:
+Both battlefields are visible on the screen, but the fleets are hidden.
+Each turn, players fire a laser to a certain coordinate in the universe by clicking on the opponent’s battlefield.
+The purpose is to destroy all the enemy’s spaceships with as little as possible lasers.
+
+It’s a hit! If there was a ship on the location that you fired, you will destroy that part of the spaceship and an explosion will be shown.
+After destroying all parts of a ship, the destroyed ship will be visible on the battlefield.
+
+It’s a miss! If you fire on a location not occupied by a spaceship on your opponent's battlefield, you will have fired in empty space.
+The corresponding location will be greyed out and it won’t be possible to target that location anymore.

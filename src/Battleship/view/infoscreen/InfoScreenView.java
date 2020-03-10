@@ -2,14 +2,10 @@ package Battleship.view.infoscreen;
 
 import Battleship.view.UISettings;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.text.Font;
+import javafx.scene.control.ScrollPane;
 
-public class InfoScreenView extends BorderPane{
+public class InfoScreenView extends ScrollPane{
 
     private UISettings uiSettings;
     private Label infoText;
@@ -26,9 +22,10 @@ public class InfoScreenView extends BorderPane{
 
     private void layoutNodes() {
         infoText.getStyleClass().add("info-label");
-        setCenter(infoText);
-        setPadding(new Insets(uiSettings.getInsetsMargin()));
+        infoText.setPadding(new Insets(uiSettings.getInsetsMargin()));
+        setContent(infoText);
     }
 
     Label getInfoText () {return infoText;}
+
 }
