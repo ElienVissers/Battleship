@@ -5,7 +5,7 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 
-public class InfoScreenView extends ScrollPane{
+public class InfoScreenView extends ScrollPane {
 
     private UISettings uiSettings;
     private Label infoText;

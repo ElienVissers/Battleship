@@ -8,8 +8,13 @@ import Battleship.view.mainscreen.MainScreenView;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
+import javafx.scene.control.DialogPane;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+
+import java.nio.file.Files;
 
 /**
  * @author Elien Vissers-Similon
@@ -33,8 +38,21 @@ public class VictoryScreenPresenter {
             this.model.saveGame();
         } catch (BattleshipException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
+            try {
+                DialogPane dialogPane = alert.getDialogPane();
+                dialogPane.setGraphic(new Label());
+                dialogPane.getStylesheets().add(uiSettings.getStyleSheetPath().toUri().toURL().toString());
+                dialogPane.getStyleClass().add("alert-window");
+            } catch (Exception ignored) {}
             alert.setTitle("unable to save game");
             alert.setContentText(e.getMessage());
+            if (Files.exists(uiSettings.getApplicationIconPath())) {
+                try {
+                    Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                    stage.getIcons().add(new Image(uiSettings.getApplicationIconPath().toUri().toURL().toString()));
+                }
+                catch (Exception ignored) { }
+            }
             alert.show();
         }
     }

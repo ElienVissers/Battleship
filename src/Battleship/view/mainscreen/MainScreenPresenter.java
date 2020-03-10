@@ -12,6 +12,8 @@ import Battleship.view.UISettings;
 import javafx.event.*;
 import javafx.scene.*;
 import javafx.scene.control.Alert;
+import javafx.scene.control.DialogPane;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -49,6 +51,20 @@ public class MainScreenPresenter {
             public void handle(ActionEvent event) {
                 if (view.getPlayer1Text().getText().isEmpty() || view.getPlayer2Text().getText().isEmpty()) {
                     final Alert stopWindow = new Alert(Alert.AlertType.ERROR);
+                    try {
+                        DialogPane dialogPane = stopWindow.getDialogPane();
+                        dialogPane.setGraphic(new Label());
+                        dialogPane.getStylesheets().add(uiSettings.getStyleSheetPath().toUri().toURL().toString());
+                        dialogPane.getStyleClass().add("alert-window");
+                    } catch (Exception ignored) {}
+                    if (Files.exists(uiSettings.getApplicationIconPath())) {
+                        try {
+                            Stage stage = (Stage) stopWindow.getDialogPane().getScene().getWindow();
+                            stage.getIcons().add(new Image(uiSettings.getApplicationIconPath().toUri().toURL().toString()));
+                        }
+                        catch (Exception ignored) { }
+                    }
+                    stopWindow.setTitle("Error!");
                     stopWindow.setHeaderText("You can not yet start the game.");
                     stopWindow.setContentText("Please fill in a name for both players.");
                     stopWindow.showAndWait();

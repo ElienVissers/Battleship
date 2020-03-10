@@ -6,9 +6,13 @@ import Battleship.view.mainscreen.MainScreenPresenter;
 import Battleship.view.mainscreen.MainScreenView;
 import javafx.event.*;
 import javafx.scene.control.Alert;
+import javafx.scene.control.DialogPane;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import java.net.MalformedURLException;
+import java.nio.file.Files;
 
 /**
  * @author Elien Vissers-Similon
@@ -58,8 +62,22 @@ public class StartScreenPresenter {
             @Override
             public void handle(WindowEvent event) {
                 final Alert stopWindow = new Alert(Alert.AlertType.ERROR);
+                try {
+                    DialogPane dialogPane = stopWindow.getDialogPane();
+                    dialogPane.setGraphic(new Label());
+                    dialogPane.getStylesheets().add(uiSettings.getStyleSheetPath().toUri().toURL().toString());
+                    dialogPane.getStyleClass().add("alert-window");
+                } catch (Exception ignored) {}
+                if (Files.exists(uiSettings.getApplicationIconPath())) {
+                    try {
+                        Stage stage = (Stage) stopWindow.getDialogPane().getScene().getWindow();
+                        stage.getIcons().add(new Image(uiSettings.getApplicationIconPath().toUri().toURL().toString()));
+                    }
+                    catch (Exception ignored) { }
+                }
+                stopWindow.setTitle("Error!");
                 stopWindow.setHeaderText("You can not yet close the application.");
-                stopWindow.setContentText("Try again after the program has started");
+                stopWindow.setContentText("Try again after the program has started!");
                 stopWindow.showAndWait();
                 event.consume();
             }

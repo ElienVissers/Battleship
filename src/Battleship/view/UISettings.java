@@ -4,7 +4,11 @@ import javafx.event.Event;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.DialogPane;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.stage.Screen;
+import javafx.stage.Stage;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -48,7 +52,7 @@ public class UISettings {
 
     public boolean styleSheetAvailable (){return Files.exists(styleSheetPath);}
 
-    public Path getStyleSheetPath () {return this.styleSheetPath;}
+    public Path getStyleSheetPath() {return this.styleSheetPath;}
 
     public void setStyleSheetPath (Path styleSheetPath) {this.styleSheetPath = styleSheetPath;}
 
@@ -70,6 +74,19 @@ public class UISettings {
 
     public static void getCloseAlert(Event event, Scene scene) {
         final Alert stopWindow = new Alert(Alert.AlertType.CONFIRMATION);
+        try {
+            DialogPane dialogPane = stopWindow.getDialogPane();
+            dialogPane.setGraphic(new Label());
+            dialogPane.getStylesheets().add(Paths.get("resources"+FILE_SEPARATOR+"stylesheets"+FILE_SEPARATOR+"battleship_standard.css").toUri().toURL().toString());
+            dialogPane.getStyleClass().add("alert-window");
+        } catch (Exception ignored) {}
+        if (Files.exists(Paths.get("resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"ApplicationLogo.png"))) {
+            try {
+                Stage stage = (Stage) stopWindow.getDialogPane().getScene().getWindow();
+                stage.getIcons().add(new Image(Paths.get("resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"ApplicationLogo.png").toUri().toURL().toString()));
+            }
+            catch (Exception ignored) { }
+        }
         stopWindow.setHeaderText("You're closing the application.");
         stopWindow.setContentText("Are you sure? Unsaved data may be lost.");
         stopWindow.setTitle("WARNING!");

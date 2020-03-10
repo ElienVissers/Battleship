@@ -1,9 +1,7 @@
 package Battleship.view.aboutscreen;
 
 import Battleship.view.UISettings;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -38,7 +36,7 @@ public class AboutScreenView extends BorderPane {
             catch (MalformedURLException ignored) { }
         }
         VBox labelBox = new VBox();
-        labelBox.getChildren().addAll(new Label("game version 1.0 was developed by Elien Vissers-Similon & Jan Dubois"),
+        labelBox.getChildren().addAll(new Label("game version 1.0 © Elien Vissers-Similon & Jan Dubois"),
                 new Label(""),
                 new Label("technical support by Wim De Keyser"),
                 new Label("graphical support by Ivan Zilic"));

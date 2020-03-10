@@ -45,7 +45,7 @@ public class BattleshipModel {
 
     private final Random rand = new Random();
     private int GRIDSIZE = 10;
-    private int NUMBER_OF_SHIPS = 10;
+    private int NUMBER_OF_SHIPS = 4;
 
     private List<Player> players;
     private Player activePlayer;
