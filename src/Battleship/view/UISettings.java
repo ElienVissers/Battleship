@@ -2,10 +2,7 @@ package Battleship.view;
 
 import javafx.event.Event;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.DialogPane;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -91,11 +88,11 @@ public class UISettings {
         stopWindow.setContentText("Are you sure? Unsaved data may be lost.");
         stopWindow.setTitle("WARNING!");
         stopWindow.getButtonTypes().clear();
-        ButtonType noButton = new ButtonType("No");
-        ButtonType yesButton = new ButtonType("Yes");
+        ButtonType noButton = new ButtonType("NO", ButtonBar.ButtonData.CANCEL_CLOSE);
+        ButtonType yesButton = new ButtonType("YES", ButtonBar.ButtonData.OK_DONE);
         stopWindow.getButtonTypes().addAll(yesButton, noButton);
         stopWindow.showAndWait();
-        if (stopWindow.getResult() == null || stopWindow.getResult().equals(noButton)) {
+        if (stopWindow.getResult() == ButtonType.OK || stopWindow.getResult().equals(noButton)) {
             event.consume();
         } else {
             scene.getWindow().hide();
