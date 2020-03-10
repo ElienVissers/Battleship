@@ -2,8 +2,6 @@ package Battleship.view.aboutscreen;
 
 import Battleship.model.BattleshipModel;
 import Battleship.view.UISettings;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 
 public class AboutScreenPresenter {
 
@@ -15,11 +13,5 @@ public class AboutScreenPresenter {
         this.model = model;
         this.view = view;
         this.uiSettings = uiSettings;
-        view.getBtnOk().setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                view.getScene().getWindow().hide();
-            }
-        });
     }
 }

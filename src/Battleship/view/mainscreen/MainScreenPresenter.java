@@ -129,8 +129,8 @@ public class MainScreenPresenter {
         Scene scene = new Scene(newView);
         stage.setScene(scene);
         stage.setTitle(uiSettings.getApplicationName() + " - " + name);
-        stage.setX(view.getScene().getWindow().getX() + uiSettings.getResY() / 20.0);
-        stage.setY(view.getScene().getWindow().getY() + uiSettings.getResY() / 10.0);
+        stage.setHeight(uiSettings.getLowestRes() /2.0);
+        stage.setWidth(uiSettings.getLowestRes() /1.0);
         if (Files.exists(uiSettings.getApplicationIconPath())) {
             try {
                 stage.getIcons().add(new Image(uiSettings.getApplicationIconPath().toUri().toURL().toString()));

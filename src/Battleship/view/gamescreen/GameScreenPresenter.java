@@ -18,11 +18,11 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.WindowEvent;
 import javafx.scene.Node;
-
 import javafx.util.Duration;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -54,8 +54,8 @@ public class GameScreenPresenter {
 
         createGridPane(view.getFirstGrid(), "red");
         createGridPane(view.getSecondGrid(), "blue");
-        view.getFirstSunkenStatsLabel().setText("sunken ships at " + model.getActivePlayer().getName() + "'s battlefield: 0/" + model.getNUMBER_OF_SHIPS());
-        view.getSecondSunkenStatsLabel().setText("sunken ships at " + model.getPassivePlayer().getName() + "'s battlefield: 0/" + model.getNUMBER_OF_SHIPS());
+        view.getFirstSunkenStatsLabel().setText("sunken ships at " + model.getActivePlayer().getName() + "'s battlefield: 0/" + model.getNumberOfShips());
+        view.getSecondSunkenStatsLabel().setText("sunken ships at " + model.getPassivePlayer().getName() + "'s battlefield: 0/" + model.getNumberOfShips());
 
         updateView();
         addEventHandlers();
@@ -148,9 +148,9 @@ public class GameScreenPresenter {
 
     private void loadStats() {
         if (model.getActivePlayer().getColor().equals("red")) {
-            view.getFirstSunkenStatsLabel().setText("sunken ships at " + model.getActivePlayer().getName() + "'s battlefield: " + model.getActiveSinkCounter() + UISettings.getFileSeparator() + model.getNUMBER_OF_SHIPS());
+            view.getFirstSunkenStatsLabel().setText("sunken ships at " + model.getActivePlayer().getName() + "'s battlefield: " + model.getActiveSinkCounter() + UISettings.getFileSeparator() + model.getNumberOfShips());
         } else if (model.getActivePlayer().getColor().equals("blue")) {
-            view.getSecondSunkenStatsLabel().setText("sunken ships at " + model.getActivePlayer().getName() + "'s battlefield: " + model.getActiveSinkCounter() + UISettings.getFileSeparator() + model.getNUMBER_OF_SHIPS());
+            view.getSecondSunkenStatsLabel().setText("sunken ships at " + model.getActivePlayer().getName() + "'s battlefield: " + model.getActiveSinkCounter() + UISettings.getFileSeparator() + model.getNumberOfShips());
         }
     }
 

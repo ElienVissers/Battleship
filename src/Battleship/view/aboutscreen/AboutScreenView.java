@@ -16,7 +16,8 @@ import java.nio.file.Files;
 public class AboutScreenView extends BorderPane {
 
     private UISettings uiSettings;
-    private Button okButton;
+
+
 
     public AboutScreenView(UISettings uiSettings) {
         this.uiSettings = uiSettings;
@@ -25,36 +26,25 @@ public class AboutScreenView extends BorderPane {
     }
 
     private void initialiseNodes() {
-        okButton = new Button("OK");
-        okButton.setPrefWidth(60);
     }
 
     private void layoutNodes() {
-        BorderPane centralPane = new BorderPane();
          if (Files.exists(uiSettings.getAboutImagePath())) {
             try {
-                centralPane.setCenter(new ImageView(new Image(uiSettings.getAboutImagePath().toUri().toURL().toString())));
+
+                Image centralImage = new Image(uiSettings.getAboutImagePath().toUri().toURL().toString(), uiSettings.getLowestRes() /2.0, uiSettings.getLowestRes() /1.0, true, true);
+                setCenter(new ImageView(centralImage));
             }
-            catch (MalformedURLException ex) {
-                // do nothing, if toURL-conversion fails, program can continue
-            }
-        } else { // do nothing, if AboutImage is not available, program can continue
+            catch (MalformedURLException ignored) { }
         }
-        VBox labelsPane = new VBox();
-        labelsPane.getChildren().addAll(new Label("This application was developed by WDK"),
-                                        new Label(String.format("Free of %c", 169)),
-                                        new Label("Enjoy!"));
-        centralPane.setBottom(labelsPane);
-        setCenter(centralPane);
-        setPadding(new Insets(uiSettings.getInsetsMargin()));
-        BorderPane.setAlignment(okButton, Pos.CENTER_RIGHT);
-        BorderPane.setMargin(okButton, new Insets(uiSettings.getInsetsMargin(), 0, 0, 0));
-        setBottom(okButton);
-        setPrefWidth(uiSettings.getLowestRes() / 4);
-        setPrefHeight(uiSettings.getLowestRes() / 4);
+        VBox labelBox = new VBox();
+        labelBox.getChildren().addAll(new Label("game version 1.0 was developed by Elien Vissers-Similon & Jan Dubois"),
+                new Label(""),
+                new Label("technical support by Wim De Keyser"),
+                new Label("graphical support by Ivan Zilic"));
+        labelBox.setAlignment(Pos.CENTER);
+        setBottom(labelBox);
+        setAlignment(labelBox, Pos.CENTER);
     }
 
-    Button getBtnOk() {
-        return okButton;
-    }
 }
