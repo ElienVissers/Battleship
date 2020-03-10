@@ -38,12 +38,12 @@ public class BattleshipModel {
     }
 
     private final Random rand = new Random(); //possible game extension; random "verdeling" zodat de kans op kleinere getallen groter is
-    private final int MAXGRIDSIZE = 15;
-    private final int MINGRIDSIZE = 8;
-    private final int MAXFLEETSIZE = 15;
-    private final int MINFLEETSIZE = 8;
-    private final int GRIDSIZE = 10; //possible game extension; when custom: check GUI what is the maximum that fits on the screen... OR different stylesheets
-    private final int NUMBER_OF_SHIPS = 10; //possible game extension; dependant on GRIDSIZE > 5 - 15?
+    private static final int MAX_GRIDSIZE = 15;
+    private static final int MIN_GRIDSIZE = 8;
+    private static final int MAX_FLEETSIZE = 15;
+    private static final int MIN_FLEETSIZE = 8;
+    private int gridSize = 10; //possible game extension; when custom: check GUI what is the maximum that fits on the screen... OR different stylesheets
+    private int fleetSize = 10; //possible game extension; dependant on GRIDSIZE > 5 - 15?
 
     private List<Player> players;
     private Player activePlayer;
@@ -59,7 +59,7 @@ public class BattleshipModel {
     private double gameStarted;
 
     public BattleshipModel() {
-        availableShips = new int[NUMBER_OF_SHIPS];
+        availableShips = new int[fleetSize];
         ships = new ArrayList<>();
         date = LocalDate.now();
         gameStarted = 0;
@@ -79,7 +79,7 @@ public class BattleshipModel {
         availableShips[2] = 4;
         availableShips[3] = 5;
         //random other ships
-        for (int i = 4; i < NUMBER_OF_SHIPS; i++) {
+        for (int i = 4; i < fleetSize; i++) {
             availableShips[i] = rand.nextInt(4) + 2;
         }
         for (int size: availableShips) {
@@ -140,7 +140,7 @@ public class BattleshipModel {
     }
 
     public boolean isGameOver() {
-        return gameboards.get(activePlayer).getSinkCounter() == NUMBER_OF_SHIPS;
+        return gameboards.get(activePlayer).getSinkCounter() ==fleetSize;
     }
 
     private void togglePlayer() {
@@ -174,14 +174,38 @@ public class BattleshipModel {
     }
 
     public int getGridSize() {
-        return GRIDSIZE;
+        return gridSize;
     }
 
-    public int getNUMBER_OF_SHIPS() {
-        return NUMBER_OF_SHIPS;
+    public int getFleetSize() {
+        return fleetSize;
+    }
+
+    public void setGridSize(int gridSize) {
+        this.gridSize = gridSize;
+    }
+
+    public void setFleetSize(int fleetSize) {
+        this.fleetSize = fleetSize;
     }
 
     public List<Ship> getShips() {
         return ships;
+    }
+
+    public static int getMaxGridSize() {
+        return MAX_GRIDSIZE;
+    }
+
+    public static int getMinGridSize() {
+        return MIN_GRIDSIZE;
+    }
+
+    public static int getMaxFleetSize() {
+        return MAX_FLEETSIZE;
+    }
+
+    public static int getMinFleetSize() {
+        return MIN_FLEETSIZE;
     }
 }

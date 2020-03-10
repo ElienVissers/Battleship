@@ -45,8 +45,8 @@ public class GameScreenPresenter {
 
         createGridPane(view.getFirstGrid(), "red");
         createGridPane(view.getSecondGrid(), "blue");
-        view.getFirstSunkenStatsLabel().setText("sunken ships: 0/" + model.getNUMBER_OF_SHIPS());
-        view.getSecondSunkenStatsLabel().setText("sunken ships: 0/" + model.getNUMBER_OF_SHIPS());
+        view.getFirstSunkenStatsLabel().setText("sunken ships: 0/" + model.getFleetSize());
+        view.getSecondSunkenStatsLabel().setText("sunken ships: 0/" + model.getFleetSize());
 
         updateView();
         addEventHandlers();
@@ -139,9 +139,9 @@ public class GameScreenPresenter {
 
     private void loadStats() {
         if (model.getActivePlayer().getColor().equals("red")) {
-            view.getFirstSunkenStatsLabel().setText("sunken ships: " + model.getActiveSinkCounter() + "/" + model.getNUMBER_OF_SHIPS());
+            view.getFirstSunkenStatsLabel().setText("sunken ships: " + model.getActiveSinkCounter() + "/" + model.getFleetSize());
         } else if (model.getActivePlayer().getColor().equals("blue")) {
-            view.getSecondSunkenStatsLabel().setText("sunken ships: " + model.getActiveSinkCounter() + "/" + model.getNUMBER_OF_SHIPS());
+            view.getSecondSunkenStatsLabel().setText("sunken ships: " + model.getActiveSinkCounter() + "/" + model.getFleetSize());
         }
     }
 
