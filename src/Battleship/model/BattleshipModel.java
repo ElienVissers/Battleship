@@ -44,8 +44,6 @@ public class BattleshipModel {
     }
 
     private final Random rand = new Random();
-    private int GRIDSIZE = 10;
-    private int NUMBER_OF_SHIPS = 4;
     private int defaultGridSie = 10;
     private int defaultFleetSize = 10;
     private int gridSize = defaultGridSie;

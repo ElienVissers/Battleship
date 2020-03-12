@@ -44,19 +44,21 @@ public class SettingsScreenView extends VBox {
         //CONTENT
         this.gridSizeLabel = new Label("Grid Size");
         this.fleetSizeLabel = new Label("Fleet Size");
-        this.fleetSizeSlider = new Slider(0, 0, 0);
-        this.gridSizeSlider = new Slider(0, 0, 0);
+        this.fleetSizeSlider = new Slider();
+        this.gridSizeSlider = new Slider();
         this.currentFleetSizeValueLabel = new Label();
         this.currentGridSizeValueLabel = new Label();
         this.confirmButton = new Button("CONFIRM");
         this.cancelButton = new Button("CANCEL");
-        BorderPane gridSettingsBP = new BorderPane();
-        BorderPane fleetSettingsBP = new BorderPane();
-        HBox buttonsHB = new HBox();
+        this.gridSettingsBP = new BorderPane();
+        this.fleetSettingsBP = new BorderPane();
+        this.buttonsHB = new HBox();
     }
 
     private void layoutNodes() {
-        buttonsHB = layoutHBox(confirmButton, cancelButton);
+        this.gridSettingsBP = layoutSliderSettings(gridSizeLabel, currentGridSizeValueLabel, gridSizeSlider);
+        this.fleetSettingsBP = layoutSliderSettings(fleetSizeLabel, currentFleetSizeValueLabel, fleetSizeSlider);
+        this.buttonsHB = layoutHBox(confirmButton, cancelButton);
         this.getChildren().addAll(buttonsHB);
         this.setAlignment(Pos.CENTER);
         this.setPadding(new Insets(30));
@@ -72,12 +74,13 @@ public class SettingsScreenView extends VBox {
         return box;
     }
 
-    private BorderPane layoutSliderSettings(BorderPane sliderSettingsBP, Label settingsLabel, Label currentValueLabel, Slider slider){
+    private BorderPane layoutSliderSettings(Label settingsLabel, Label currentValueLabel, Slider slider){
         BorderPane borderPane = new BorderPane();
         borderPane.setTop(settingsLabel);
+        settingsLabel.getStyleClass().add("title");
         borderPane.setLeft(slider);
         borderPane.setRight(currentValueLabel);
-        return sliderSettingsBP;
+        return borderPane;
     }
 
     Button getConfirmButton() {
@@ -96,4 +99,5 @@ public class SettingsScreenView extends VBox {
         return fleetSizeSlider;
     }
 
+    
 }

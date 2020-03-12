@@ -39,6 +39,10 @@ public class SettingsScreenPresenter {
         this.model = model;
         this.view = view;
         this.uiSettings = uiSettings;
+        view.getFleetSizeSlider().setMax(model.get);
+        view.getFleetSizeSlider().setMin();
+        view.getGridSizeSlider().setMax();
+        view.getGridSizeSlider().setMin();
         updateView();
         addEventHandlers();
     }
