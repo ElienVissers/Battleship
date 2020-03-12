@@ -44,10 +44,12 @@ public class BattleshipModel {
     }
 
     private final Random rand = new Random();
-    private int defaultGridSie = 10;
-    private int defaultFleetSize = 10;
-    private int gridSize = defaultGridSie;
-    private int numberOfShips = defaultFleetSize;
+    private final int MAX_GRID_SIZE = 15;
+    private final int MIN_GRID_SIE = 7;
+    private final int MAX_FLEET_SIZE = 15;
+    private final int MIN_FLEET_SIZE = 7;
+    private int gridSize = 10;
+    private int numberOfShips = 10;
 
     private List<Player> players;
     private Player activePlayer;
@@ -222,6 +224,14 @@ public class BattleshipModel {
     public List<Ship> getShips() {
         return ships;
     }
+
+    public int getMAX_GRID_SIZE() { return MAX_GRID_SIZE; }
+
+    public int getMIN_GRID_SIE() { return MIN_GRID_SIE; }
+
+    public int getMAX_FLEET_SIZE() { return MAX_FLEET_SIZE; }
+
+    public int getMIN_FLEET_SIZE() { return MIN_FLEET_SIZE; }
 
     public void setGridSize(int gridSize) {
         this.gridSize = gridSize;

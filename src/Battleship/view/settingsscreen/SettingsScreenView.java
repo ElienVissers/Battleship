@@ -59,7 +59,7 @@ public class SettingsScreenView extends VBox {
         this.gridSettingsBP = layoutSliderSettings(gridSizeLabel, currentGridSizeValueLabel, gridSizeSlider);
         this.fleetSettingsBP = layoutSliderSettings(fleetSizeLabel, currentFleetSizeValueLabel, fleetSizeSlider);
         this.buttonsHB = layoutHBox(confirmButton, cancelButton);
-        this.getChildren().addAll(buttonsHB);
+        this.getChildren().addAll(gridSettingsBP, fleetSettingsBP, buttonsHB);
         this.setAlignment(Pos.CENTER);
         this.setPadding(new Insets(30));
         this.setSpacing(30);
@@ -99,5 +99,11 @@ public class SettingsScreenView extends VBox {
         return fleetSizeSlider;
     }
 
-    
+    public Label getCurrentGridSizeValueLabel() {
+        return currentGridSizeValueLabel;
+    }
+
+    public Label getCurrentFleetSizeValueLabel() {
+        return currentFleetSizeValueLabel;
+    }
 }

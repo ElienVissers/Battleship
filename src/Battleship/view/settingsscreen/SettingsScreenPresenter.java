@@ -39,10 +39,14 @@ public class SettingsScreenPresenter {
         this.model = model;
         this.view = view;
         this.uiSettings = uiSettings;
-        view.getFleetSizeSlider().setMax(model.get);
-        view.getFleetSizeSlider().setMin();
-        view.getGridSizeSlider().setMax();
-        view.getGridSizeSlider().setMin();
+        view.getGridSizeSlider().setMax(model.getMAX_GRID_SIZE());
+        view.getGridSizeSlider().setMin(model.getMIN_GRID_SIE());
+        view.getGridSizeSlider().setValue(model.getGridSize());
+        view.getCurrentGridSizeValueLabel().setText(Integer.toString(model.getGridSize()));
+        view.getFleetSizeSlider().setMax(model.getMAX_FLEET_SIZE());
+        view.getFleetSizeSlider().setMin(model.getMIN_FLEET_SIZE());
+        view.getFleetSizeSlider().setValue(model.getNumberOfShips());
+        view.getCurrentFleetSizeValueLabel().setText(Integer.toString(model.getNumberOfShips()));
         updateView();
         addEventHandlers();
     }
