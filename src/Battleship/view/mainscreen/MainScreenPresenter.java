@@ -83,20 +83,20 @@ public class MainScreenPresenter {
     private void addMenuEvents() {
         view.getOptionsItem().setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle(ActionEvent event) {
+            /*public void handle(ActionEvent event) {
                 UniverseScreenView universeScreenView = new UniverseScreenView(uiSettings);
                 UniverseScreenPresenter universeScreenPresenter = new UniverseScreenPresenter(model, universeScreenView, uiSettings);
                 Stage mainOptionsStage = new Stage();
                 openMenuWindow(mainOptionsStage, universeScreenView, "Universe settings"); //open UNIVERSE SETTINGS MENU window
                 universeScreenPresenter.windowsHandler();
-            }/*
+            }*/
             public void handle(ActionEvent event) {
                 SettingsScreenView settingsScreenView = new SettingsScreenView(uiSettings);
                 SettingsScreenPresenter settingsScreenPresenter = new SettingsScreenPresenter(model, settingsScreenView, uiSettings);
                 Stage mainOptionsStage = new Stage();
                 openMenuWindow(mainOptionsStage, settingsScreenView, "Universe settings"); //open UNIVERSE SETTINGS MENU window
                 settingsScreenPresenter.windowsHandler();
-            }*/
+            }
         });
         view.getHighscoresItem().setOnAction(new EventHandler<ActionEvent>() {
             @Override

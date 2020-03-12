@@ -46,6 +46,10 @@ public class BattleshipModel {
     private final Random rand = new Random();
     private int GRIDSIZE = 10;
     private int NUMBER_OF_SHIPS = 4;
+    private int defaultGridSie = 10;
+    private int defaultFleetSize = 10;
+    private int gridSize = defaultGridSie;
+    private int numberOfShips = defaultFleetSize;
 
     private List<Player> players;
     private Player activePlayer;
@@ -63,7 +67,7 @@ public class BattleshipModel {
     }
 
     public void startGame(Boolean isComputer, String name1, String name2) {
-        availableShips = new int[NUMBER_OF_SHIPS];
+        availableShips = new int[numberOfShips];
         ships = new ArrayList<>();
         date = LocalDate.now();
         gameStarted = 0;
@@ -80,7 +84,7 @@ public class BattleshipModel {
         availableShips[2] = 4;
         availableShips[3] = 5;
         //random other ships
-        for (int i = 4; i < NUMBER_OF_SHIPS; i++) {
+        for (int i = 4; i < numberOfShips; i++) {
             availableShips[i] = rand.nextInt(4) + 2;
         }
         for (int size: availableShips) {
@@ -141,7 +145,7 @@ public class BattleshipModel {
     }
 
     public boolean isGameOver() {
-        return gameboards.get(activePlayer).getSinkCounter() == NUMBER_OF_SHIPS;
+        return gameboards.get(activePlayer).getSinkCounter() == numberOfShips;
     }
 
     private void togglePlayer() {
@@ -172,7 +176,7 @@ public class BattleshipModel {
                 for (String log : logList) {
                     fm.format("%s%n", log);
                 }
-                fm.format("%d;%d;%s;%s;%d%n", GRIDSIZE, NUMBER_OF_SHIPS, date.toString(), passivePlayer.getName(), (int) turnCounter);
+                fm.format("%d;%d;%s;%s;%d%n", gridSize, numberOfShips, date.toString(), passivePlayer.getName(), (int) turnCounter);
             } catch (IOException ioe) {
                 throw new BattleshipException(ioe);
             }
@@ -183,7 +187,7 @@ public class BattleshipModel {
                 fm =  new Formatter(pathString);
                 fm.format("%s;%s;%s;%s;%s%n%d;%d;%s;%s;%d%n",
                         "gridsize", "amount of ships", "date", "winner", "amount of turns",
-                        GRIDSIZE, NUMBER_OF_SHIPS, date.toString(), passivePlayer.getName(), (int) turnCounter);
+                        gridSize, numberOfShips, date.toString(), passivePlayer.getName(), (int) turnCounter);
                 fm.close();
             } catch (IOException ioe) {
                 throw new BattleshipException(ioe);
@@ -210,22 +214,22 @@ public class BattleshipModel {
     }
 
     public int getGridSize() {
-        return GRIDSIZE;
+        return gridSize;
     }
 
     public int getNumberOfShips() {
-        return NUMBER_OF_SHIPS;
+        return numberOfShips;
     }
 
     public List<Ship> getShips() {
         return ships;
     }
 
-    public void setGRIDSIZE(int GRIDSIZE) {
-        this.GRIDSIZE = GRIDSIZE;
+    public void setGridSize(int gridSize) {
+        this.gridSize = gridSize;
     }
 
-    public void setNUMBER_OF_SHIPS(int NUMBER_OF_SHIPS) {
-        this.NUMBER_OF_SHIPS = NUMBER_OF_SHIPS;
+    public void setNumberOfShips(int numberOfShips) {
+        this.numberOfShips = numberOfShips;
     }
 }

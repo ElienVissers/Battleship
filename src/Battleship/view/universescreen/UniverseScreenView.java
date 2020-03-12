@@ -46,6 +46,7 @@ public class UniverseScreenView extends BorderPane  {
         return box;
     }
 
+    //TODO CODEREFACTOR waarom gebruik je hier Node en niet specifieker? Je geeft toch specifieke dingen terug?
     private VBox layoutVBox(Node child1, Node child2, Node child3) {
         VBox box = new VBox();
         box.getChildren().addAll(child1, child2, child3);
