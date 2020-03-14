@@ -61,7 +61,7 @@ public class UISettings {
 
     public Path getAboutImagePath () {return this.AboutImagePath;}
 
-    public Path getInfoTextPath () {return this.infoTextPath;}
+    public Path etInfoTextPath () {return this.infoTextPath;}
 
     public String getApplicationName () {return this.ApplicationName;}
 
