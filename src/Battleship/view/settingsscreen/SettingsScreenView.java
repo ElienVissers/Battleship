@@ -3,12 +3,9 @@ package Battleship.view.settingsscreen;
 import Battleship.view.UISettings;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -19,16 +16,16 @@ import javafx.scene.layout.VBox;
  */
 
 public class SettingsScreenView extends VBox {
-    private BorderPane gridSettingsBP;
-    private BorderPane fleetSettingsBP;
+    private VBox gridSettingsVB;
+    private VBox fleetSettingsVB;
     private BorderPane settingsBP;
     private HBox buttonsHB;
     private Label gridSizeLabel;
     private Label fleetSizeLabel;
-    private Label currentGridSizeValueLabel;
-    private Label currentFleetSizeValueLabel;
     private Slider gridSizeSlider;
     private Slider fleetSizeSlider;
+    private final Double MAX_INCREMENT_SIZE = 1.0;
+    private final int MINOR_INCREMENT_SIZE = 0;
     private Button confirmButton;
     private Button cancelButton;
     private UISettings uiSettings;
@@ -46,20 +43,18 @@ public class SettingsScreenView extends VBox {
         this.fleetSizeLabel = new Label("Fleet Size");
         this.fleetSizeSlider = new Slider();
         this.gridSizeSlider = new Slider();
-        this.currentFleetSizeValueLabel = new Label();
-        this.currentGridSizeValueLabel = new Label();
         this.confirmButton = new Button("CONFIRM");
         this.cancelButton = new Button("CANCEL");
-        this.gridSettingsBP = new BorderPane();
-        this.fleetSettingsBP = new BorderPane();
+        this.gridSettingsVB = new VBox();
+        this.fleetSettingsVB = new VBox();
         this.buttonsHB = new HBox();
     }
 
     private void layoutNodes() {
-        this.gridSettingsBP = layoutSliderSettings(gridSizeLabel, currentGridSizeValueLabel, gridSizeSlider);
-        this.fleetSettingsBP = layoutSliderSettings(fleetSizeLabel, currentFleetSizeValueLabel, fleetSizeSlider);
+        this.gridSettingsVB = layoutSliderSettings(gridSizeLabel, gridSizeSlider);
+        this.fleetSettingsVB = layoutSliderSettings(fleetSizeLabel, fleetSizeSlider);
         this.buttonsHB = layoutHBox(confirmButton, cancelButton);
-        this.getChildren().addAll(gridSettingsBP, fleetSettingsBP, buttonsHB);
+        this.getChildren().addAll(gridSettingsVB, fleetSettingsVB, buttonsHB);
         this.setAlignment(Pos.CENTER);
         this.setPadding(new Insets(30));
         this.setSpacing(30);
@@ -74,13 +69,15 @@ public class SettingsScreenView extends VBox {
         return box;
     }
 
-    private BorderPane layoutSliderSettings(Label settingsLabel, Label currentValueLabel, Slider slider){
-        BorderPane borderPane = new BorderPane();
-        borderPane.setTop(settingsLabel);
+    private VBox layoutSliderSettings(Label settingsLabel, Slider slider){
+        VBox alignment = new VBox();
+        slider.setMaxWidth((uiSettings.getResX()/3));
+        alignment.getChildren().addAll(settingsLabel, slider);
+        alignment.setAlignment(Pos.CENTER);
         settingsLabel.getStyleClass().add("title");
-        borderPane.setLeft(slider);
-        borderPane.setRight(currentValueLabel);
-        return borderPane;
+        alignment.setPadding(new Insets(10));
+        alignment.setSpacing(30);
+        return alignment;
     }
 
     Button getConfirmButton() {
@@ -99,11 +96,4 @@ public class SettingsScreenView extends VBox {
         return fleetSizeSlider;
     }
 
-    public Label getCurrentGridSizeValueLabel() {
-        return currentGridSizeValueLabel;
-    }
-
-    public Label getCurrentFleetSizeValueLabel() {
-        return currentFleetSizeValueLabel;
-    }
 }

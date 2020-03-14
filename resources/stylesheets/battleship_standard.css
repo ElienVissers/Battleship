@@ -19,7 +19,7 @@
     -fx-my-background-color: #2D2D2D;           /* variable */
 }
 
-.root {
+.root{
     -fx-padding: 15px;
     -fx-border-width: 2px;
     -fx-border-insets: 5px;
@@ -100,6 +100,19 @@
 #textfield-player2 {
     -fx-border-color: -fx-my-blue-color;
     -fx-text-fill: -fx-my-blue-color;
+}
+/* SLIDER */
+
+.slider{
+    -fx-font-size: 20;
+    -fx-snap-to-ticks: true;
+    -fx-show-tick-labels: true;
+    -fx-major-tick-unit: 1.0;
+    -fx-minor-tick-count: 0;
+}
+
+.axis{
+    -fx-tick-label-fill: -fx-my-white-color;
 }
 
 /* BUTTON */
