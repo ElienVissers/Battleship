@@ -2,6 +2,7 @@ package Battleship.view.settingsscreen;
 
 import Battleship.model.BattleshipModel;
 import Battleship.view.UISettings;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.stage.WindowEvent;
 
@@ -43,8 +44,20 @@ public class SettingsScreenPresenter {
         // aan de controls uit de view.
         // Event handlers: roepen methodes aan uit het
         // model en zorgen voor een update van de view.
-        view.getConfirmButton();
-        view.getCancelButton();
+        //TODO add method that saves the current settings and shows a message about fleetsize can't be higher than grid size
+        view.getConfirmButton().setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                event.consume();
+            }
+        });
+        //TODO add error message same as on close pane (That shows that settings won't be changed)
+        view.getCancelButton().setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                event.consume();
+            }
+            });
     }
 
     //TODO Add warning on close

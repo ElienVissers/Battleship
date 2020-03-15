@@ -24,8 +24,6 @@ public class SettingsScreenView extends VBox {
     private Label fleetSizeLabel;
     private Slider gridSizeSlider;
     private Slider fleetSizeSlider;
-    private final Double MAX_INCREMENT_SIZE = 1.0;
-    private final int MINOR_INCREMENT_SIZE = 0;
     private Button confirmButton;
     private Button cancelButton;
     private UISettings uiSettings;
@@ -39,8 +37,8 @@ public class SettingsScreenView extends VBox {
 
     private void initialiseNodes() {
         //CONTENT
-        this.gridSizeLabel = new Label("Grid Size");
-        this.fleetSizeLabel = new Label("Fleet Size");
+        this.gridSizeLabel = new Label("Choose the size of your battlefield:");
+        this.fleetSizeLabel = new Label("Choose the size of your fleet:");
         this.fleetSizeSlider = new Slider();
         this.gridSizeSlider = new Slider();
         this.confirmButton = new Button("CONFIRM");
