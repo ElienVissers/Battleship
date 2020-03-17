@@ -6,15 +6,20 @@ Taking turns, they are able to aim and fire lasers strategically to destroy enem
 Will you rule the universe? Play and find out!
 
 
+
 GAME OPTIONS:
 You won’t need 2 desktops/laptops to play this game, one is enough!
 If you don’t have an opponent it’s possible to add a droid into the game via the option menu.
 You can choose how big the battlefield is and how many ships each player will have in their fleet.
 
+
+
 PREPARE FOR BATTLE:
 When you start positioning your spaceships you can only position them in a vertical or horizontal position, not diagonally.
 It’s not possible to place a ship outside of the battlefield or on top of each other.
 You won’t be able to change the position of your ship during the game.
+
+
 
 BATTLE RULES:
 Both battlefields are visible on the screen, but the fleets are hidden.
