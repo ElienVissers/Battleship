@@ -89,6 +89,7 @@ class GameBoard {
 
     boolean hasSunken(int x, int y) {
         boolean sunken = false;
+        sinkDirection = 0;
         for (List<Square> aShipCoordinateList : shipList) {
             boolean targetedShip = false;
             int shipSize = aShipCoordinateList.size();

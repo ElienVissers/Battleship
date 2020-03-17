@@ -49,7 +49,7 @@ public class BattleshipModel {
     private final int MAX_FLEET_SIZE = 15;
     private final int MIN_FLEET_SIZE = 4;
     private int gridSize = 10;
-    private int numberOfShips = 4;
+    private int numberOfShips = 10;
 
     private List<Player> players;
     private Player activePlayer;

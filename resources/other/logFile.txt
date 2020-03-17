@@ -31,3 +31,4 @@ gridsize;amount of ships;date;winner;amount of turns
 10;4;2020-03-16;Don't;14
 10;4;2020-03-16;2;14
 10;4;2020-03-16;2;14
+10;4;2020-03-17;Elien;15
