@@ -1,1 +1,17 @@
-Timo:1Elien:5Jan:9jan:1bear:1Jef:1blues:1Uku:1
+1                     :                     A
+1                     :                     B
+1                     :                 Don't
+1                     :                   Jef
+1                     :                  Boem
+1                     :                 blues
+1                     :                Please
+1                     :                  Timo
+1                     :                 Broek
+2                     :                     2
+6                     :                 Elien
+10                     :                   Jan
+1                     :                   jan
+1                     :                  bear
+1                     :                   Win
+1                     :                   Uku
+1                     :                   uku

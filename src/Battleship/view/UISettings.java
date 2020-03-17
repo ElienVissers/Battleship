@@ -30,6 +30,7 @@ public class UISettings {
     private Path applicationIconPath = Paths.get("resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"ApplicationLogo.png");
     private Path startScreenImagePath = Paths.get("resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"ApplicationImage.gif");
     private Path infoTextPath = Paths.get("resources"+FILE_SEPARATOR+"other"+FILE_SEPARATOR+"info.txt");
+    private Path highscoresPath = Paths.get("resources"+FILE_SEPARATOR+"other"+FILE_SEPARATOR+"highscores.txt");
 
     public UISettings() {
         this.resX= (int) Screen.getPrimary().getVisualBounds().getWidth();
@@ -63,6 +64,8 @@ public class UISettings {
 
     public Path getInfoTextPath () {return this.infoTextPath;}
 
+    public Path getHighscoresPath () {return this.highscoresPath;}
+
     public String getApplicationName () {return this.ApplicationName;}
 
     public static char getFileSeparator() {
@@ -70,6 +73,9 @@ public class UISettings {
     }
 
     public static void getCloseAlert(Event event, Scene scene) {
+        getCloseAlert(event, scene,"You're closing the application.","Are you sure? Unsaved data may be lost.");
+    }
+    public static void getCloseAlert(Event event, Scene scene, String headerText, String contentText){
         final Alert stopWindow = new Alert(Alert.AlertType.CONFIRMATION);
         try {
             DialogPane dialogPane = stopWindow.getDialogPane();
@@ -84,8 +90,8 @@ public class UISettings {
             }
             catch (Exception ignored) { }
         }
-        stopWindow.setHeaderText("You're closing the application.");
-        stopWindow.setContentText("Are you sure? Unsaved data may be lost.");
+        stopWindow.setHeaderText(headerText);
+        stopWindow.setContentText(contentText);
         stopWindow.setTitle("WARNING!");
         stopWindow.getButtonTypes().clear();
         ButtonType noButton = new ButtonType("NO", ButtonBar.ButtonData.CANCEL_CLOSE);

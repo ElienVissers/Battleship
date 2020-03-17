@@ -1,9 +1,17 @@
 package Battleship.view.highscoresscreen;
 
+import Battleship.model.BattleshipException;
 import Battleship.model.BattleshipModel;
 import Battleship.view.UISettings;
-import javafx.event.EventHandler;
-import javafx.stage.WindowEvent;
+
+
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 /**
  * @author Elien Vissers-Similon
@@ -19,20 +27,22 @@ public class HighscoresScreenPresenter {
         this.model = model;
         this.view = view;
         this.uiSettings = uiSettings;
-        updateView();
-        EventHandlers();
+        view.getHighscoresText().setText(ReadInfoFromFile());
     }
 
-    private void updateView() {
-    }
+    private String ReadInfoFromFile() {
+        String highscoresFile ="";
+        try (BufferedReader reader = new BufferedReader(new FileReader(uiSettings.getHighscoresPath().toString()))){
+            StringBuffer sb = new StringBuffer();
+            String line = "";
+            while ((line = reader.readLine())!= null){
+                sb.append(line);
+                sb.append("\n");
+                highscoresFile += line + "\n";
+            }
+        } catch (Exception ignored) {}
 
-    private void EventHandlers() {
-    }
-
-    public void windowsHandler() {
-        view.getScene().getWindow().setOnCloseRequest(new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent event) {view.getScene().getWindow().hide();}});
+        return (highscoresFile.compareTo("")==0)?"No highscores available":highscoresFile;
     }
 
 }

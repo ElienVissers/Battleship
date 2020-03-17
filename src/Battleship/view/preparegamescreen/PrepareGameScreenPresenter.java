@@ -258,7 +258,7 @@ public class PrepareGameScreenPresenter {
                                     TogglePlayerScreenView togglePlayerScreenView = new TogglePlayerScreenView(uiSettings);
                                     TogglePlayerScreenPresenter togglePlayerScreenPresenter = new TogglePlayerScreenPresenter(model, togglePlayerScreenView, uiSettings);
                                     view.getScene().setRoot(togglePlayerScreenView);
-                                    togglePlayerScreenPresenter.windowsHandlers();
+                                    togglePlayerScreenPresenter.windowsHandler();
                                 }
                             });
                         }

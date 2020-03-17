@@ -66,7 +66,7 @@ public class TogglePlayerScreenPresenter {
             }});
     }
 
-    public void windowsHandlers() {
+    public void windowsHandler() {
         view.getScene().getWindow().setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent event) { UISettings.getCloseAlert(event, view.getScene()); }});

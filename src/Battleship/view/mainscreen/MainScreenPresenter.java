@@ -7,9 +7,10 @@ import Battleship.view.highscoresscreen.HighscoresScreenPresenter;
 import Battleship.view.infoscreen.*;
 import Battleship.view.toggleplayerscreen.TogglePlayerScreenPresenter;
 import Battleship.view.toggleplayerscreen.TogglePlayerScreenView;
-import Battleship.view.universescreen.*;
 import Battleship.view.settingsscreen.*;
 import Battleship.view.UISettings;
+import Battleship.view.universescreen.UniverseScreenPresenter;
+import Battleship.view.universescreen.UniverseScreenView;
 import javafx.event.*;
 import javafx.scene.*;
 import javafx.scene.control.Alert;
@@ -75,15 +76,15 @@ public class MainScreenPresenter {
                     TogglePlayerScreenView togglePlayerScreenView = new TogglePlayerScreenView(uiSettings);
                     TogglePlayerScreenPresenter togglePlayerScreenpresenter = new TogglePlayerScreenPresenter(model, togglePlayerScreenView, uiSettings);
                     view.getScene().setRoot(togglePlayerScreenView);
-                    togglePlayerScreenpresenter.windowsHandlers();
+                    togglePlayerScreenpresenter.windowsHandler();
                 }
             }});
     }
 
     private void addMenuEvents() {
         view.getOptionsItem().setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            /*public void handle(ActionEvent event) {
+            /*@Override
+            public void handle(ActionEvent event) {
                 UniverseScreenView universeScreenView = new UniverseScreenView(uiSettings);
                 UniverseScreenPresenter universeScreenPresenter = new UniverseScreenPresenter(model, universeScreenView, uiSettings);
                 Stage mainOptionsStage = new Stage();
@@ -101,12 +102,10 @@ public class MainScreenPresenter {
         view.getHighscoresItem().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                //TODO load highscores from file (LATER, no priority)
                 HighscoresScreenView highscoresScreenView = new HighscoresScreenView(uiSettings);
                 HighscoresScreenPresenter highscoresScreenPresenter = new HighscoresScreenPresenter(model, highscoresScreenView, uiSettings);
                 Stage highscoresStage = new Stage();
                 openMenuWindow(highscoresStage, highscoresScreenView, "Highscores"); //open HIGHSCORES MENU window
-                highscoresScreenPresenter.windowsHandler();
             }
         });
         view.getExitItem().setOnAction(new EventHandler<ActionEvent>() {

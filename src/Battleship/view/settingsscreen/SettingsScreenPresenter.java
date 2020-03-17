@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import org.w3c.dom.ls.LSOutput;
 
 import java.nio.file.Files;
 
@@ -34,23 +35,20 @@ public class SettingsScreenPresenter {
         view.getFleetSizeSlider().setMax(model.getMAX_FLEET_SIZE());
         view.getFleetSizeSlider().setMin(model.getMIN_FLEET_SIZE());
         view.getFleetSizeSlider().setValue(model.getNumberOfShips());
-        updateView();
         addEventHandlers();
     }
 
     private void updateView() {
+        model.setGridSize((int) view.getGridSizeSlider().getValue());
+        model.setNumberOfShips((int) view.getFleetSizeSlider().getValue());
+        view.getGridSizeSlider().setValue(model.getGridSize());
     }
 
     private void addEventHandlers() {
-        // Koppelt event handlers (anon. inner klassen)
-        // aan de controls uit de view.
-        // Event handlers: roepen methodes aan uit het
-        // model en zorgen voor een update van de view.
-        //TODO vragen over alert 2de if methode
         view.getConfirmButton().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                if(view.getFleetSizeSlider().getValue() >= view.getGridSizeSlider().getValue()) {
+                if(view.getFleetSizeSlider().getValue() > view.getGridSizeSlider().getValue()) {
                     final Alert stopWindow = new Alert(Alert.AlertType.ERROR);
                     try {
                         DialogPane dialogPane = stopWindow.getDialogPane();
@@ -70,25 +68,30 @@ public class SettingsScreenPresenter {
                     stopWindow.showAndWait();
                     event.consume();
                     model.setNumberOfShips((int) view.getGridSizeSlider().getValue());
+                    view.getFleetSizeSlider().setValue(model.getNumberOfShips());
+                    updateView();
                 }
-                model.setGridSize((int) view.getGridSizeSlider().getValue());
-                model.setNumberOfShips((int) view.getFleetSizeSlider().getValue());
+                else{
+                    updateView();
+                    view.getScene().getWindow().hide();
+                }
             }
         });
-        //TODO add error message same as on close pane (That shows that settings won't be changed. Are u sure you want to leave? Yes? No?) close view on yes
+
         view.getCancelButton().setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle(ActionEvent event) {
-                event.consume();
-            }
+            public void handle(ActionEvent event) { view.getScene().getWindow().hide(); }
             });
     }
 
-    //TODO same as above in view.getCancelButton().setOnAction()
+    //TODO Waarom word setOnCloseRequest niet getriggerd
     public void windowsHandler() {
+        System.out.println("inside windows handler");
         view.getScene().getWindow().setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
-            public void handle(WindowEvent event) { UISettings.getCloseAlert(event, view.getScene()); }
+            public void handle(WindowEvent event) {
+                System.out.println("Erin");
+                UISettings.getCloseAlert(event, view.getScene(), "Settings won't be changed", "Are u sure you want to leave?"); }
         });
     }
 

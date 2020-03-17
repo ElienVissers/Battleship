@@ -47,9 +47,9 @@ public class BattleshipModel {
     private final int MAX_GRID_SIZE = 15;
     private final int MIN_GRID_SIE = 7;
     private final int MAX_FLEET_SIZE = 15;
-    private final int MIN_FLEET_SIZE = 7;
+    private final int MIN_FLEET_SIZE = 4;
     private int gridSize = 10;
-    private int numberOfShips = 10;
+    private int numberOfShips = 4;
 
     private List<Player> players;
     private Player activePlayer;
@@ -160,19 +160,25 @@ public class BattleshipModel {
 
     public void saveGame() {
         turnCounter = Math.round(turnCounter);
-        String pathString = "resources"+ File.separator + "logFile.txt";
-        Path logFile = Paths.get(pathString);
+        String logPathString = "resources"+ File.separator +"other"+ File.separator + "logFile.txt";
+        String highscoresPathString = "resources"+ File.separator +"other"+ File.separator + "highscores.txt";
+        Path logFile = Paths.get(logPathString);
+        Path highscoresFile = Paths.get(highscoresPathString);
+        Map<String, Long> namesMap = new HashMap<>();
+
         if (Files.exists(logFile)) {
             List<String> logList = new ArrayList<>();
-            try (Scanner sc = new Scanner(new File(pathString))) {
+            List<String> nameList = new ArrayList<>();
+            try (Scanner sc = new Scanner(new File(logPathString))) {
                 while (sc.hasNext()) {
                     String log = sc.nextLine();
                     logList.add(log);
+                    nameList.add(log.split(";")[3]);
                 }
             } catch (FileNotFoundException fnfe) {
                 throw new BattleshipException(fnfe);
             }
-            try (Formatter fm = new Formatter(pathString)) {
+            try (Formatter fm = new Formatter(logPathString)) {
                 for (String log : logList) {
                     fm.format("%s%n", log);
                 }
@@ -180,21 +186,51 @@ public class BattleshipModel {
             } catch (IOException ioe) {
                 throw new BattleshipException(ioe);
             }
+            nameList.add(passivePlayer.getName());
+            nameList.remove(0);
+            namesMap = countNames(nameList);
+
+            try (Formatter fmHS = new Formatter(highscoresPathString)) {
+                for ( String key : namesMap.keySet() ) {
+                    fmHS.format("%d%22s%22s%n",namesMap.get(key) , ":" , key );
+                }
+            } catch (IOException ioe) {
+                throw new BattleshipException(ioe);
+            }
+
         } else {
             Formatter fm = null;
+            Formatter fmHS = null;
             try {
                 Files.createFile(logFile);
-                fm =  new Formatter(pathString);
+                Files.createFile(highscoresFile);
+                fm =  new Formatter(logPathString);
                 fm.format("%s;%s;%s;%s;%s%n%d;%d;%s;%s;%d%n",
                         "gridsize", "amount of ships", "date", "winner", "amount of turns",
                         gridSize, numberOfShips, date.toString(), passivePlayer.getName(), (int) turnCounter);
                 fm.close();
+                fmHS = new Formatter(highscoresPathString);
+                fmHS.format("%-22s:%-22s",passivePlayer.getName(), "1");
+                fmHS.close();
             } catch (IOException ioe) {
                 throw new BattleshipException(ioe);
             } finally {
-                if (fm != null) fm.close();
+                if (fm != null){ fm.close();}
+                if (fmHS != null){ fmHS.close();}
             }
         }
+    }
+
+    public <T> Map<T, Long> countNames(List<T> inputList) {
+        Map<T, Long> resultMap = new HashMap<>();
+        for (T name : inputList) {
+            if (resultMap.containsKey(name)) {
+                resultMap.put(name, resultMap.get(name) + 1L);
+            } else {
+                resultMap.put(name, 1L);
+            }
+        }
+        return resultMap;
     }
 
     public Player getActivePlayer() {
