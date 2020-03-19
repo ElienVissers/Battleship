@@ -187,6 +187,7 @@ public class BattleshipModel {
 
     /**
      * Checks whether the game is over or not.
+     * @return isGameOver boolean value
      */
     public boolean isGameOver() {
         return gameboards.get(activePlayer).getSinkCounter() == numberOfShips;
@@ -210,7 +211,7 @@ public class BattleshipModel {
      * 1. logFile.txt: contains the gridsize, number of ships, date, name of the winning player and amount of turns for each game
      * 2. highscores.txt: contains the number of wins for each winner in logFile.txt
      *
-     * @author Elien Vissers-Similon & Jan Dubois
+     * @author Elien Vissers-Similon, Jan Dubois
      */
     public void saveGame() {
         turnCounter = Math.round(turnCounter);

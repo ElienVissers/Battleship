@@ -74,6 +74,7 @@ public class Player {
 
     /**
      * Translates the player's List of StartSquare coordinates (which only hold the start-coordinates) to a list which holds ALL coordinates, per ship.
+     * @return shipCoordinates the list of coordinates per ship
      */
     public List<List<int[]>> getShipCoordinates() {
         List<List<int[]>> shipCoordinates = new ArrayList<>();
