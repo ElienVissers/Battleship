@@ -4,14 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Elien Vissers-Similon
- * @version 1.0 02.02.2020 15:50
+ * This class contains the player's ability to position his/her ships.
+ * It contains the inner class "StartSquare" which serves as a "smart start-coordinate" for the player's ships.
  *
- * controls the behaviour of a player
+ * @author Elien Vissers-Similon
+ * @version 1.0 02.02.2020
  */
 
 public class Player {
 
+    /**
+     * The class StartSquare is an inner class of Player and serves as a "smart start-coordinate" of the player's ships.
+     * It contains the start-coordinate, the orientation of the ship and its size.
+     */
     static class StartSquare {
         private int[] coordinates;
         private boolean horizontal;
@@ -22,17 +27,10 @@ public class Player {
             this.horizontal = horizontal;
             this.size = size;
         }
-        int[] getCoordinates() {
-            return coordinates;
-        }
 
-        boolean isHorizontal() {
-            return horizontal;
-        }
-
-        int getSize() {
-            return size;
-        }
+        int[] getCoordinates() { return coordinates; }
+        boolean isHorizontal() { return horizontal; }
+        int getSize() { return size; }
     }
 
     private List<StartSquare> startShipList;
@@ -40,6 +38,13 @@ public class Player {
     private String color;
     private boolean isComputer;
 
+    /**
+     * Creates a new player with a name, color and status (human player or computer player).
+     *
+     * @param name The name of the player
+     * @param color The color of the player
+     * @param isComputer The status of the player (human player or computer player)
+     */
     Player(String name, String color, boolean isComputer) {
         this.name = name;
         this.color = color;
@@ -47,18 +52,17 @@ public class Player {
         this.startShipList = new ArrayList<>();
     }
 
-    public String getName() {
-        return name;
-    }
+    public String getName() { return name; }
 
-    public String getColor() {
-        return color;
-    }
+    public String getColor() { return color; }
 
-    public boolean isComputer() {
-        return isComputer;
-    }
+    public boolean isComputer() { return isComputer; }
 
+    /**
+     * Positions a player's ship: a StartSquare is created and added to the player's List ("startShipList").
+     *
+     * @param currentShipCoordinates An array that contains the information about the ship that is to be placed
+     */
     public void positionShip(int[] currentShipCoordinates) {
         int startX = currentShipCoordinates[0];
         int startY = currentShipCoordinates[1];
@@ -68,6 +72,9 @@ public class Player {
         startShipList.add(startSquare);
     }
 
+    /**
+     * Translates the player's List of StartSquare coordinates (which only hold the start-coordinates) to a list which holds ALL coordinates, per ship.
+     */
     public List<List<int[]>> getShipCoordinates() {
         List<List<int[]>> shipCoordinates = new ArrayList<>();
         for (StartSquare startSquare : startShipList) {

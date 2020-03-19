@@ -4,16 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Elien Vissers-Similon
- * @version 1.0 02.02.2020 16:16
+ * This class can add a list of ships to the board, checks whether certain target coordinates would hit a ship on the board and knows when a ship has sunken.
+ * It contains the inner class "Square" which serves as a "smart coordinate" on the gameboard.
  *
- * saves ship positions;
- * remembers where rockets land;
- * counts how many ships have sunk;
+ * @author Elien Vissers-Similon
+ * @version 1.0 02.02.2020
  */
 
 class GameBoard {
 
+    /**
+     * The class Square is an inner class of GameBoard and serves as a "smart coordinate" of the gameboard.
+     * It contains the coordinates, whether or not the coordinate has been hit and if it also serves as the "StartSquare" of a ship.
+     */
     public static class Square {
         private int[] coordinates;
         private boolean wasTargeted;
@@ -33,7 +36,7 @@ class GameBoard {
             return wasTargeted;
         }
 
-        public boolean isStartSquare() {
+        boolean isStartSquare() {
             return isStartSquare;
         }
 
@@ -49,6 +52,9 @@ class GameBoard {
     private int sinkY;
     private int sinkDirection;
 
+    /**
+     * Generates a new GameBoard. Initialises the fields.
+     */
     GameBoard() {
         sinkCounter = 0;
         sinkSize = 0;
@@ -58,6 +64,13 @@ class GameBoard {
         shipList = new ArrayList<>();
     }
 
+    /**
+     * Adds a list of ships to the gameboard:
+     * 1. for every coordinate, a new Square is created
+     * 2. for every ship, the coordinates are added to the List in the GameBoard class
+     *
+     * @param shipCoordinates The list of ship coordinates to be placed on the gameboard
+     */
     void addShips(List<List<int[]>> shipCoordinates) {
         for (List<int[]> aShipCoordinateList : shipCoordinates) {
             List<Square> aShip = new ArrayList<>();
@@ -74,6 +87,13 @@ class GameBoard {
         }
     }
 
+    /**
+     * Checks whether or not a ship is positioned at a target coordinate.
+     * If a ship has been positioned at this coordinate, that Square will be updated with setTargeted().
+     *
+     * @param x The target x-coordinate
+     * @param y The target y-coordinate
+     */
     boolean hitOrMiss(int x, int y) {
         boolean hit = false;
         for (List<Square> aShipCoordinateList : shipList) {
@@ -87,6 +107,13 @@ class GameBoard {
         return hit;
     }
 
+    /**
+     * Checks whether or not a ship has been sunken, because of the last target hit.
+     * If a ship was destroyed, the relevant fields of the GameBoard class are updated with that ship's information.
+     *
+     * @param x The target x-coordinate
+     * @param y The target y-coordinate
+     */
     boolean hasSunken(int x, int y) {
         boolean sunken = false;
         sinkDirection = 0;

@@ -10,14 +10,26 @@ import java.time.LocalDate;
 import java.util.*;
 
 /**
- * @author Elien Vissers-Similon
- * @version 1.0 02.02.2020 13:58
+ * The class BattleshipModel is the main class of the application as it contains the game data.
+ * For each game it creates a HashMap that contains the a Player as the key and a GameBoard as the value.
+ * It lets players make a move, keeps track of the active player and checks whether or not the game is over.
+ * After a game has been won, it updates logFile.txt and highscores.txt.
  *
- * controls the course of ZEESLAG;
+ * It contains the inner Enum "Ship" which defines the possible ships in the game.
+ *
+ * @author Elien Vissers-Similon
+ * @version 1.0 02.02.2020
  */
 
 public class BattleshipModel {
 
+    /**
+     * The enum Ship contains the possible ships.
+     * Ships have a size and a name.
+     *
+     * @author Elien Vissers-Similon
+     * @version 1.0 02.02.2020
+     */
     public enum Ship {
         TWO(2), THREE(3), FOUR(4), FIVE(5);
 
@@ -40,7 +52,6 @@ public class BattleshipModel {
                 default: return "a ship";
             }
         }
-
     }
 
     private final Random rand = new Random();
@@ -66,6 +77,13 @@ public class BattleshipModel {
     public BattleshipModel() {
     }
 
+    /**
+     * Starts a new game: creates the ships, players and gameboards based on the predefined gridsize and number of ships.
+     *
+     * @param isComputer determines whether the new game is player-versus-player or player-versus-computer
+     * @param name1 the name of player 1
+     * @param name2 the name of player 2
+     */
     public void startGame(Boolean isComputer, String name1, String name2) {
         availableShips = new int[numberOfShips];
         ships = new ArrayList<>();
@@ -77,6 +95,9 @@ public class BattleshipModel {
         createGameBoards();
     }
 
+    /**
+     * Called during startGame(). Creates a random collection of ships that will be used during the game.
+     */
     private void createGameShips() {
         //minimum one ship of each
         availableShips[0] = 2;
@@ -99,6 +120,9 @@ public class BattleshipModel {
         }
     }
 
+    /**
+     * Called during startGame(). Creates both players and sets player 1 as the active player.
+     */
     private void createGamePlayers(boolean isComputer, String name1, String name2) {
         players = new ArrayList<>();
         Player player1 = new Player(name1, "red", false);
@@ -114,6 +138,9 @@ public class BattleshipModel {
         passivePlayer = players.get(1);
     }
 
+    /**
+     * Called during startGame(). Creates the HashMap and adds each player as a key, with a new gameboard as the value.
+     */
     private void createGameBoards() {
         gameboards = new HashMap<>();
         for (Player player:players) {
@@ -121,12 +148,26 @@ public class BattleshipModel {
         }
     }
 
+    /**
+     * Gets the ship coordinates from the activeplayer and adds them to his/her gameboard in the HashMap.
+     */
     public void prepareBoard() {
         gameboards.get(activePlayer).addShips(activePlayer.getShipCoordinates());
         gameStarted += 0.5;
         togglePlayer();
     }
 
+    /**
+     * Lets the active player make a move:
+     * 1. Has a ship been hit? The method checks if the target coordinates are present in the the passive players's gameboard.
+     * 2. Has a ship been sunken? The method checks if the target was the last the last coordinate of the ship to be hit.
+     *
+     * After the move the turn counter is increased and the active and passive player switch roles.
+     *
+     * @param x the target x-coordinate
+     * @param y the target y-coordinate
+     * @return an array that holds the results of the players move: if a ship was hit, if the targeted ship sunk, and important data of said ship
+     */
     public int[] activePlayerPlays(int x, int y) {
         int[] returnValue = new int[]{0, 0, 0, 0, 0, 0};
         if (gameboards.get(passivePlayer).hitOrMiss(x, y)) {
@@ -144,10 +185,16 @@ public class BattleshipModel {
         return returnValue;
     }
 
+    /**
+     * Checks whether the game is over or not.
+     */
     public boolean isGameOver() {
         return gameboards.get(activePlayer).getSinkCounter() == numberOfShips;
     }
 
+    /**
+     * Switches the active and passive player roles.
+     */
     private void togglePlayer() {
         if (activePlayer.equals(players.get(0))) {
             activePlayer = players.get(1);
@@ -158,13 +205,20 @@ public class BattleshipModel {
         }
     }
 
+    /**
+     * Saves the game by updating logFile.txt and highscores.txt
+     * 1. logFile.txt: contains the gridsize, number of ships, date, name of the winning player and amount of turns for each game
+     * 2. highscores.txt: contains the number of wins for each winner in logFile.txt
+     *
+     * @author Elien Vissers-Similon & Jan Dubois
+     */
     public void saveGame() {
         turnCounter = Math.round(turnCounter);
         String logPathString = "resources"+ File.separator +"other"+ File.separator + "logFile.txt";
         String highscoresPathString = "resources"+ File.separator +"other"+ File.separator + "highscores.txt";
         Path logFile = Paths.get(logPathString);
         Path highscoresFile = Paths.get(highscoresPathString);
-        Map<String, Long> namesMap = new HashMap<>();
+        Map<String, Long> namesMap;
 
         if (Files.exists(logFile)) {
             List<String> logList = new ArrayList<>();
@@ -221,7 +275,7 @@ public class BattleshipModel {
         }
     }
 
-    public <T> Map<T, Long> countNames(List<T> inputList) {
+    private <T> Map<T, Long> countNames(List<T> inputList) {
         Map<T, Long> resultMap = new HashMap<>();
         for (T name : inputList) {
             if (resultMap.containsKey(name)) {
@@ -233,47 +287,18 @@ public class BattleshipModel {
         return resultMap;
     }
 
-    public Player getActivePlayer() {
-        return activePlayer;
-    }
-
-    public Player getPassivePlayer() {
-        return passivePlayer;
-    }
-
-    public int getActiveSinkCounter() {
-        return gameboards.get(activePlayer).getSinkCounter();
-    }
-
-    public double getGameStarted() {
-        return gameStarted;
-    }
-
-    public int getGridSize() {
-        return gridSize;
-    }
-
-    public int getNumberOfShips() {
-        return numberOfShips;
-    }
-
-    public List<Ship> getShips() {
-        return ships;
-    }
-
+    public Player getActivePlayer() { return activePlayer; }
+    public Player getPassivePlayer() { return passivePlayer; }
+    public int getActiveSinkCounter() { return gameboards.get(activePlayer).getSinkCounter(); }
+    public double getGameStarted() { return gameStarted; }
+    public int getGridSize() { return gridSize; }
+    public int getNumberOfShips() { return numberOfShips; }
+    public List<Ship> getShips() { return ships; }
     public int getMAX_GRID_SIZE() { return MAX_GRID_SIZE; }
-
     public int getMIN_GRID_SIE() { return MIN_GRID_SIE; }
-
     public int getMAX_FLEET_SIZE() { return MAX_FLEET_SIZE; }
-
     public int getMIN_FLEET_SIZE() { return MIN_FLEET_SIZE; }
 
-    public void setGridSize(int gridSize) {
-        this.gridSize = gridSize;
-    }
-
-    public void setNumberOfShips(int numberOfShips) {
-        this.numberOfShips = numberOfShips;
-    }
+    public void setGridSize(int gridSize) { this.gridSize = gridSize; }
+    public void setNumberOfShips(int numberOfShips) { this.numberOfShips = numberOfShips; }
 }
