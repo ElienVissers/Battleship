@@ -11,6 +11,8 @@ import java.net.MalformedURLException;
 import java.nio.file.Files;
 
 /**
+ * The View class of the StartScreen.
+ *
  * @author Elien Vissers-Similon
  * @version 1.0 09.02.2020 14:13
  */
@@ -51,9 +53,7 @@ public class StartScreenView extends VBox {
                 centralImage.setFitWidth(ImageSize);
                 centralImage.setSmooth(true);
             }
-            catch (MalformedURLException ex) {
-                // do nothing, if toURL-conversion fails, program can continue
-            }
+            catch (MalformedURLException ignored) { }
         }
         this.getChildren().addAll(centralImage, time);
         this.setSpacing(60);
@@ -63,8 +63,6 @@ public class StartScreenView extends VBox {
     Label getTimeDisplay () {return (timeDisplay);}
 
     ProgressBar getTimeProgress () {return (timeProgress);}
-
-    ImageView getCentralImage() {return (centralImage);}
 
     StartScreenTransition getTransition() {return trans;}
 

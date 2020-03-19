@@ -21,6 +21,8 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
+ * The Presenter class of the PrepareGameScreen.
+ *
  * @author Elien Vissers-Similon
  * @version 1.0 15.02.2020 17:54
  */
@@ -282,6 +284,10 @@ public class PrepareGameScreenPresenter {
         return selectedSize;
     }
 
+    /**
+     * Called in addCellClickHanlder().
+     * Adds the image of the selected ship to the grid.
+     */
     private void addShipToGrid() {
         Image shipImage = null;
         if (horizontal) {
@@ -312,6 +318,10 @@ public class PrepareGameScreenPresenter {
         view.getGrid().add(shipView, currentShipCoordinates[0], currentShipCoordinates[1], colSpan, rowSpan);
     }
 
+    /**
+     * Called in addCellHoverHandler().
+     * Highlights the cells where the selected ship could be positioned.
+     */
     private void highlightShipSize(int shipSize, boolean horizontal, int columnIndex, int rowIndex, int targetColumnIndex, int targetRowIndex, Node n) {
         if (targetColumnIndex > 0 && targetRowIndex > 0) {
             switch (shipSize) {

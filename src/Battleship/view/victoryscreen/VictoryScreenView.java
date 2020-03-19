@@ -14,8 +14,10 @@ import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
 /**
+ * The View class of the VictoryScreen.
+ *
  * @author Elien Vissers-Similon
- * @version 1.0 15.02.2020 12:35
+ * @version 1.0 15.02.2020
  */
 public class VictoryScreenView extends BorderPane {
 
@@ -73,18 +75,8 @@ public class VictoryScreenView extends BorderPane {
     }
 
     Label getVictoryLabel() { return victoryLabel; }
-
     Button getButton() {return button;}
-
-    ImageView getAnimatedShip1() {
-        return animatedShip1;
-    }
-
-    ImageView getAnimatedShip2() {
-        return animatedShip2;
-    }
-
-    ImageView getAnimatedShip3() {
-        return animatedShip3;
-    }
+    ImageView getAnimatedShip1() { return animatedShip1; }
+    ImageView getAnimatedShip2() { return animatedShip2; }
+    ImageView getAnimatedShip3() { return animatedShip3; }
 }

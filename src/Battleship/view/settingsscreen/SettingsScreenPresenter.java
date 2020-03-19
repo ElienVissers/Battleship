@@ -10,13 +10,14 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import org.w3c.dom.ls.LSOutput;
 
 import java.nio.file.Files;
 
 /**
- * @author Elien Vissers-Similon
- * @version 1.0 09.02.2020 14:08
+ * The Presenter class of the SettingsScreen.
+ *
+ * @author Jan Dubois
+ * @version 1.0 14.03.2020
  */
 
 public class SettingsScreenPresenter {

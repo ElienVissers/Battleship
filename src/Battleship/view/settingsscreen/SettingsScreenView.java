@@ -6,19 +6,19 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 /**
- * @author Elien Vissers-Similon
- * @version 1.0 09.02.2020 14:08
+ * The View class of the SettingsScreen.
+ *
+ * @author Jan Dubois
+ * @version 1.0 14.03.2020
  */
 
 public class SettingsScreenView extends VBox {
     private VBox gridSettingsVB;
     private VBox fleetSettingsVB;
-    private BorderPane settingsBP;
     private HBox buttonsHB;
     private Label gridSizeLabel;
     private Label fleetSizeLabel;
@@ -69,7 +69,7 @@ public class SettingsScreenView extends VBox {
 
     private VBox layoutSliderSettings(Label settingsLabel, Slider slider){
         VBox alignment = new VBox();
-        slider.setMaxWidth((uiSettings.getResX()/3));
+        slider.setMaxWidth((uiSettings.getResX()/3.0));
         alignment.getChildren().addAll(settingsLabel, slider);
         alignment.setAlignment(Pos.CENTER);
         settingsLabel.getStyleClass().add("title");

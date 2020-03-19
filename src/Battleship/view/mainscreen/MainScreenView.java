@@ -17,8 +17,10 @@ import javafx.util.Duration;
 import java.util.Random;
 
 /**
+ * The View class of the MainScreen.
+ *
  * @author Elien Vissers-Similon
- * @version 1.0 09.02.2020 14:08
+ * @version 1.0 09.02.2020
  */
 
 public class MainScreenView extends BorderPane  {
@@ -147,24 +149,14 @@ public class MainScreenView extends BorderPane  {
     }
 
     MenuItem getExitItem() {return exitMI;}
-
     MenuItem getAboutItem() {return aboutMI;}
-
     MenuItem getInfoItem() {return infoMI;}
-
     MenuItem getOptionsItem() {return optionsMI;}
-
     MenuItem getHighscoresItem() {return highscoresMI;}
-
     MenuItem getComputerPlayerCheck() {return computerPlayerCheck;}
-
     Boolean isComputer() {return isComputer;}
-
     TextField getPlayer1Text() {return player1Text;}
-
     TextField getPlayer2Text() {return player2Text;}
-
-
     Button getStartButton() {return startButton;}
 
     void setPlayerMode() {

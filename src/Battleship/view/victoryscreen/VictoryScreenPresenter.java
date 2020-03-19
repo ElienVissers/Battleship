@@ -17,8 +17,11 @@ import javafx.stage.WindowEvent;
 import java.nio.file.Files;
 
 /**
+ * The Presenter class of the VictoryScreen.
+ * In its constructor, the game will be saved.
+ *
  * @author Elien Vissers-Similon
- * @version 1.0 15.02.2020 12:35
+ * @version 1.0 15.02.2020
  */
 public class VictoryScreenPresenter {
 

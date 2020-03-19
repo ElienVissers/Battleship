@@ -13,8 +13,11 @@ import java.net.MalformedURLException;
 import java.nio.file.Files;
 
 /**
+ * Main class of the Battleship application. Shows the primaryStage and sets StartScreen as the view.
+ *
  * @author Elien Vissers-Similon
- * @version 1.0 09.02.2020 14:00
+ * @version 1.0 09.02.2020
+ *
  * RUN/DEBUG configuration - vm options: --module-path "C:\Program Files\Java\javafx-sdk-11.0.2\lib" --add-modules javafx.controls,javafx.fxml,javafx.graphics,javafx.media
  */
 public class Main extends Application {
@@ -29,9 +32,7 @@ public class Main extends Application {
         if (uiSettings.styleSheetAvailable()){
             try {
                 scene.getStylesheets().add(uiSettings.getStyleSheetPath().toUri().toURL().toString());
-            } catch (MalformedURLException ex) {
-                // do nothing, if toURL-conversion fails, program can continue
-            }
+            } catch (MalformedURLException ignored) { }
         }
         primaryStage.setScene(scene);
         primaryStage.setHeight(uiSettings.getLowestRes() /2.0);
@@ -41,10 +42,7 @@ public class Main extends Application {
             try {
                 primaryStage.getIcons().add(new Image(uiSettings.getApplicationIconPath().toUri().toURL().toString()));
             }
-            catch (MalformedURLException ex) {
-                // do nothing, if toURL-conversion fails, program can continue
-            }
-        } else { // do nothing, if ApplicationIcon is not available, program can continue
+            catch (MalformedURLException ignored) { }
         }
         presenter.windowsHandler();
         primaryStage.show();

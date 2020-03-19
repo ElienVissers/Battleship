@@ -9,8 +9,6 @@ import Battleship.view.toggleplayerscreen.TogglePlayerScreenPresenter;
 import Battleship.view.toggleplayerscreen.TogglePlayerScreenView;
 import Battleship.view.settingsscreen.*;
 import Battleship.view.UISettings;
-import Battleship.view.universescreen.UniverseScreenPresenter;
-import Battleship.view.universescreen.UniverseScreenView;
 import javafx.event.*;
 import javafx.scene.*;
 import javafx.scene.control.Alert;
@@ -25,8 +23,10 @@ import java.net.MalformedURLException;
 import java.nio.file.Files;
 
 /**
+ * The Presenter class of the MainScreen.
+ *
  * @author Elien Vissers-Similon
- * @version 1.0 09.02.2020 14:08
+ * @version 1.0 09.02.2020
  */
 
 public class MainScreenPresenter {
@@ -43,8 +43,7 @@ public class MainScreenPresenter {
         EventHandlers();
     }
 
-    private void updateView() {
-    }
+    private void updateView() { }
 
     private void EventHandlers() {
         addMenuEvents();
@@ -83,19 +82,11 @@ public class MainScreenPresenter {
 
     private void addMenuEvents() {
         view.getOptionsItem().setOnAction(new EventHandler<ActionEvent>() {
-            /*@Override
-            public void handle(ActionEvent event) {
-                UniverseScreenView universeScreenView = new UniverseScreenView(uiSettings);
-                UniverseScreenPresenter universeScreenPresenter = new UniverseScreenPresenter(model, universeScreenView, uiSettings);
-                Stage mainOptionsStage = new Stage();
-                openMenuWindow(mainOptionsStage, universeScreenView, "Universe settings"); //open UNIVERSE SETTINGS MENU window
-                universeScreenPresenter.windowsHandler();
-            }*/
             public void handle(ActionEvent event) {
                 SettingsScreenView settingsScreenView = new SettingsScreenView(uiSettings);
                 SettingsScreenPresenter settingsScreenPresenter = new SettingsScreenPresenter(model, settingsScreenView, uiSettings);
                 Stage mainOptionsStage = new Stage();
-                openMenuWindow(mainOptionsStage, settingsScreenView, "Universe settings"); //open UNIVERSE SETTINGS MENU window
+                openMenuWindow(mainOptionsStage, settingsScreenView, "Universe settings"); //open SETTINGS MENU window
                 settingsScreenPresenter.windowsHandler();
             }
         });
@@ -157,17 +148,13 @@ public class MainScreenPresenter {
         if (Files.exists(uiSettings.getApplicationIconPath())) {
             try {
                 stage.getIcons().add(new Image(uiSettings.getApplicationIconPath().toUri().toURL().toString()));
-            } catch (MalformedURLException ex) {
-                // do nothing, if toURL-conversion fails, program can continue
-            }
+            } catch (MalformedURLException ignored) { }
         }
         if (uiSettings.styleSheetAvailable()) {
             stage.getScene().getStylesheets().removeAll();
             try {
                 stage.getScene().getStylesheets().add(uiSettings.getStyleSheetPath().toUri().toURL().toString());
-            } catch (MalformedURLException ex) {
-                // do nothing, if toURL-conversion fails, program can continue
-            }
+            } catch (MalformedURLException ignored) { }
         }
         stage.showAndWait();
     }

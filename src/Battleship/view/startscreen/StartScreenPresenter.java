@@ -11,10 +11,13 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 
 /**
+ * The Presenter class of the StartScreen.
+ *
  * @author Elien Vissers-Similon
  * @version 1.0 09.02.2020 14:13
  */
@@ -36,7 +39,6 @@ public class StartScreenPresenter {
     }
 
     private void EventHandlers() {
-        /** create and switch to MainScreen: from StartScreen to MainScreen in existing Stage */
         view.getTransition().setOnFinished(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -45,9 +47,7 @@ public class StartScreenPresenter {
                 view.getScene().setRoot(msView);
                 try {
                     msView.getScene().getStylesheets().add(uiSettings.getStyleSheetPath().toUri().toURL().toString());
-                } catch (MalformedURLException ex) {
-                    // do nothing, if toURL-conversion fails, program can continue
-                }
+                } catch (MalformedURLException ignored) { }
                 msView.getScene().getWindow().sizeToScene();
                 //open new window fullscreen
                 Stage currentStage = (Stage) msView.getScene().getWindow();

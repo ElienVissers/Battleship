@@ -7,6 +7,8 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 
 /**
+ * The View class of the PrepareGameScreen.
+ *
  * @author Elien Vissers-Similon
  * @version 1.0 15.02.2020 17:54
  */
@@ -91,33 +93,12 @@ public class PrepareGameScreenView extends BorderPane {
         label.setContentDisplay(ContentDisplay.RIGHT);
     }
 
-    Label getActivePlayerLabel() {
-        return activePlayerLabel;
-    }
-
-    Label getShipLabel2() {
-        return shipLabel2;
-    }
-
-    Label getShipLabel3() {
-        return shipLabel3;
-    }
-
-    Label getShipLabel4() {
-        return shipLabel4;
-    }
-
-    Label getShipLabel5() {
-        return shipLabel5;
-    }
-
+    Label getActivePlayerLabel() { return activePlayerLabel; }
+    Label getShipLabel2() { return shipLabel2; }
+    Label getShipLabel3() { return shipLabel3; }
+    Label getShipLabel4() { return shipLabel4; }
+    Label getShipLabel5() { return shipLabel5; }
     GridPane getGrid() { return grid; }
-
-    Button getRotateButton() {
-        return rotateButton;
-    }
-
-    Button getDoneButton() {
-        return doneButton;
-    }
+    Button getRotateButton() { return rotateButton; }
+    Button getDoneButton() { return doneButton; }
 }

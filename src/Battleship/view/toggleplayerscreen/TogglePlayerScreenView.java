@@ -6,8 +6,10 @@ import javafx.scene.layout.*;
 import javafx.scene.control.*;
 
 /**
+ * The View class of the TogglePlayerScreen.
+ *
  * @author Elien Vissers-Similon
- * @version 1.0 09.02.2020 14:08
+ * @version 1.0 09.02.2020
  */
 
 public class TogglePlayerScreenView extends VBox  {

@@ -12,8 +12,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 /**
+ * Contains "User Interface" information that will be used by the application.
+ *
  * @author Elien Vissers-Similon
- * @version 1.0 09.02.2020 14:07
+ * @version 1.0 09.02.2020
  */
 
 public class UISettings {
@@ -42,8 +44,6 @@ public class UISettings {
 
     public int getResX () {return this.resX;}
 
-    public int getResY () {return this.resY;}
-
     public int getInsetsMargin () {return this.insetsMargin;}
 
     public int getLowestRes () {return (Math.min(resX, resY));}
@@ -51,10 +51,6 @@ public class UISettings {
     public boolean styleSheetAvailable (){return Files.exists(styleSheetPath);}
 
     public Path getStyleSheetPath() {return this.styleSheetPath;}
-
-    public void setStyleSheetPath (Path styleSheetPath) {this.styleSheetPath = styleSheetPath;}
-
-    public String getHomeDir () {return this.homeDir;}
 
     public Path getApplicationIconPath () {return this.applicationIconPath;}
 
@@ -72,9 +68,24 @@ public class UISettings {
         return FILE_SEPARATOR;
     }
 
+    /**
+     * Opens an Alert DialogPane when the user tries to close the application.
+     *
+     *  @param event The event that would normally be triggered (the closing of the application)
+     *  @param scene The scene that would be closed
+     */
     public static void getCloseAlert(Event event, Scene scene) {
         getCloseAlert(event, scene,"You're closing the application.","Are you sure? Unsaved data may be lost.");
     }
+
+    /**
+     * Opens an Alert DialogPane when the user tries to close a window.
+     *
+     * @param event The event that would normally be triggered (the closing of the window)
+     * @param scene The scene that would be closed
+     * @param headerText The header-text of the Alert
+     * @param contentText The content-text of the Alert
+     */
     public static void getCloseAlert(Event event, Scene scene, String headerText, String contentText){
         final Alert stopWindow = new Alert(Alert.AlertType.CONFIRMATION);
         try {
