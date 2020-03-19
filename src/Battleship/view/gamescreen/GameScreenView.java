@@ -7,6 +7,8 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 
 /**
+ * The View class of the GameScreen.
+ *
  * @author Elien Vissers-Similon
  * @version 1.0 29.02.2020 10:19
  */
@@ -88,14 +90,9 @@ public class GameScreenView extends BorderPane {
     }
 
     Label getFirstPlayerLabel() { return firstPlayerLabel; }
-
     Label getSecondPlayerLabel() { return secondPlayerLabel; }
-
     GridPane getFirstGrid() { return firstGrid; }
-
     GridPane getSecondGrid() { return secondGrid; }
-
     Label getFirstSunkenStatsLabel() { return firstSunkenStatsLabel; }
-
     Label getSecondSunkenStatsLabel() { return secondSunkenStatsLabel; }
 }

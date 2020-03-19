@@ -27,6 +27,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
+ * The Presenter class of the GameScreen.
+ *
  * @author Elien Vissers-Similon
  * @version 1.0 29.02.2020 10:19
  */

@@ -7,8 +7,10 @@ import javafx.scene.control.ScrollPane;
 
 
 /**
- * @author Elien Vissers-Similon
- * @version 1.0 15.02.2020 14:03
+ * The View class of the HighscoresScreen.
+ *
+ * @author Jan Dubois
+ * @version 1.0 14.03.2020
  */
 public class HighscoresScreenView extends ScrollPane {
 

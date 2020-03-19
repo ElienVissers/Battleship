@@ -11,11 +11,15 @@ import javafx.scene.layout.VBox;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 
+/**
+ * The View class of the AboutScreen.
+ *
+ * @author Elien Vissers-Similon
+ * @version 1.0 05.03.2020
+ */
 public class AboutScreenView extends BorderPane {
 
     private UISettings uiSettings;
-
-
 
     public AboutScreenView(UISettings uiSettings) {
         this.uiSettings = uiSettings;
@@ -23,8 +27,7 @@ public class AboutScreenView extends BorderPane {
         layoutNodes();
     }
 
-    private void initialiseNodes() {
-    }
+    private void initialiseNodes() { }
 
     private void layoutNodes() {
          if (Files.exists(uiSettings.getAboutImagePath())) {
@@ -44,5 +47,4 @@ public class AboutScreenView extends BorderPane {
         setBottom(labelBox);
         setAlignment(labelBox, Pos.CENTER);
     }
-
 }

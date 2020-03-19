@@ -5,6 +5,12 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 
+/**
+ * The View class of the InfoScreen.
+ *
+ * @author Elien Vissers-Similon
+ * @version 1.0 05.03.2020
+ */
 public class InfoScreenView extends ScrollPane {
 
     private UISettings uiSettings;
@@ -27,5 +33,4 @@ public class InfoScreenView extends ScrollPane {
     }
 
     Label getInfoText () {return infoText;}
-
 }

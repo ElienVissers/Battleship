@@ -6,7 +6,12 @@ import Battleship.view.UISettings;
 import java.io.BufferedReader;
 import java.io.FileReader;
 
-
+/**
+ * The Presenter class of the InfoScreen.
+ *
+ * @author Elien Vissers-Similon
+ * @version 1.0 05.03.2020
+ */
 public class InfoScreenPresenter {
 
     private BattleshipModel model;
