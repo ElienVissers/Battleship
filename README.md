@@ -35,9 +35,7 @@ Future Features
 
 ## Run the application
 
-Windows: download [Battleship.jar](out/artifacts/Battleship_jar/Battleship.jar) and run the following command: 
-<br>
-"java -jar Battleship.jar"
+Windows: download [Battleship.jar](out/artifacts/Battleship_jar/Battleship.jar) and run the following command: "java -jar Battleship.jar"
 
 <p align="center">
   <br>
