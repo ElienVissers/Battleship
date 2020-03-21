@@ -36,7 +36,8 @@ Future Features
 
 ## Run the application
 
-command line: java -jar [Battleship.jar](out/artifacts/Battleship_jar/Battleship.jar)
+Windows: 
+"java -jar [Battleship.jar](out/artifacts/Battleship_jar/Battleship.jar)"
 
 <p align="center">
   <br>
