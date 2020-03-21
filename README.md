@@ -4,7 +4,7 @@
 
 <img src="resources/images/ApplicationLogo.png" width=100 height=100>
 
-Battleship is a desktop application written in [Java](https://www.oracle.com/java/), using [JavaFX](https://openjfx.io/) to create the GUI. The custom JavaDoc documentation for all classes can be found <a href="http://htmlpreview.github.com/?https://github.com/ElienVissers/Battleship/resources/doc/blob/master/allclasses.html" target="_blank">here</a> (right click to open in a new tab).
+Battleship is a desktop application written in [Java](https://www.oracle.com/java/), using [JavaFX](https://openjfx.io/) to create the GUI. The custom JavaDoc documentation for all classes can be found <a href="https://htmlpreview.github.io/?https://github.com/ElienVissers/Battleship/resources/doc/allclasses.html">here</a> (right click to open in a new tab).
 
 
 ## Features
