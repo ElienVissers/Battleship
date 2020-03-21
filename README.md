@@ -42,5 +42,5 @@ Windows:
 <p align="center">
   <br>
   <br>
-  <img src="resources/images/ApplicationImage.gif" width=355.5 height=200>
+  <img src="resources/images/ApplicationImage.gif" width=711 height=400>
 </p>  
