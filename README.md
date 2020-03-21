@@ -36,7 +36,7 @@ Future Features
 
 ## Run the application
 
-command line: java -jar [Battleship.jar](Battleship.jar)
+command line: java -jar [Battleship.jar](out/artefacts/Battleship_jar/Battleship.jar)
 
 <p align="center">
   <br>
