@@ -5,6 +5,7 @@
 <img src="resources/images/ApplicationLogo.png" width=100 height=100>
 
 Battleship is a desktop application written in [Java](https://www.oracle.com/java/), using [JavaFX](https://openjfx.io/) to create the GUI.
+JavaDoc can be found [here](resources/doc/allclasses.html).
 
 
 
