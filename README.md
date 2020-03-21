@@ -34,7 +34,9 @@ Future Features
 - position your fleet randomly
 - battle against a droid
 
+## Run the application
 
+command line: java -jar [Battleship.jar](Battleship.jar)
 
 <p align="center">
   <br>
