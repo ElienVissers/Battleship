@@ -4,7 +4,7 @@
 
 <img src="resources/images/ApplicationLogo.png" width=100 height=100>
 
-Battleship is a desktop application written in [Java](https://www.oracle.com/java/), using [JavaFx](https://openjfx.io/) to create the GUI.
+Battleship is a desktop application written in [Java](https://www.oracle.com/java/), using [JavaFX](https://openjfx.io/) to create the GUI.
 
 
 
@@ -37,5 +37,7 @@ Future Features
 
 
 <p align="center">
+  <br>
+  <br>
   <img src="resources/images/ApplicationImage.gif" width=355.5 height=200>
 </p>  
