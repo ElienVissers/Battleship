@@ -4,7 +4,9 @@
 
 <img src="resources/images/ApplicationLogo.png" width=100 height=100>
 
-Battleship is a desktop application written in [Java](https://www.oracle.com/java/), using [JavaFX](https://openjfx.io/) and [MPV](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93presenter) to create the GUI. The custom JavaDoc documentation for all classes can be found <a href="https://htmlpreview.github.io/?https://github.com/ElienVissers/Battleship/blob/master/resources/doc/allclasses.html">here</a> (right click to open in a new tab).
+Battleship is a desktop application written in [Java](https://www.oracle.com/java/), using [JavaFX](https://openjfx.io/) and [MPV](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93presenter) to create the GUI.
+
+JavaDoc documentation for all classes can be found <a href="https://htmlpreview.github.io/?https://github.com/ElienVissers/Battleship/blob/master/resources/doc/allclasses.html">here</a> (right click to open in a new tab).
 
 
 ## Features
