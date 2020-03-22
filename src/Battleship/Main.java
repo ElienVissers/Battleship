@@ -29,21 +29,12 @@ public class Main extends Application {
         StartScreenView view = new StartScreenView(uiSettings);
         StartScreenPresenter presenter = new StartScreenPresenter(model, view, uiSettings);
         Scene scene = new Scene(view);
-        if (uiSettings.styleSheetAvailable()){
-            try {
-                scene.getStylesheets().add(uiSettings.getStyleSheetPath().toUri().toURL().toString());
-            } catch (MalformedURLException ignored) { }
-        }
+        scene.getStylesheets().add("/stylesheets/battleship_standard.css");
         primaryStage.setScene(scene);
         primaryStage.setHeight(uiSettings.getLowestRes() /2.0);
         primaryStage.setWidth(uiSettings.getLowestRes() /1.5);
         primaryStage.setTitle(uiSettings.getApplicationName());
-        if (Files.exists(uiSettings.getApplicationIconPath())) {
-            try {
-                primaryStage.getIcons().add(new Image(uiSettings.getApplicationIconPath().toUri().toURL().toString()));
-            }
-            catch (MalformedURLException ignored) { }
-        }
+        primaryStage.getIcons().add(new Image("/images/ApplicationLogo.png"));
         presenter.windowsHandler();
         primaryStage.show();
     }

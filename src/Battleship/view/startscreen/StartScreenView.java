@@ -7,9 +7,6 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-import java.net.MalformedURLException;
-import java.nio.file.Files;
-
 /**
  * The View class of the StartScreen.
  *
@@ -45,16 +42,11 @@ public class StartScreenView extends VBox {
         time.getChildren().addAll(timeDisplay, timeProgress);
         time.setAlignment(Pos.CENTER);
         time.setSpacing(10);
-        if (Files.exists(uiSettings.getStartScreenImagePath())) {
-            try {
-                centralImage = new ImageView(new Image(uiSettings.getStartScreenImagePath().toUri().toURL().toString()));
-                centralImage.setPreserveRatio(true);
-                centralImage.setFitHeight(ImageSize);
-                centralImage.setFitWidth(ImageSize);
-                centralImage.setSmooth(true);
-            }
-            catch (MalformedURLException ignored) { }
-        }
+        centralImage = new ImageView(new Image("/images/ApplicationImage.gif"));
+        centralImage.setPreserveRatio(true);
+        centralImage.setFitHeight(ImageSize);
+        centralImage.setFitWidth(ImageSize);
+        centralImage.setSmooth(true);
         this.getChildren().addAll(centralImage, time);
         this.setSpacing(60);
         this.setAlignment(Pos.CENTER);

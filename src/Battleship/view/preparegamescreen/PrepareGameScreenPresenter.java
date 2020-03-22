@@ -292,17 +292,17 @@ public class PrepareGameScreenPresenter {
         Image shipImage = null;
         if (horizontal) {
             switch (currentShipCoordinates[2]) {
-                case 2: shipImage = new Image(UISettings.getFileSeparator() + "images" + UISettings.getFileSeparator() + "ship_" + model.getActivePlayer().getColor() + "_2.png", 100, 50, true, true); break;
-                case 3: shipImage = new Image(UISettings.getFileSeparator() + "images" + UISettings.getFileSeparator() + "ship_" + model.getActivePlayer().getColor() + "_3.png", 150, 50, true, true); break;
-                case 4: shipImage = new Image(UISettings.getFileSeparator() + "images" + UISettings.getFileSeparator() + "ship_" + model.getActivePlayer().getColor() + "_4.png", 200, 50, true, true); break;
-                case 5: shipImage = new Image(UISettings.getFileSeparator() + "images" + UISettings.getFileSeparator() + "ship_" + model.getActivePlayer().getColor() + "_5.png", 250, 50, true, true); break;
+                case 2: shipImage = new Image("/images/ship_" + model.getActivePlayer().getColor() + "_2.png", 100, 50, true, true); break;
+                case 3: shipImage = new Image("images/ship_" + model.getActivePlayer().getColor() + "_3.png", 150, 50, true, true); break;
+                case 4: shipImage = new Image("images/ship_" + model.getActivePlayer().getColor() + "_4.png", 200, 50, true, true); break;
+                case 5: shipImage = new Image("images/ship_" + model.getActivePlayer().getColor() + "_5.png", 250, 50, true, true); break;
             }
         } else {
             switch (currentShipCoordinates[2]) {
-                case 2: shipImage = new Image(UISettings.getFileSeparator() + "images" + UISettings.getFileSeparator() + "ship_" + model.getActivePlayer().getColor() + "_2_vert.png", 50, 100, true, true); break;
-                case 3: shipImage = new Image(UISettings.getFileSeparator() + "images" + UISettings.getFileSeparator() + "ship_" + model.getActivePlayer().getColor() + "_3_vert.png", 50, 150, true, true); break;
-                case 4: shipImage = new Image(UISettings.getFileSeparator() + "images" + UISettings.getFileSeparator() + "ship_" + model.getActivePlayer().getColor() + "_4_vert.png", 50, 200, true, true); break;
-                case 5: shipImage = new Image(UISettings.getFileSeparator() + "images" + UISettings.getFileSeparator() + "ship_" + model.getActivePlayer().getColor() + "_5_vert.png", 50, 250, true, true); break;
+                case 2: shipImage = new Image("images/ship_" + model.getActivePlayer().getColor() + "_2_vert.png", 50, 100, true, true); break;
+                case 3: shipImage = new Image("images/ship_" + model.getActivePlayer().getColor() + "_3_vert.png", 50, 150, true, true); break;
+                case 4: shipImage = new Image("images/ship_" + model.getActivePlayer().getColor() + "_4_vert.png", 50, 200, true, true); break;
+                case 5: shipImage = new Image("images/ship_" + model.getActivePlayer().getColor() + "_5_vert.png", 50, 250, true, true); break;
             }
         }
         ImageView shipView = new ImageView(shipImage);

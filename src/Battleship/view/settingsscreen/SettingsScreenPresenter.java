@@ -54,15 +54,13 @@ public class SettingsScreenPresenter {
                     try {
                         DialogPane dialogPane = stopWindow.getDialogPane();
                         dialogPane.setGraphic(new Label());
-                        dialogPane.getStylesheets().add(uiSettings.getStyleSheetPath().toUri().toURL().toString());
+                        dialogPane.getStylesheets().add("/stylesheets/battleship_standard.css");
                         dialogPane.getStyleClass().add("alert-window");
                     } catch (Exception ignored) {}
-                    if (Files.exists(uiSettings.getApplicationIconPath())) {
                         try {
                             Stage stage = (Stage) stopWindow.getDialogPane().getScene().getWindow();
-                            stage.getIcons().add(new Image(uiSettings.getApplicationIconPath().toUri().toURL().toString()));
+                            stage.getIcons().add(new Image("images/ApplicationIcon.png"));
                         } catch (Exception ignored) {}
-                    }
                     stopWindow.setTitle("Warning!");
                     stopWindow.setHeaderText("The selected fleet size is bigger than your universe (Grid) supports");
                     stopWindow.setContentText("The fleet size has been adjust to fit in your universe");

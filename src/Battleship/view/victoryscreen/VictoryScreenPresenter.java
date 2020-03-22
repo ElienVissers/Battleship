@@ -44,18 +44,17 @@ public class VictoryScreenPresenter {
             try {
                 DialogPane dialogPane = alert.getDialogPane();
                 dialogPane.setGraphic(new Label());
-                dialogPane.getStylesheets().add(uiSettings.getStyleSheetPath().toUri().toURL().toString());
+                dialogPane.getStylesheets().add("/stylesheets/battleship_standard.css");
                 dialogPane.getStyleClass().add("alert-window");
             } catch (Exception ignored) {}
             alert.setTitle("unable to save game");
             alert.setContentText(e.getMessage());
-            if (Files.exists(uiSettings.getApplicationIconPath())) {
                 try {
                     Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-                    stage.getIcons().add(new Image(uiSettings.getApplicationIconPath().toUri().toURL().toString()));
+                    stage.getIcons().add(new Image("/images.ApplicationIcon.png"));
                 }
                 catch (Exception ignored) { }
-            }
+
             alert.show();
         }
     }

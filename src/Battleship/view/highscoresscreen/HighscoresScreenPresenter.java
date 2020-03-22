@@ -26,7 +26,8 @@ public class HighscoresScreenPresenter {
 
     private String ReadInfoFromFile() {
         String highscoresFile ="";
-        try (BufferedReader reader = new BufferedReader(new FileReader(uiSettings.getHighscoresPath().toString()))){
+        InputStream inputStream = getClass().getResourceAsStream("/other/highscores.txt");
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))){
             StringBuffer sb = new StringBuffer();
             String line = "";
             while ((line = reader.readLine())!= null){

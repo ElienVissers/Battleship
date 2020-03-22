@@ -55,16 +55,14 @@ public class MainScreenPresenter {
                     try {
                         DialogPane dialogPane = stopWindow.getDialogPane();
                         dialogPane.setGraphic(new Label());
-                        dialogPane.getStylesheets().add(uiSettings.getStyleSheetPath().toUri().toURL().toString());
+                        dialogPane.getStylesheets().add("/stylesheets/battleship_standard.css");
                         dialogPane.getStyleClass().add("alert-window");
                     } catch (Exception ignored) {}
-                    if (Files.exists(uiSettings.getApplicationIconPath())) {
-                        try {
-                            Stage stage = (Stage) stopWindow.getDialogPane().getScene().getWindow();
-                            stage.getIcons().add(new Image(uiSettings.getApplicationIconPath().toUri().toURL().toString()));
-                        }
-                        catch (Exception ignored) { }
+                    try {
+                        Stage stage = (Stage) stopWindow.getDialogPane().getScene().getWindow();
+                        stage.getIcons().add(new Image("images/ApplicationLogo.png"));
                     }
+                    catch (Exception ignored) { }
                     stopWindow.setTitle("Error!");
                     stopWindow.setHeaderText("You can not yet start the game.");
                     stopWindow.setContentText("Please fill in a name for both players.");
@@ -145,17 +143,9 @@ public class MainScreenPresenter {
         stage.setTitle(uiSettings.getApplicationName() + " - " + name);
         stage.setHeight(uiSettings.getLowestRes() /2.0);
         stage.setWidth(uiSettings.getLowestRes() /1.0);
-        if (Files.exists(uiSettings.getApplicationIconPath())) {
-            try {
-                stage.getIcons().add(new Image(uiSettings.getApplicationIconPath().toUri().toURL().toString()));
-            } catch (MalformedURLException ignored) { }
-        }
-        if (uiSettings.styleSheetAvailable()) {
-            stage.getScene().getStylesheets().removeAll();
-            try {
-                stage.getScene().getStylesheets().add(uiSettings.getStyleSheetPath().toUri().toURL().toString());
-            } catch (MalformedURLException ignored) { }
-        }
+        stage.getIcons().add(new Image("images/ApplicationLogo.png"));
+        stage.getScene().getStylesheets().removeAll();
+        stage.getScene().getStylesheets().add("/stylesheets/battleship_standard.css");
         stage.showAndWait();
     }
 

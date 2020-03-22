@@ -33,6 +33,8 @@ import java.util.Arrays;
  * @version 1.0 29.02.2020 10:19
  */
 
+//TODO find out why there is a delay in the gameplay when running the .jar
+
 public class GameScreenPresenter {
 
     private BattleshipModel model;
@@ -198,7 +200,7 @@ public class GameScreenPresenter {
                         String musicFile;
                         if (returnValue[0] == 1) {
                             targetNode.getStyleClass().add("grid-pane-hit");
-                            Image flameImage = new Image(UISettings.getFileSeparator() + "images" + UISettings.getFileSeparator() + "flame_" + model.getActivePlayer().getColor() + ".png", 50, 50, true, true);
+                            Image flameImage = new Image("images/flame_" + model.getActivePlayer().getColor() + ".png", 50, 50, true, true);
                             ImageView flameView = new ImageView(flameImage);
                             grid.add(flameView, currentTargetCoordinates[0], currentTargetCoordinates[1]);
                             musicFile = "hit.mp3";
@@ -215,10 +217,13 @@ public class GameScreenPresenter {
                         }
                         Arrays.fill(currentTargetCoordinates, 0);
                         updateView();
-                        Path musicPath = Paths.get("resources" + UISettings.getFileSeparator() +"other"+ UISettings.getFileSeparator() + musicFile);
-                        Media sound = new Media(musicPath.toUri().toString());
-                        mediaPlayer = new MediaPlayer(sound);
-                        mediaPlayer.play();
+                        try {
+                            //TODO figure out how to get the music files into the .jar
+                            Path musicPath = Paths.get("other/" + musicFile);
+                            Media sound = new Media(musicPath.toUri().toString());
+                            mediaPlayer = new MediaPlayer(sound);
+                            mediaPlayer.play();
+                        } catch (Exception ignored) {}
                     }
                 }
             });
@@ -229,17 +234,17 @@ public class GameScreenPresenter {
         Image shipImage = null;
         if (direction == 0) {
             switch (size) {
-                case 2: shipImage = new Image(UISettings.getFileSeparator() + "images" + UISettings.getFileSeparator() + "ship_destroyed_2.png", 100, 50, true, true); break;
-                case 3: shipImage = new Image(UISettings.getFileSeparator() + "images" + UISettings.getFileSeparator() + "ship_destroyed_3.png", 150, 50, true, true); break;
-                case 4: shipImage = new Image(UISettings.getFileSeparator() + "images" + UISettings.getFileSeparator() + "ship_destroyed_4.png", 200, 50, true, true); break;
-                case 5: shipImage = new Image(UISettings.getFileSeparator() + "images" + UISettings.getFileSeparator() + "ship_destroyed_5.png", 250, 50, true, true); break;
+                case 2: shipImage = new Image("images/ship_destroyed_2.png", 100, 50, true, true); break;
+                case 3: shipImage = new Image("images/ship_destroyed_3.png", 150, 50, true, true); break;
+                case 4: shipImage = new Image("images/ship_destroyed_4.png", 200, 50, true, true); break;
+                case 5: shipImage = new Image("images/ship_destroyed_5.png", 250, 50, true, true); break;
             }
         } else {
             switch (size) {
-                case 2: shipImage = new Image(UISettings.getFileSeparator() + "images" + UISettings.getFileSeparator() + "ship_destroyed_2_vert.png", 50, 100, true, true); break;
-                case 3: shipImage = new Image(UISettings.getFileSeparator() + "images" + UISettings.getFileSeparator() + "ship_destroyed_3_vert.png", 50, 150, true, true); break;
-                case 4: shipImage = new Image(UISettings.getFileSeparator() + "images" + UISettings.getFileSeparator() + "ship_destroyed_4_vert.png", 50, 200, true, true); break;
-                case 5: shipImage = new Image(UISettings.getFileSeparator() + "images" + UISettings.getFileSeparator() + "ship_destroyed_5_vert.png", 50, 250, true, true); break;
+                case 2: shipImage = new Image("images/ship_destroyed_2_vert.png", 50, 100, true, true); break;
+                case 3: shipImage = new Image("images/ship_destroyed_3_vert.png", 50, 150, true, true); break;
+                case 4: shipImage = new Image("images/ship_destroyed_4_vert.png", 50, 200, true, true); break;
+                case 5: shipImage = new Image("images/ship_destroyed_5_vert.png", 50, 250, true, true); break;
             }
         }
         ImageView shipView = new ImageView(shipImage);

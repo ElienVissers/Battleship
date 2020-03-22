@@ -30,14 +30,8 @@ public class AboutScreenView extends BorderPane {
     private void initialiseNodes() { }
 
     private void layoutNodes() {
-         if (Files.exists(uiSettings.getAboutImagePath())) {
-            try {
-
-                Image centralImage = new Image(uiSettings.getAboutImagePath().toUri().toURL().toString(), uiSettings.getLowestRes() /2.0, uiSettings.getLowestRes() /1.0, true, true);
-                setCenter(new ImageView(centralImage));
-            }
-            catch (MalformedURLException ignored) { }
-        }
+        Image centralImage = new Image("/images/ApplicationImage.gif", uiSettings.getLowestRes() /2.0, uiSettings.getLowestRes() /1.0, true, true);
+        setCenter(new ImageView(centralImage));
         VBox labelBox = new VBox();
         labelBox.getChildren().addAll(new Label("game version 1.0 © Elien Vissers-Similon & Jan Dubois"),
                 new Label(""),

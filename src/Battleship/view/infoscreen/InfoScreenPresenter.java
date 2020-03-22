@@ -4,7 +4,8 @@ import Battleship.model.BattleshipModel;
 import Battleship.view.UISettings;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 /**
  * The Presenter class of the InfoScreen.
@@ -27,7 +28,8 @@ public class InfoScreenPresenter {
 
     private String ReadInfoFromFile() {
         String infoTextInFile ="";
-        try (BufferedReader reader = new BufferedReader(new FileReader(uiSettings.getInfoTextPath().toString()))){
+        InputStream inputStream = getClass().getResourceAsStream("/other/info.txt");
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))){
             String line = "";
             while ((line = reader.readLine())!= null){
                 infoTextInFile += line + "\n";

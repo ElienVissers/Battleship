@@ -12,8 +12,6 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
-import java.net.MalformedURLException;
-import java.nio.file.Files;
 
 /**
  * The Presenter class of the StartScreen.
@@ -45,9 +43,7 @@ public class StartScreenPresenter {
                 MainScreenView msView = new MainScreenView(uiSettings);
                 MainScreenPresenter msPresenter = new MainScreenPresenter(model, msView, uiSettings);
                 view.getScene().setRoot(msView);
-                try {
-                    msView.getScene().getStylesheets().add(uiSettings.getStyleSheetPath().toUri().toURL().toString());
-                } catch (MalformedURLException ignored) { }
+                msView.getScene().getStylesheets().add("/stylesheets/battleship_standard.css");
                 msView.getScene().getWindow().sizeToScene();
                 //open new window fullscreen
                 Stage currentStage = (Stage) msView.getScene().getWindow();
@@ -65,16 +61,14 @@ public class StartScreenPresenter {
                 try {
                     DialogPane dialogPane = stopWindow.getDialogPane();
                     dialogPane.setGraphic(new Label());
-                    dialogPane.getStylesheets().add(uiSettings.getStyleSheetPath().toUri().toURL().toString());
+                    dialogPane.getStylesheets().add("/stylesheets/battleship_standard.css");
                     dialogPane.getStyleClass().add("alert-window");
                 } catch (Exception ignored) {}
-                if (Files.exists(uiSettings.getApplicationIconPath())) {
-                    try {
-                        Stage stage = (Stage) stopWindow.getDialogPane().getScene().getWindow();
-                        stage.getIcons().add(new Image(uiSettings.getApplicationIconPath().toUri().toURL().toString()));
-                    }
-                    catch (Exception ignored) { }
+                try {
+                    Stage stage = (Stage) stopWindow.getDialogPane().getScene().getWindow();
+                    stage.getIcons().add(new Image("/images/ApplicationLogo.png"));
                 }
+                catch (Exception ignored) { }
                 stopWindow.setTitle("Error!");
                 stopWindow.setHeaderText("You can not yet close the application.");
                 stopWindow.setContentText("Try again after the program has started!");
