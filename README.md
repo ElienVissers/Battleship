@@ -32,6 +32,7 @@ Future Features
 
 - position your fleet randomly
 - battle against a droid
+- responsive design
 
 ## Run the application
 
