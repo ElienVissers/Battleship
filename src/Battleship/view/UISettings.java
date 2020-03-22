@@ -7,9 +7,6 @@ import javafx.scene.image.Image;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 /**
  * Contains "User Interface" information that will be used by the application.
@@ -61,7 +58,6 @@ public class UISettings {
      * @param contentText The content-text of the Alert
      */
     public static void getCloseAlert(Event event, Scene scene, String headerText, String contentText){
-        //TODO method not working in .jar file
         final Alert stopWindow = new Alert(Alert.AlertType.CONFIRMATION);
         try {
             DialogPane dialogPane = stopWindow.getDialogPane();
