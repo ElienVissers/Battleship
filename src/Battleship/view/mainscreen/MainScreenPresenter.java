@@ -85,7 +85,6 @@ public class MainScreenPresenter {
                 SettingsScreenPresenter settingsScreenPresenter = new SettingsScreenPresenter(model, settingsScreenView, uiSettings);
                 Stage mainOptionsStage = new Stage();
                 openMenuWindow(mainOptionsStage, settingsScreenView, "Universe settings"); //open SETTINGS MENU window
-                settingsScreenPresenter.windowsHandler();
             }
         });
         view.getHighscoresItem().setOnAction(new EventHandler<ActionEvent>() {

@@ -25,44 +25,19 @@ public class UISettings {
     private int insetsMargin;
     public static final char FILE_SEPARATOR = System.getProperties().getProperty("file.separator").charAt(0);
     private String ApplicationName;
-    private String homeDir;
-//    private Path styleSheetPath = Paths.get("resources/stylesheets/battleship_standard.css");
-//    private Path AboutImagePath = Paths.get("resources/images/ApplicationImage.gif");
-//    private Path applicationIconPath = Paths.get("resources/images/ApplicationLogo.png");
-//    private Path startScreenImagePath = Paths.get("resources/images/ApplicationImage.gif");
-//    private Path infoTextPath = Paths.get("resources/other/info.txt");
-//    private Path highscoresPath = Paths.get("resources/other/highscores.txt");
 
     public UISettings() {
         this.resX= (int) Screen.getPrimary().getVisualBounds().getWidth();
         this.resY = (int) Screen.getPrimary().getVisualBounds().getHeight();
         this.insetsMargin = this.getLowestRes()/100;
-        this.homeDir = System.getProperties().getProperty("user.dir");
+        String homeDir = System.getProperties().getProperty("user.dir");
         this.ApplicationName = "Battleship";
     }
 
     public int getResX () {return this.resX;}
-
     public int getInsetsMargin () {return this.insetsMargin;}
-
     public int getLowestRes () {return (Math.min(resX, resY));}
-
-//    public boolean styleSheetAvailable (){return Files.exists(styleSheetPath);}
-//
-//    public Path getStyleSheetPath() {return this.styleSheetPath;}
-//
-//    public Path getApplicationIconPath () {return this.applicationIconPath;}
-//
-//    public Path getStartScreenImagePath () {return this.startScreenImagePath;}
-//
-//    public Path getAboutImagePath () {return this.AboutImagePath;}
-//
-//    public Path getInfoTextPath () {return this.infoTextPath;}
-//
-//    public Path getHighscoresPath () {return this.highscoresPath;}
-
     public String getApplicationName () {return this.ApplicationName;}
-
     public static char getFileSeparator() {
         return FILE_SEPARATOR;
     }
@@ -86,20 +61,19 @@ public class UISettings {
      * @param contentText The content-text of the Alert
      */
     public static void getCloseAlert(Event event, Scene scene, String headerText, String contentText){
+        //TODO method not working in .jar file
         final Alert stopWindow = new Alert(Alert.AlertType.CONFIRMATION);
         try {
             DialogPane dialogPane = stopWindow.getDialogPane();
             dialogPane.setGraphic(new Label());
-            dialogPane.getStylesheets().add(Paths.get("resources/stylesheets/battleship_standard.css").toUri().toURL().toString());
+            dialogPane.getStylesheets().add("/stylesheets/battleship_standard.css");
             dialogPane.getStyleClass().add("alert-window");
         } catch (Exception ignored) {}
-        if (Files.exists(Paths.get("resources/images/ApplicationLogo.png"))) {
-            try {
-                Stage stage = (Stage) stopWindow.getDialogPane().getScene().getWindow();
-                stage.getIcons().add(new Image(Paths.get("resources/images/ApplicationLogo.png").toUri().toURL().toString()));
-            }
-            catch (Exception ignored) { }
+        try {
+            Stage stage = (Stage) stopWindow.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image("images/ApplicationLogo.png"));
         }
+        catch (Exception ignored) { }
         stopWindow.setHeaderText(headerText);
         stopWindow.setContentText(contentText);
         stopWindow.setTitle("WARNING!");

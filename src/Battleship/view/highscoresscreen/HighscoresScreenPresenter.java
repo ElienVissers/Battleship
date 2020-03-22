@@ -8,8 +8,8 @@ import java.io.*;
 /**
  * The Presenter class of the HighscoresScreen.
  *
- * @author Jan Dubois
- * @version 1.0 15.02.2020 14:03
+ * @author Elien Vissers-Similon, Jan Dubois
+ * @version 1.0 15.03.2020
  */
 public class HighscoresScreenPresenter {
 
@@ -26,13 +26,9 @@ public class HighscoresScreenPresenter {
 
     private String ReadInfoFromFile() {
         String highscoresFile ="";
-        InputStream inputStream = getClass().getResourceAsStream("/other/highscores.txt");
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))){
-            StringBuffer sb = new StringBuffer();
-            String line = "";
-            while ((line = reader.readLine())!= null){
-                sb.append(line);
-                sb.append("\n");
+        try (DataInputStream dis = new DataInputStream(new BufferedInputStream(new FileInputStream("highscores.bin")))){
+            while(dis.available() > 0) {
+                String line = dis.readUTF();
                 highscoresFile += line + "\n";
             }
         } catch (Exception ignored) {}

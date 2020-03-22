@@ -1,13 +1,12 @@
 package Battleship.model;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * The class BattleshipModel is the main class of the application as it contains the game data.
@@ -207,71 +206,76 @@ public class BattleshipModel {
     }
 
     /**
-     * Saves the game by updating logFile.txt and highscores.txt
-     * 1. logFile.txt: contains the gridsize, number of ships, date, name of the winning player and amount of turns for each game
-     * 2. highscores.txt: contains the number of wins for each winner in logFile.txt
+     * Saves the game by updating logFile.bin and highscores.bin
+     * 1. logFile.bin: contains the gridsize, number of ships, date, name of the winning player and amount of turns for each game
+     * 2. highscores.bin: contains the number of wins for each winner in logFile.txt
+     *
+     * Byte Streams are used so the files can be embedded in the .jar file.
      *
      * @author Elien Vissers-Similon, Jan Dubois
      */
     public void saveGame() {
         turnCounter = Math.round(turnCounter);
-        String logPathString = "resources"+ File.separator +"other"+ File.separator + "logFile.txt";
-        String highscoresPathString = "resources"+ File.separator +"other"+ File.separator + "highscores.txt";
-        Path logFile = Paths.get(logPathString);
-        Path highscoresFile = Paths.get(highscoresPathString);
+        String logPathString = "logFile.bin";
+        String highscoresPathString = "highscores.bin";
+        Path logFilePath = Paths.get(logPathString);
+        Path highscoresFilePath = Paths.get(highscoresPathString);
+
         Map<String, Long> namesMap;
 
-        if (Files.exists(logFile)) {
+        if (Files.exists(logFilePath)) {
             List<String> logList = new ArrayList<>();
             List<String> nameList = new ArrayList<>();
-            try (Scanner sc = new Scanner(new File(logPathString))) {
-                while (sc.hasNext()) {
-                    String log = sc.nextLine();
+
+            try (DataInputStream dis = new DataInputStream(new BufferedInputStream(new FileInputStream(logPathString)))){
+                while (dis.available() > 0) {
+                    String log = dis.readUTF();
                     logList.add(log);
                     nameList.add(log.split(";")[3]);
                 }
-            } catch (FileNotFoundException fnfe) {
-                throw new BattleshipException(fnfe);
+            } catch (Exception e) {
+                System.out.println(Arrays.toString(e.getStackTrace()));
+                throw new BattleshipException(e);
             }
-            try (Formatter fm = new Formatter(logPathString)) {
+
+            try (DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(logPathString)))) {
                 for (String log : logList) {
-                    fm.format("%s%n", log);
+                    dos.writeUTF(log + "\n");
                 }
-                fm.format("%d;%d;%s;%s;%d%n", gridSize, numberOfShips, date.toString(), passivePlayer.getName(), (int) turnCounter);
-            } catch (IOException ioe) {
-                throw new BattleshipException(ioe);
+                dos.writeUTF((gridSize + ";" + numberOfShips + ";" + date.toString() + ";" + passivePlayer.getName() + ";" + (int) turnCounter + "\n"));
+            } catch (Exception e) {
+                System.out.println(Arrays.toString(e.getStackTrace()));
+                throw new BattleshipException(e);
             }
             nameList.add(passivePlayer.getName());
             nameList.remove(0);
             namesMap = countNames(nameList);
-
-            try (Formatter fmHS = new Formatter(highscoresPathString)) {
+            try (DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(highscoresPathString)))) {
                 for ( String key : namesMap.keySet() ) {
-                    fmHS.format("%d%22s%22s%n",namesMap.get(key) , ":" , key );
+                    dos.writeUTF(key + " (" + namesMap.get(key) + ")\n");
                 }
             } catch (IOException ioe) {
+                System.out.println(Arrays.toString(ioe.getStackTrace()));
                 throw new BattleshipException(ioe);
             }
 
         } else {
-            Formatter fm = null;
-            Formatter fmHS = null;
             try {
-                Files.createFile(logFile);
-                Files.createFile(highscoresFile);
-                fm =  new Formatter(logPathString);
-                fm.format("%s;%s;%s;%s;%s%n%d;%d;%s;%s;%d%n",
-                        "gridsize", "amount of ships", "date", "winner", "amount of turns",
-                        gridSize, numberOfShips, date.toString(), passivePlayer.getName(), (int) turnCounter);
-                fm.close();
-                fmHS = new Formatter(highscoresPathString);
-                fmHS.format("%-22s:%-22s",passivePlayer.getName(), "1");
-                fmHS.close();
+                Files.createFile(logFilePath);
+                Files.createFile(highscoresFilePath);
             } catch (IOException ioe) {
                 throw new BattleshipException(ioe);
-            } finally {
-                if (fm != null){ fm.close();}
-                if (fmHS != null){ fmHS.close();}
+            }
+            try (DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(logPathString)))) {
+                dos.writeUTF("gridsize;amount of ships;date;winner;amount of turns\n");
+                dos.writeUTF((gridSize + ";" + numberOfShips + ";" + date.toString() + ";" + passivePlayer.getName() + ";" + (int) turnCounter + "\n").toString());
+            } catch (Exception e) {
+                throw new BattleshipException(e);
+            }
+            try (DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(highscoresPathString)))) {
+                dos.writeUTF(passivePlayer.getName() + " (1)");
+            } catch (Exception e) {
+                throw new BattleshipException(e);
             }
         }
     }
@@ -285,7 +289,9 @@ public class BattleshipModel {
                 resultMap.put(name, 1L);
             }
         }
-        return resultMap;
+        return resultMap.entrySet().stream()
+                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
     }
 
     public Player getActivePlayer() { return activePlayer; }

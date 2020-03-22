@@ -14,8 +14,6 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
-import java.nio.file.Files;
-
 /**
  * The Presenter class of the VictoryScreen.
  * In its constructor, the game will be saved.
@@ -62,9 +60,9 @@ public class VictoryScreenPresenter {
     private void updateView() {
         this.view.getVictoryLabel().setText("Congratulations, " + model.getPassivePlayer().getName() + "! You are one step closer to ruling the galaxy!");
         this.view.getVictoryLabel().getStyleClass().addAll("title", model.getPassivePlayer().getColor() + "-text");
-        this.view.getAnimatedShip1().setImage(new Image(UISettings.getFileSeparator() + "images" + UISettings.getFileSeparator() + "ship_" + model.getPassivePlayer().getColor() + "_3.png", 150, 50, true, true));
-        this.view.getAnimatedShip2().setImage(new Image(UISettings.getFileSeparator() + "images" + UISettings.getFileSeparator() + "ship_" + model.getPassivePlayer().getColor() + "_4.png", 200, 50, true, true));
-        this.view.getAnimatedShip3().setImage(new Image(UISettings.getFileSeparator() + "images" + UISettings.getFileSeparator() + "ship_" + model.getPassivePlayer().getColor() + "_5.png", 250, 50, true, true));
+        this.view.getAnimatedShip1().setImage(new Image("/images/ship_" + model.getPassivePlayer().getColor() + "_3.png", 150, 50, true, true));
+        this.view.getAnimatedShip2().setImage(new Image("images/ship_" + model.getPassivePlayer().getColor() + "_4.png", 200, 50, true, true));
+        this.view.getAnimatedShip3().setImage(new Image("images/ship_" + model.getPassivePlayer().getColor() + "_5.png", 250, 50, true, true));
     }
 
     private void EventHandlers() {

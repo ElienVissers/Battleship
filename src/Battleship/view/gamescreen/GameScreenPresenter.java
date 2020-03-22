@@ -20,9 +20,6 @@ import javafx.stage.WindowEvent;
 import javafx.scene.Node;
 import javafx.util.Duration;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -32,9 +29,6 @@ import java.util.Arrays;
  * @author Elien Vissers-Similon
  * @version 1.0 29.02.2020 10:19
  */
-
-//TODO find out why there is a delay in the gameplay when running the .jar
-
 public class GameScreenPresenter {
 
     private BattleshipModel model;
@@ -217,13 +211,9 @@ public class GameScreenPresenter {
                         }
                         Arrays.fill(currentTargetCoordinates, 0);
                         updateView();
-                        try {
-                            //TODO figure out how to get the music files into the .jar
-                            Path musicPath = Paths.get("other/" + musicFile);
-                            Media sound = new Media(musicPath.toUri().toString());
-                            mediaPlayer = new MediaPlayer(sound);
-                            mediaPlayer.play();
-                        } catch (Exception ignored) {}
+                        Media mp3MusicFile = new Media(getClass().getResource("/other/" + musicFile).toExternalForm());
+                        mediaPlayer = new MediaPlayer(mp3MusicFile);
+                        mediaPlayer.setAutoPlay(true);
                     }
                 }
             });
@@ -323,10 +313,9 @@ public class GameScreenPresenter {
     }
 
     private void openVictoryScreen() {
-        Path musicPath = Paths.get("resources" + UISettings.getFileSeparator() +"other"+ UISettings.getFileSeparator() + "victory.mp3");
-        Media sound = new Media(musicPath.toUri().toString());
-        mediaPlayer = new MediaPlayer(sound);
-        mediaPlayer.play();
+        Media mp3MusicFile = new Media(getClass().getResource("/other/victory.mp3").toExternalForm());
+        mediaPlayer = new MediaPlayer(mp3MusicFile);
+        mediaPlayer.setAutoPlay(true);
         VictoryScreenView victoryScreenView = new VictoryScreenView(uiSettings);
         VictoryScreenPresenter victoryScreenPresenter = new VictoryScreenPresenter(model, victoryScreenView, uiSettings);
         view.getScene().setRoot(victoryScreenView);

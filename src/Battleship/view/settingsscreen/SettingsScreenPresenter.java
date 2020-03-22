@@ -82,16 +82,4 @@ public class SettingsScreenPresenter {
             public void handle(ActionEvent event) { view.getScene().getWindow().hide(); }
             });
     }
-
-    //TODO Waarom word setOnCloseRequest niet getriggerd
-    public void windowsHandler() {
-        System.out.println("inside windows handler");
-        view.getScene().getWindow().setOnCloseRequest(new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent event) {
-                System.out.println("Erin");
-                UISettings.getCloseAlert(event, view.getScene(), "Settings won't be changed", "Are u sure you want to leave?"); }
-        });
-    }
-
 }

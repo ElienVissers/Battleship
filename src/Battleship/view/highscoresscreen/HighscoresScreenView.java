@@ -26,6 +26,7 @@ public class HighscoresScreenView extends ScrollPane {
     private void initialiseNodes() { highscoresText = new Label(); }
 
     private void layoutNodes() {
+        highscoresText.translateXProperty().bind(widthProperty().subtract(highscoresText.widthProperty()).divide(2));
         highscoresText.getStyleClass().add("info-label");
         highscoresText.setPadding(new Insets(uiSettings.getInsetsMargin()));
         setContent(highscoresText);
